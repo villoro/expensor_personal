@@ -2,44 +2,55 @@
     Dash app
 """
 
+import os
+
 import dash
+import dash_auth
 import dash_core_components as dcc
 import dash_html_components as html
-from flask import Flask, redirect, url_for
-from flask_dance.contrib.google import make_google_blueprint, google
 
-from auth.google_oauth import GoogleOAuth
+# Keep this out of source code repository - save in a file or a database
+VALID_USERNAME_PASSWORD_PAIRS = [
+    [os.environ["EXPENSOR_USER"], os.environ["EXPENSOR_PASSWORD"]]
+]
 
-server = Flask(__name__)
+app = dash.Dash('auth')
+auth = dash_auth.BasicAuth(
+    app,
+    VALID_USERNAME_PASSWORD_PAIRS
+)
 
-app = dash.Dash(__name__, server=server, url_base_pathname='/', auth='auth')
-authorized_emails = ["villoro7@gmail.com"]
-auth = GoogleOAuth(app, authorized_emails)
+app.layout = html.Div([
+    html.H1('Welcome to the app'),
+    html.H3('You are successfully authorized'),
+    dcc.Dropdown(
+        id='dropdown',
+        options=[{'label': i, 'value': i} for i in ['A', 'B']],
+        value='A'
+    ),
+    dcc.Graph(id='graph')
+], className='container')
 
-@server.route("/")
-def MyDashApp():
-    return app.index()
-
-app.layout = html.Div(children=[
-    html.H1(children="Hello Dash"),
-
-    html.Div(children='''
-    Dash: A web application framework for Python
-    '''),
-
-    dcc.Graph(
-        id='example-graph',
-        figure={
-            'data': [
-                {'x': [1, 2, 3], 'y': [4, 1, 2], 'type': 'bar', 'name': 'SF'},
-                {'x': [1, 2, 3], 'y': [2, 4, 6], 'type': 'bar', 'name': 'Montreal'},
-            ],
-            'layout': {
-                'title': 'Dash Data Visualization'
+@app.callback(
+    dash.dependencies.Output('graph', 'figure'),
+    [dash.dependencies.Input('dropdown', 'value')])
+def update_graph(dropdown_value):
+    return {
+        'layout': {
+            'title': 'Graph of {}'.format(dropdown_value),
+            'margin': {
+                'l': 20,
+                'b': 20,
+                'r': 10,
+                't': 60
             }
-        }
-    )
-])
+        },
+        'data': [{'x': [1, 2, 3], 'y': [4, 1, 2]}]
+    }
+
+app.scripts.config.serve_locally = True
+app.css.append_css({'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'})
+
 
 
 if __name__ == '__main__':
