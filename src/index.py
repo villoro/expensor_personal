@@ -14,14 +14,16 @@ VALID_USERNAME_PASSWORD_PAIRS = [
     [os.environ["EXPENSOR_USER"], os.environ["EXPENSOR_PASSWORD"]]
 ]
 
-app = dash.Dash('auth')
+APP = dash.Dash('auth')
+SERVER = APP.server
+
 auth = dash_auth.BasicAuth(
-    app,
+    APP,
     VALID_USERNAME_PASSWORD_PAIRS
 )
 
-app.layout = html.Div([
-    html.H1('Welcome to the app'),
+APP.layout = html.Div([
+    html.H1('Welcome to the APP'),
     html.H3('You are successfully authorized'),
     dcc.Dropdown(
         id='dropdown',
@@ -31,7 +33,7 @@ app.layout = html.Div([
     dcc.Graph(id='graph')
 ], className='container')
 
-@app.callback(
+@APP.callback(
     dash.dependencies.Output('graph', 'figure'),
     [dash.dependencies.Input('dropdown', 'value')])
 def update_graph(dropdown_value):
@@ -48,10 +50,10 @@ def update_graph(dropdown_value):
         'data': [{'x': [1, 2, 3], 'y': [4, 1, 2]}]
     }
 
-app.scripts.config.serve_locally = True
-app.css.append_css({'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'})
+APP.scripts.config.serve_locally = True
+APP.css.append_css({'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'})
 
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    APP.run_server(debug=True)
