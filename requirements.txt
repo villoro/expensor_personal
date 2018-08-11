@@ -1,9 +1,10 @@
-pandas==0.22.0
-gunicorn==19.8.1
 dash==0.19.0
 dash-core-components==0.22.0
 dash-html-components==0.10.0
 dash-renderer==0.12.1
 dropbox==9.0.0
+flask-dance==1.0.0
+gunicorn==19.8.1
+pandas==0.22.0
 plotly==2.5.1
 xlrd==1.1.0
