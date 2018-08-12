@@ -44,10 +44,16 @@ def filter_data(df_input, values=None, col_name=c.cols.CATEGORY):
     return df
 
 
-def fix_df_trans(df):
+def fix_df_trans(df_in):
     """
         It does all required transformations in order to use the transaction dataframe
+
+        Args:
+            df_in:  raw dataframe with transactions
     """
+
+    df = df_in.rename(c.cols.REPLACES, axis="columns").copy()
+    df = df[~df[c.cols.CATEGORY].isin(c.io.FORBIDDEN_CATEGORIES)]
 
     # Add time filter columns (store everything as string to ensure JSON compatibility)
     df[c.cols.DATE] = pd.to_datetime(df[c.cols.DATE])
@@ -62,4 +68,4 @@ def fix_df_trans(df):
     # Amount as positve number
     df[c.cols.AMOUNT] = df[c.cols.AMOUNT].apply(abs)
 
-    return df
+    return df[c.cols.DF_TRANS]
