@@ -32,4 +32,7 @@ def get_layout(dfs):
 
         # Body
         html.Div(id="page-content", style=c.styles.STYLE_BODY),
+
+        # Others
+        dcc.Location(id='url', refresh=False),
     ])
