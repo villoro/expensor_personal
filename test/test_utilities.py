@@ -54,6 +54,14 @@ class TestUtilities(unittest.TestCase):
         self.assertTrue(all([x in dfs for x in c.dfs.ALL_FROM_DATA]))
 
 
+    def test_get_data(self):
+        """ Test that is able to retrive all dataframes """
+
+        # Check that all needed dataframes are present
+        self.assertTrue(all([x in u.io.get_data() for x in c.dfs.ALL]))
+
+
+
     # ------------------------------ dfs -----------------------------------------------------------
     def test_fix_df_trans(self):
         """ Test that is able to retrive dataframes from data.xlsx """

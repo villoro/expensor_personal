@@ -9,6 +9,7 @@ import pandas as pd
 import dropbox
 
 import constants as c
+from utilities.dfs import fix_df_trans
 
 
 def get_dropbox_conector():
@@ -46,5 +47,16 @@ def get_data_without_transactions(dbx):
     _, res = dbx.files_download(c.io.FILE_DATA)
 
     dfs = {x: pd.read_excel(io.BytesIO(res.content), sheet_name=x) for x in c.dfs.ALL_FROM_DATA}
+
+    return dfs
+
+
+def get_data():
+    """ Retrives all dataframes """
+
+    dbx = get_dropbox_conector()
+
+    dfs = get_data_without_transactions(dbx)
+    dfs[c.dfs.TRANS] = fix_df_trans(get_df_transactions(dbx))
 
     return dfs
