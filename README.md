@@ -1,4 +1,7 @@
 # Expenses Visualization App [Personal] (ExpensOR)
+[![Build Status](https://travis-ci.com/villoro/expensor_personal.svg?branch=master)](https://travis-ci.com/villoro/expensor_personal)
+[![codecov](https://codecov.io/gh/villoro/expensor_personal/branch/master/graph/badge.svg)](https://codecov.io/gh/villoro/expensor_personal)
+
 This is a [dash](https://plot.ly/products/dash/) app that allows users to visualitze their expenses and/or incomes.
 
 **It is intended only for personal use.** There is another repository ([expensor](https://github.com/villoro/expensor)) with a similar dash app for public use.
