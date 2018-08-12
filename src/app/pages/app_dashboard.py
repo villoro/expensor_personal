@@ -5,12 +5,12 @@
 import dash_core_components as dcc
 from dash.dependencies import Input, Output
 
-import utilities as u
 import constants as c
 from app import ui_utils as uiu
 from plots import plots_evolution as plt_ev
 from plots import plots_liquid as plt_li
 from plots import plots_pies as plt_pi
+from plots import plots_dashboard as plt_db
 
 
 LINK = c.dash.LINK_DASHBOARD
@@ -31,8 +31,10 @@ def get_content(app, dfs):
     """
 
     def_ma = 12
+    pie_height = 420
 
     content = [
+        plt_db.get_titles(dfs),
         [
             uiu.get_one_column(
                 dcc.Graph(
@@ -41,11 +43,20 @@ def get_content(app, dfs):
                 ), n_rows=8
             ),
             uiu.get_one_column(
-                dcc.Graph(
-                    id="plot_dash_pie",
-                    config=uiu.PLOT_CONFIG,
-                    figure=plt_pi.get_pie(dfs[c.dfs.TRANS], dfs[c.dfs.CATEG], c.names.EXPENSES)
-                ), n_rows=4
+                [
+                    dcc.Graph(
+                        id="plot_dash_pie",
+                        config=uiu.PLOT_CONFIG,
+                        figure=plt_pi.get_pie(
+                            dfs[c.dfs.TRANS], dfs[c.dfs.CATEG], c.names.EXPENSES, height=pie_height
+                        )
+                    ),
+                    dcc.RadioItems(
+                        id="radio_dash_pie_type", value=c.names.EXPENSES,
+                        options=uiu.get_options([c.names.INCOMES, c.names.EXPENSES]),
+                        labelStyle={'display': 'inline-block'}
+                    )
+                ], n_rows=4
             ),
         ],
         [
@@ -55,22 +66,18 @@ def get_content(app, dfs):
                     figure=plt_li.plot_expenses_vs_liquid(
                         dfs[c.dfs.LIQUID], dfs[c.dfs.TRANS], def_ma, False
                     )
-                ), n_rows=6
+                ), n_rows=8
             ),
             uiu.get_one_column(
                 dcc.Graph(
                     id="plot_dash_liq_months", config=uiu.PLOT_CONFIG,
                     figure=plt_li.plot_months(dfs[c.dfs.LIQUID], dfs[c.dfs.TRANS], def_ma, False)
-                ), n_rows=6
+                ), n_rows=4
             )
         ],
     ]
 
     sidebar = [
-        ("Group by (pie)", dcc.RadioItems(
-            id="radio_dash_pie_type", value=c.names.EXPENSES,
-            options=uiu.get_options([c.names.INCOMES, c.names.EXPENSES])
-        )),
         ("Rolling Average", dcc.Slider(
             id="slider_dash_rolling_avg",
             min=1, max=12, value=def_ma,
@@ -102,7 +109,7 @@ def get_content(app, dfs):
             Args:
                 type_trans: expenses/incomes
         """
-        return plt_pi.get_pie(dfs[c.dfs.TRANS], dfs[c.dfs.CATEG], type_trans)
+        return plt_pi.get_pie(dfs[c.dfs.TRANS], dfs[c.dfs.CATEG], type_trans, height=pie_height)
 
 
     @app.callback(Output("plot_dash_l_vs_e", "figure"),
