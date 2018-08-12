@@ -7,10 +7,11 @@ import os
 import dash_auth
 from dash import Dash
 
+import constants as c
 from app import layout
 
 VALID_USERNAME_PASSWORD_PAIRS = [
-    [os.environ["EXPENSOR_USER"], os.environ["EXPENSOR_PASSWORD"]]
+    [os.environ[c.io.VAR_USER], os.environ[c.io.VAR_PASSWORD]]
 ]
 
 def create_dash_app():
