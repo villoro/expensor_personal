@@ -7,7 +7,7 @@ from utilities.upalette import get_colors
 
 HEIGHT_HEADER = 75
 HEIGHT_FILTERS = 0
-WIDTH_SIDEBAR = 350
+WIDTH_SIDEBAR = 300
 PADDING_V = 10
 PADDING_H = 15
 

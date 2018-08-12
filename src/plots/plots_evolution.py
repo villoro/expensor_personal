@@ -8,13 +8,14 @@ import constants as c
 import utilities as u
 
 
-def plot_timeserie(dfg, timewindow="M"):
+def plot_timeserie(dfg, timewindow="M", avg_month=1):
     """
         Creates a timeseries plot with expenses, incomes and their regressions
 
         Args:
             dfg:        dataframe with info
             timewindow: temporal grouping
+            avg_month:  month to use in rolling average
 
         Returns:
             the plotly plot as html-div format
@@ -27,6 +28,7 @@ def plot_timeserie(dfg, timewindow="M"):
 
     for name, color in iter_data.items():
         df = u.dfs.group_df_by(dfg[dfg[c.cols.TYPE] == name], timewindow)
+        df = df.rolling(avg_month, min_periods=1).mean().apply(lambda x: round(x, 2))
         data.append(
             go.Scatter(
                 x=df.index, y=df[c.cols.AMOUNT],
@@ -42,6 +44,7 @@ def plot_timeserie(dfg, timewindow="M"):
 
     # EBIT trace
     df = u.dfs.group_df_by(df, timewindow)
+    df = df.rolling(avg_month, min_periods=1).mean().apply(lambda x: round(x, 2))
     data.append(
         go.Scatter(
             x=df.index, y=df[c.cols.AMOUNT],

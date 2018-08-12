@@ -17,6 +17,15 @@ def get_dropbox_conector():
     return dropbox.Dropbox(os.environ[c.io.VAR_DROPBOX_TOKEN])
 
 
+def get_money_lover_filename(dbx=None):
+    """ gets the name of the money lover excel file """
+
+    if dbx is None:
+        dbx = get_dropbox_conector()
+
+    return max([x.name for x in dbx.files_list_folder(c.io.PATH_MONEY_LOVER).entries])
+
+
 def get_df_transactions(dbx):
     """
         Retrives the df with transactions. It will read the newest money lover excel file
@@ -27,7 +36,7 @@ def get_df_transactions(dbx):
         Returns:
             raw dataframe with transactions
     """
-    filename = max([x.name for x in dbx.files_list_folder(c.io.PATH_MONEY_LOVER).entries])
+    filename = get_money_lover_filename(dbx)
 
     _, res = dbx.files_download(c.io.PATH_MONEY_LOVER + filename)
 

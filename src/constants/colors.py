@@ -2,6 +2,7 @@
     Some colors
 """
 
+from constants import names
 from utilities.upalette import get_colors
 
 
@@ -14,3 +15,10 @@ LIQUID_MIN_REC = get_colors(("grey", 700))
 LIQUID_REC = get_colors(("grey", 400))
 
 TABLE_HEADER_FILL = get_colors(("blue", 200))
+
+COLORS = {
+    names.INCOMES: INCOMES,
+    names.EXPENSES: EXPENSES,
+    names.EBIT: EBIT,
+    names.LIQUID: LIQUID
+}
