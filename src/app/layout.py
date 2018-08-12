@@ -14,7 +14,7 @@ def get_layout():
     return html.Div([
         # Header
         html.Div([
-            html.H1("ExpensORpy", id="title", style={"color": "white"})
+            html.H1(c.names.TITLE, id="title", style={"color": "white"})
         ], style=c.styles.STYLE_HEADER),
 
         # Sidebar

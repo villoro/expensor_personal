@@ -7,7 +7,7 @@ import plotly.graph_objs as go
 import utilities as u
 import constants as c
 
-def get_pie(dfg, df_categ, type_trans, years=None):
+def get_pie(dfg, df_categ, type_trans, years=None, height=None):
     """
         Creates a pie with expenses or incomes
 
@@ -41,4 +41,8 @@ def get_pie(dfg, df_categ, type_trans, years=None):
     data = go.Pie(values=df[c.cols.AMOUNT], labels=df.index, marker={"colors": colors}, sort=False)
 
     layout = go.Layout(title="{} distribution".format(type_trans))
+
+    if height:
+        layout.update({"height": height})
+
     return go.Figure(data=[data], layout=layout)

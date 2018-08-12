@@ -27,7 +27,7 @@ def get_content(app, dfs):
                 sidebar:    content of the sidebar
     """
 
-    def_avg_month = 12
+    def_ma = 12
 
     content = [
         dcc.Graph(
@@ -36,18 +36,18 @@ def get_content(app, dfs):
         ),
         dcc.Graph(
             id="plot_liquid_vs_expenses", config=uiu.PLOT_CONFIG,
-            figure=plots.plot_expenses_vs_liquid(dfs[c.dfs.LIQUID], dfs[c.dfs.TRANS], def_avg_month)
+            figure=plots.plot_expenses_vs_liquid(dfs[c.dfs.LIQUID], dfs[c.dfs.TRANS], def_ma)
         ),
         dcc.Graph(
             id="plot_liquid_months", config=uiu.PLOT_CONFIG,
-            figure=plots.plot_months(dfs[c.dfs.LIQUID], dfs[c.dfs.TRANS], def_avg_month)
+            figure=plots.plot_months(dfs[c.dfs.LIQUID], dfs[c.dfs.TRANS], def_ma)
         ),
     ]
 
     sidebar = [
         ("Rolling Average", dcc.Slider(
             id="slider_liq_rolling_avg",
-            min=1, max=12, value=def_avg_month,
+            min=1, max=12, value=def_ma,
             marks={i: str(i) if i > 1 else "None" for i in range(1, 13)},
         ))
     ]
@@ -67,6 +67,7 @@ def get_content(app, dfs):
             dfs[c.dfs.LIQUID], dfs[c.dfs.TRANS], avg_month
         )
 
+
     @app.callback(Output("plot_liquid_months", "figure"),
                   [Input("slider_liq_rolling_avg", "value")])
     #pylint: disable=unused-variable,unused-argument
@@ -75,8 +76,6 @@ def get_content(app, dfs):
             Updates the survival months plot
 
             Args:
-                df_liq:     dataframe with liquid info
-                df_trans:   dataframe with transactions
                 avg_month:  month to use in rolling average
         """
 

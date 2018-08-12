@@ -27,14 +27,14 @@ def get_content(app, dfs):
                 body:       body of the page
     """
 
-    def_avg_month = 1
+    def_ma = 1
     radio_opt = uiu.get_options([c.names.INCOMES, c.names.EXPENSES, c.names.EBIT])
 
     content = [
         [
             dcc.Graph(
                 id="plot_comp_1", config=uiu.PLOT_CONFIG,
-                figure=plots.ts_gradient(dfs[c.dfs.TRANS], c.names.INCOMES, def_avg_month)
+                figure=plots.ts_gradient(dfs[c.dfs.TRANS], c.names.INCOMES, def_ma)
             ),
             dcc.RadioItems(
                 id="radio_comp_1", options=radio_opt,
@@ -44,7 +44,7 @@ def get_content(app, dfs):
         [
             dcc.Graph(
                 id="plot_comp_2", config=uiu.PLOT_CONFIG,
-                figure=plots.ts_gradient(dfs[c.dfs.TRANS], c.names.EXPENSES, def_avg_month)
+                figure=plots.ts_gradient(dfs[c.dfs.TRANS], c.names.EXPENSES, def_ma)
             ),
             dcc.RadioItems(
                 id="radio_comp_2", options=radio_opt,
@@ -60,7 +60,7 @@ def get_content(app, dfs):
         )),
         ("Rolling Average", dcc.Slider(
             id="slider_comp_rolling_avg",
-            min=1, max=12, value=def_avg_month,
+            min=1, max=12, value=def_ma,
             marks={i: str(i) if i > 1 else "None" for i in range(1, 13)},
         ))
     ]
