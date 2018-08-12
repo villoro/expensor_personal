@@ -9,12 +9,13 @@ import constants as c
 from app import ui_utils as uiu
 
 
-def get_pages(app):
+def get_pages(app, dfs):
     """
         Creates all dash pages
 
         Args:
-            app:        dash app
+            app:    dash app
+            dfs:    dict with dataframes
 
         Returns:
             Pages as a json with the next structure
@@ -41,11 +42,10 @@ def get_pages(app):
             m_app = importlib.import_module(app_name, "app.pages")
 
             # Retrive content from the page
-            content = m_app.get_content(app)
+            content = m_app.get_content(app, dfs)
 
             # Construct body and sidebar
-            dummy_name = content[c.dash.DUMMY_DIV] if c.dash.DUMMY_DIV in content else None
-            body = uiu.create_body(content[c.dash.KEY_BODY], dummy_name)
+            body = uiu.create_body(content[c.dash.KEY_BODY])
             sidebar = uiu.create_sidebar(content)
 
             # Add content to the output dict
