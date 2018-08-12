@@ -2,44 +2,41 @@
     Dash app
 """
 
-import os
+from dash.dependencies import Input, Output
 
-import dash
-import dash_auth
-import dash_core_components as dcc
-import dash_html_components as html
+from app.pages import get_pages
+from dash_app import create_dash_app
 
-# Keep this out of source code repository - save in a file or a database
-VALID_USERNAME_PASSWORD_PAIRS = [
-    [os.environ["EXPENSOR_USER"], os.environ["EXPENSOR_PASSWORD"]]
-]
+import constants as c
 
-APP = dash.Dash('auth')
+
+# Create dash app with styles
+APP = create_dash_app()
 SERVER = APP.server
 
-auth = dash_auth.BasicAuth(
-    APP,
-    VALID_USERNAME_PASSWORD_PAIRS
-)
+# Add pages with content, sidebar and callbacks
+PAGES = get_pages(APP)
 
-APP.layout = html.Div([
-    html.Div(
-        className="app-header",
-        children=[
-            html.Div('Plotly Dash', className="app-header--title")
-        ]
-    ),
-    html.Div(
-        children=html.Div([
-            html.H5('Overview'),
-            html.Div('''
-                This is an example of a simple Dash app with
-                local, customized CSS.
-            ''')
-        ])
-    )
-])
+@APP.callback(Output('page-content', 'children'),
+              [Input('url', 'pathname')])
+#pylint: disable=unused-variable
+def display_content(pathname):
+    """Updates content based on current page"""
 
+    if pathname in PAGES:
+        return PAGES[pathname][c.dash.KEY_BODY]
+    return "404"
+
+
+@APP.callback(Output('sidebar', 'children'),
+              [Input('url', 'pathname')])
+#pylint: disable=unused-variable
+def display_sidebar(pathname):
+    """Updates sidebar based on current page"""
+
+    if pathname in PAGES:
+        return PAGES[pathname][c.dash.KEY_SIDEBAR]
+    return "404"
 
 
 if __name__ == '__main__':
