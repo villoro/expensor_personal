@@ -1,0 +1,17 @@
+sublime.sublime-project
+sublime.sublime-workspace
+/Graph
+/Results
+/results
+/Temp
+*.pyc
+__pycache__
+/.ipynb_checkpoints
+/.scannerwork
+.coverage
+/cover
+coverage.xml
+nosetests.xml
+pylint.xml
+/personal_notebooks
+/backups
