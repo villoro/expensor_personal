@@ -27,6 +27,8 @@ def create_dash_app():
         VALID_USERNAME_PASSWORD_PAIRS
     )
 
+    app.title = c.names.TITLE
+
     app.layout = layout.get_layout()
 
     return app

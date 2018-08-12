@@ -1,4 +1,4 @@
-# Expenses Visualization App [Personal] (ExpensOR)
+# <img src="assets/logo.png" alt="expensor_personal" width="48px"/> Expenses Visualization App (expensor_personal)
 [![Build Status](https://travis-ci.com/villoro/expensor_personal.svg?branch=master)](https://travis-ci.com/villoro/expensor_personal)
 [![codecov](https://codecov.io/gh/villoro/expensor_personal/branch/master/graph/badge.svg)](https://codecov.io/gh/villoro/expensor_personal)
 
