@@ -52,7 +52,7 @@ def fix_df_trans(df_in):
             df_in:  raw dataframe with transactions
     """
 
-    df = df_in.rename(c.cols.REPLACES, axis="columns").copy()
+    df = df_in.rename(c.cols.REPLACES_DF_TRANS, axis="columns").copy()
     df = df[~df[c.cols.CATEGORY].isin(c.io.FORBIDDEN_CATEGORIES)]
 
     # Add time filter columns (store everything as string to ensure JSON compatibility)
