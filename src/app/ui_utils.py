@@ -13,14 +13,6 @@ PLOT_CONFIG = {
 }
 
 
-def get_dummy_div(name, value="Dummy"):
-    """
-        Creates a dummy div that will be used to draw plots when a page is loaded
-        using the callbacks in the page
-    """
-    return html.Div(value, id=name, style=c.styles.STYLE_HIDDEN)
-
-
 def get_options(iterable):
     """
         Populates a dash dropdawn from an iterable
@@ -64,7 +56,7 @@ def create_sidebar(kwa):
     return [_get_sidebar_elem(title, data) for title, data in elements]
 
 
-def create_body(datalist, dummy_div_name):
+def create_body(datalist):
     """
         Creates an element for the body
 
@@ -77,12 +69,7 @@ def create_body(datalist, dummy_div_name):
 
     elem_style = c.styles.STYLE_DIV_CONTROL_IN_BODY
 
-    out = [html.Div(data, className="row", style=elem_style) for data in datalist]
-
-    if dummy_div_name:
-        return out + [get_dummy_div(dummy_div_name)]
-
-    return out
+    return [html.Div(data, className="row", style=elem_style) for data in datalist]
 
 
 def get_one_column(data, n_rows=12):
