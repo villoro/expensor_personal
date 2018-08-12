@@ -28,14 +28,24 @@ def get_content(app, dfs):
                 sidebar:    content of the sidebar
     """
 
+    def_type = c.names.EXPENSES
+    def_tw = "M"
+
     content = [
-        dcc.Graph(id="plot_evol", config=uiu.PLOT_CONFIG),
+        dcc.Graph(
+            id="plot_evol", config=uiu.PLOT_CONFIG,
+            figure=plots.plot_timeserie(dfs[c.dfs.TRANS], def_tw)),
         [
-            dcc.Graph(id="plot_evo_detail", config=uiu.PLOT_CONFIG),
+            dcc.Graph(
+                id="plot_evo_detail", config=uiu.PLOT_CONFIG,
+                figure=plots.plot_timeserie_by_categories(
+                    dfs[c.dfs.TRANS], dfs[c.dfs.CATEG], def_type, def_tw
+                )
+            ),
             dcc.RadioItems(
                 id="radio_evol_type",
                 options=uiu.get_options([c.names.EXPENSES, c.names.INCOMES]),
-                value=c.names.EXPENSES,
+                value=def_type,
                 labelStyle={'display': 'inline-block'}
             )
         ],
@@ -47,7 +57,7 @@ def get_content(app, dfs):
             options=uiu.get_options(dfs[c.dfs.TRANS][c.cols.CATEGORY].unique())
         )),
         ("Group by", dcc.RadioItems(
-            id="radio_evol_tw", value="M",
+            id="radio_evol_tw", value=def_tw,
             options=[{"label": "Day", "value": "D"},
                      {"label": "Month", "value": "M"},
                      {"label": "Year", "value": "Y"}]
@@ -67,7 +77,6 @@ def get_content(app, dfs):
                 categories: categories to use
                 timewindow: timewindow to use for grouping
         """
-
         df = u.dfs.filter_data(dfs[c.dfs.TRANS], categories)
         return plots.plot_timeserie(df, timewindow)
 
@@ -86,7 +95,6 @@ def get_content(app, dfs):
                 type_trans: type of transacions [Expenses/Inc]
                 timewindow: timewindow to use for grouping
         """
-
         df = u.dfs.filter_data(dfs[c.dfs.TRANS], categories)
         return plots.plot_timeserie_by_categories(df, dfs[c.dfs.CATEG], type_trans, timewindow)
 

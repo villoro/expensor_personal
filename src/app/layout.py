@@ -8,13 +8,8 @@ import dash_html_components as html
 import constants as c
 
 
-def get_layout(dfs):
-    """
-        Creates the dash layout
-
-        Args:
-            dfs:   dict of excel bytes
-    """
+def get_layout():
+    """ Creates the dash layout """
 
     return html.Div([
         # Header
@@ -25,10 +20,8 @@ def get_layout(dfs):
         # Sidebar
         html.Div(id="sidebar", style=c.styles.STYLE_SIDEBAR),
 
-        # Header
-        html.Div([
-            html.H2("Filters")
-        ], style=c.styles.STYLE_FILTER_DIV),
+        # Sub-header
+        html.Div([html.H2("Filters")], style=c.styles.STYLE_FILTER_DIV),
 
         # Body
         html.Div(id="page-content", style=c.styles.STYLE_BODY),
