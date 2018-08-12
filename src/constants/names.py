@@ -2,6 +2,8 @@
     Names related constants
 """
 
+TITLE = "Expensor (villoro)"
+
 EXPENSES = "Expenses"
 INCOMES = "Incomes"
 EBIT = "EBIT"
