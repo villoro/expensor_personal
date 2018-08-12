@@ -9,7 +9,6 @@ import constants as c
 from app import ui_utils as uiu
 from plots import plots_evolution as plt_ev
 from plots import plots_liquid as plt_li
-from plots import plots_pies as plt_pi
 from plots import plots_dashboard as plt_db
 
 
@@ -31,7 +30,6 @@ def get_content(app, dfs):
     """
 
     def_ma = 12
-    pie_height = 420
 
     content = [
         [

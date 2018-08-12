@@ -34,6 +34,14 @@ class TestUtilities(unittest.TestCase):
         self.assertIsNotNone(u.io.get_dropbox_conector())
 
 
+    def test_get_filename(self):
+        """ Check that is able to connect to drobpox """
+
+        name = u.io.get_money_lover_filename()
+
+        self.assertIn(name.split(".")[-1], ["xls", "xlsx"])
+
+
     def test_get_df_trans(self):
         """ Test that is able to retrive a valid excel for transactions """
 

@@ -7,7 +7,7 @@ from datetime import date, timedelta
 import dash_html_components as html
 
 import constants as c
-from app import ui_utils as uiu
+from utilities.io import get_money_lover_filename
 
 
 ARROWS = {True: "▲", False: "▼"}
@@ -71,6 +71,13 @@ def get_summary(dfs):
         style = {"color": color, "text-align": "left"}
         style.update(c.styles.get_style_wraper(margin_h, 10))
 
-        data.append(html.H6(text, style=style))
+        data.append(html.H5(text, style=style))
+
+    # Show a text with transactions excel file date
+    name = get_money_lover_filename()
+    text = "* Using data from {}".format(name.split(".")[0].replace("-", "/"))
+    style = {"text-align": "left"}
+    style.update(c.styles.get_style_wraper(margin_h, 40))
+    data.append(html.Div(text, style=style))
 
     return data
