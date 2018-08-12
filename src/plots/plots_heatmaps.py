@@ -35,7 +35,7 @@ def get_heatmap(dfg, type_trans):
     # Fix month names
     df.index = [month_abbr[x] for x in df.index]
 
-    cmap = {c.names.INCOMES: "Greens", c.names.EXPENSES: "YIOrRd"}[type_trans]
+    cmap = {c.names.INCOMES: "Greens", c.names.EXPENSES: "YlOrRd"}[type_trans]
 
     data = go.Heatmap(x=df.columns, y=df.index, z=df.values,
                       colorscale=cmap, reversescale=True, showscale=False)
