@@ -2,14 +2,10 @@
     Dash app
 """
 
-import pandas as pd
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output, State, Event
 
 import constants as c
-import utilities as u
-from app import ui_utils as uiu
 
 
 LINK = c.dash.LINK_UPLOAD

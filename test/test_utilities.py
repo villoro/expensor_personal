@@ -3,8 +3,6 @@
 """
 
 import unittest
-from os import rmdir
-from datetime import datetime, timedelta
 
 from src import utilities as u
 

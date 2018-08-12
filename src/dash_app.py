@@ -21,7 +21,7 @@ def create_dash_app():
     app = Dash('auth')
     app.config.supress_callback_exceptions = True
 
-    auth = dash_auth.BasicAuth(
+    _ = dash_auth.BasicAuth(
         app,
         VALID_USERNAME_PASSWORD_PAIRS
     )
