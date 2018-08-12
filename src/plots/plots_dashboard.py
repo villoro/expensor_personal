@@ -40,23 +40,26 @@ def _get_stats(dfs, date_in):
 
     return out
 
-def get_titles(dfs):
+def get_summary(dfs):
     """ Gets a list of h6 with data from previous month """
 
     mdate = date.today()
     date_m1 = (mdate.replace(day=1) - timedelta(days=1))
     date_m2 = (date_m1.replace(day=1) - timedelta(days=1))
 
+    # Get stats for last month and the month previous to the last one
     stats = _get_stats(dfs, date_m1)
     stats2 = _get_stats(dfs, date_m2)
 
-    data = [
-        uiu.get_one_column(
-            html.H6("Stats for months {:%Y/%m} ({:%Y/%m})".format(date_m1, date_m2)),
-            n_rows=4
-        )
-    ]
+    margin_h = 30
 
+    # Header of the summary
+    text = "Stats for months {:%Y/%m} ({:%Y/%m})".format(date_m1, date_m2)
+    style = {"text-align": "left"}
+    style.update(c.styles.get_style_wraper(margin_h, 40))
+    data = [html.H4(text, style=style)]
+
+    # Fill the summary with relevant stats
     for name, color in c.colors.COLORS.items():
         # bool stating if it is better than previous month (expenses should be reversed)
         aux = stats[name] > stats2[name]
@@ -65,12 +68,9 @@ def get_titles(dfs):
 
         # space as thousand separator
         text = text.replace(",", ".")
+        style = {"color": color, "text-align": "left"}
+        style.update(c.styles.get_style_wraper(margin_h, 10))
 
-        data.append(
-            uiu.get_one_column(
-                html.H6(text, style={"color": color}),
-                n_rows=2
-            )
-        )
+        data.append(html.H6(text, style=style))
 
     return data

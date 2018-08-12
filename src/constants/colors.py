@@ -17,8 +17,8 @@ LIQUID_REC = get_colors(("grey", 400))
 TABLE_HEADER_FILL = get_colors(("blue", 200))
 
 COLORS = {
-    names.EXPENSES: EXPENSES,
     names.INCOMES: INCOMES,
+    names.EXPENSES: EXPENSES,
     names.EBIT: EBIT,
     names.LIQUID: LIQUID
 }

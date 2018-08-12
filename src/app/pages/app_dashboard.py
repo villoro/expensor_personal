@@ -34,29 +34,13 @@ def get_content(app, dfs):
     pie_height = 420
 
     content = [
-        plt_db.get_titles(dfs),
         [
+            uiu.get_one_column(plt_db.get_summary(dfs), n_rows=4),
             uiu.get_one_column(
                 dcc.Graph(
                     id="plot_dash_evol", config=uiu.PLOT_CONFIG,
                     figure=plt_ev.plot_timeserie(dfs[c.dfs.TRANS], avg_month=def_ma)
                 ), n_rows=8
-            ),
-            uiu.get_one_column(
-                [
-                    dcc.Graph(
-                        id="plot_dash_pie",
-                        config=uiu.PLOT_CONFIG,
-                        figure=plt_pi.get_pie(
-                            dfs[c.dfs.TRANS], dfs[c.dfs.CATEG], c.names.EXPENSES, height=pie_height
-                        )
-                    ),
-                    dcc.RadioItems(
-                        id="radio_dash_pie_type", value=c.names.EXPENSES,
-                        options=uiu.get_options([c.names.INCOMES, c.names.EXPENSES]),
-                        labelStyle={'display': 'inline-block'}
-                    )
-                ], n_rows=4
             ),
         ],
         [
@@ -66,13 +50,13 @@ def get_content(app, dfs):
                     figure=plt_li.plot_expenses_vs_liquid(
                         dfs[c.dfs.LIQUID], dfs[c.dfs.TRANS], def_ma, False
                     )
-                ), n_rows=8
+                ), n_rows=7
             ),
             uiu.get_one_column(
                 dcc.Graph(
                     id="plot_dash_liq_months", config=uiu.PLOT_CONFIG,
                     figure=plt_li.plot_months(dfs[c.dfs.LIQUID], dfs[c.dfs.TRANS], def_ma, False)
-                ), n_rows=4
+                ), n_rows=5
             )
         ],
     ]
@@ -97,19 +81,6 @@ def get_content(app, dfs):
                 avg_month:  month to use in rolling average
         """
         return plt_ev.plot_timeserie(dfs[c.dfs.TRANS], avg_month=avg_month)
-
-
-    @app.callback(Output("plot_dash_pie", "figure"),
-                  [Input("radio_dash_pie_type", "value")])
-    #pylint: disable=unused-variable,unused-argument
-    def update_dash_pie(type_trans):
-        """
-            Updates the pie plot
-
-            Args:
-                type_trans: expenses/incomes
-        """
-        return plt_pi.get_pie(dfs[c.dfs.TRANS], dfs[c.dfs.CATEG], type_trans, height=pie_height)
 
 
     @app.callback(Output("plot_dash_l_vs_e", "figure"),
