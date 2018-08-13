@@ -6,16 +6,15 @@ import os
 import importlib
 
 import constants as c
+from utilities.io import get_data
 from app import ui_utils as uiu
 
-
-def get_pages(app, dfs):
+def get_pages(app):
     """
         Creates all dash pages
 
         Args:
             app:    dash app
-            dfs:    dict with dataframes
 
         Returns:
             Pages as a json with the next structure
@@ -28,6 +27,8 @@ def get_pages(app, dfs):
                 --content
                 --sidebar
     """
+
+    dfs = get_data()
 
     output = {}
     for app_name in os.listdir("src/app/pages"):

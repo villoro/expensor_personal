@@ -8,7 +8,6 @@ from app.pages import get_pages
 from dash_app import create_dash_app
 
 import constants as c
-from utilities.io import get_data
 
 
 # Create dash app with styles
@@ -16,8 +15,7 @@ APP = create_dash_app()
 SERVER = APP.server
 
 # Add pages with content, sidebar and callbacks
-DFS = get_data()
-PAGES = get_pages(APP, DFS)
+PAGES = get_pages(APP)
 
 
 @APP.callback(Output('page-content', 'children'),
