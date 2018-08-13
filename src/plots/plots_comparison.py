@@ -36,7 +36,7 @@ def ts_gradient(dfg, type_trans, avg_month):
 
     # Compute rolling average
     if avg_month > 0:
-        df = df.rolling(avg_month, min_periods=1).mean()
+        df = df.rolling(avg_month, min_periods=1).mean().apply(lambda x: round(x, 2))
 
     max_width = 5
 

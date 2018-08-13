@@ -28,7 +28,6 @@ def create_dash_app():
     )
 
     app.title = c.names.TITLE
-
     app.layout = layout.get_layout()
 
     return app
