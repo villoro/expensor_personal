@@ -48,8 +48,8 @@ class TestApp(unittest.TestCase):
         """ Test the content of page heatmaps """
 
         body_elem = ["plot_dash_evol", "plot_dash_l_vs_e", "plot_dash_liq_months"]
-        sidebar_elem = ["slider_dash_rolling_avg"]
-        self._check_one_page(c.dash.LINK_HEATMAPS, body_elem + sidebar_elem)
+        #sidebar_elem = ["slider_dash_rolling_avg"]
+        self._check_one_page(c.dash.LINK_DASHBOARD, body_elem) # + sidebar_elem)
 
 
     def test_page_evolution(self):
