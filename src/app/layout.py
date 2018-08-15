@@ -24,7 +24,7 @@ def get_layout():
         html.Div([html.H2("Filters")], style=c.styles.STYLE_FILTER_DIV),
 
         # Body
-        html.Div(id="page-content", style=c.styles.STYLE_BODY),
+        html.Div(id="body", style=c.styles.STYLE_BODY),
 
         # Others
         dcc.Location(id='url', refresh=False),
