@@ -1,3 +1,8 @@
+sudo: required
+
+addons:
+  chrome: stable
+
 language: python
 
 python:
@@ -7,6 +12,19 @@ install:
 - pip install -r requirements.txt
 - pip install codecov
 - pip install pylint==1.8.1
+- pip install selenium==3.10.0
+
+before_script:
+# Get chromedriver
+- wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
+- unzip chromedriver_linux64.zip -d /home/travis/selenium/
+- export CHROME_BIN=chromium-browser
+
+# Open dash app to test it
+- "export DISPLAY=:99.0" # set up xvfb, req'd for webdriver/firefox
+- "sh -e /etc/init.d/xvfb start"
+- "python src/index.py&"
+- "sleep 3"
 
 script:
 - nosetests --with-coverage --cover-package=src --cover-erase --cover-inclusive
