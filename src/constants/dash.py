@@ -3,6 +3,7 @@
 """
 
 LINK_ROOT = "http://localhost:8050"
+LINK_ROOT_LOGIN = "http://{}:{}@localhost:8050"
 
 LINK_MAIN = "/"
 LINK_DASHBOARD = "/dashboard"

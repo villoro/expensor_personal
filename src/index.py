@@ -18,7 +18,7 @@ SERVER = APP.server
 PAGES = get_pages(APP)
 
 
-@APP.callback(Output('page-content', 'children'),
+@APP.callback(Output('body', 'children'),
               [Input('url', 'pathname')])
 #pylint: disable=unused-variable
 def display_content(pathname):
