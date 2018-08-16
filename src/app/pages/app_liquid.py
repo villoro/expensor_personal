@@ -11,7 +11,7 @@ from plots import plots_liquid as plots
 
 
 class Page(uiu.AppPage):
-    """ Page Dashboard """
+    """ Page Liquid """
 
     link = c.dash.LINK_LIQUID
     def_ma = 12

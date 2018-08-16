@@ -94,13 +94,15 @@ def get_row(data, style=None):
 
         Args:
             data:   what to put inside
+            style:  style for the row
 
         Returns:
             html div containg the data
     """
 
-    kwa = None if style is None else {"style": style}
-    return html.Div(data, className="row", **kwa)
+    if style is None:
+        return html.Div(data, className="row")
+    return html.Div(data, className="row", style=style)
 
 
 class AppPage():
