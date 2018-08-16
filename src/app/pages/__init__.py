@@ -41,7 +41,7 @@ def get_pages(app):
             Args:
                 avg_month:  month to use in rolling average
         """
-        dload.sync_data()
+        dload.sync()
 
         return x
 

@@ -82,7 +82,7 @@ class DataLoader():
         self.dfs[c.dfs.TRANS] = fix_df_trans(get_df_transactions(dbx))
 
 
-    def sync_data(self):
+    def sync(self):
         """ It will force a data loading """
         self.__init__()
 

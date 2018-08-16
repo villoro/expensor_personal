@@ -24,7 +24,7 @@ class Page(uiu.AppPage):
         self.all_years = self.gdf(c.dfs.TRANS)[c.cols.YEAR].unique().tolist()
         self.last_year_as_list = [max(self.all_years)]
 
-        for num, myears in enumerate([self.all_years, self.last_year_as_list]):
+        for num, _ in enumerate([self.all_years, self.last_year_as_list]):
             @app.callback(Output("plot_pie_{}_{}".format(num, c.names.INCOMES), "figure"),
                           [Input("drop_pie_categ", "value"),
                            Input("drop_pie_{}".format(num), "value")])
@@ -64,7 +64,6 @@ class Page(uiu.AppPage):
         # One row default with all data, the other with last year
         for num, myears in enumerate([self.all_years, self.last_year_as_list]):
 
-            print(num, myears)
             body.append(
                 [
                     html.Div(
@@ -102,7 +101,7 @@ class Page(uiu.AppPage):
 
         return body
 
-        
+
     def get_sidebar(self):
         return [
             ("Categories", dcc.Dropdown(

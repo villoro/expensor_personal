@@ -117,10 +117,12 @@ class AppPage():
         """ Get one dataframe by it's name """
         return self.dload.dfs[name]
 
+    #pylint: disable=R0201
     def get_body(self):
         """ Dummy function to be overrided by every page. It should create the body """
         return None
 
+    #pylint: disable=R0201
     def get_sidebar(self):
         """ Dummy function to be overrided by every page. It should create the sidebar """
         return None
