@@ -89,7 +89,7 @@ class AppPage():
 
     def gdf(self, name):
         """ Get one dataframe by it's name """
-        return self.dload.dfs[name]
+        return self.dload.gdf(name)
 
     #pylint: disable=R0201
     def get_body(self):

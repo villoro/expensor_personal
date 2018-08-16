@@ -90,3 +90,7 @@ class DataLoader():
     def get_data(self):
         """ Returns the dict of dataframes """
         return self.dfs
+
+    def gdf(self, name):
+        """ Returns one dataframe """
+        return self.dfs[name]
