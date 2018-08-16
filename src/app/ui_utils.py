@@ -61,6 +61,24 @@ def get_row(data, style=None):
     return _get_row_or_col(data, {"className": "row"}, style)
 
 
+def _get_sidebar_elem(title, data):
+    """
+        Creates an element for the sidebar
+
+        Args:
+            title:  name to display
+            data:   what to include in the element
+
+        Return:
+            html div with the element
+    """
+
+    aux = html.H6(title + ":")
+    children = [aux] + data if isinstance(data, list) else [aux, data]
+
+    return html.Div(children, style=c.styles.SIDEBAR_ELEM)
+
+
 class AppPage():
     """
         Raw Page class that is meant to be extended
@@ -76,7 +94,7 @@ class AppPage():
     #pylint: disable=R0201
     def get_body(self):
         """ Dummy function to be overrided by every page. It should create the body """
-        return None
+        return []
 
     #pylint: disable=R0201
     def get_sidebar(self):
@@ -94,30 +112,13 @@ class AppPage():
     def get_sidebar_html(self):
         """ Retrives the html sidebar """
 
-        sidebar = self.get_sidebar()
-
-        def _get_sidebar_elem(title, data):
-            """
-                Creates an element for the sidebar
-
-                Args:
-                    title:  name to display
-                    data:   what to include in the element
-
-                Return:
-                    html div with the element
-            """
-
-            aux = html.H6(title + ":")
-            children = [aux] + data if isinstance(data, list) else [aux, data]
-
-            return html.Div(children, style=c.styles.SIDEBAR_ELEM)
-
         elements = [
             ("Sections", [
                 html.Div(dcc.Link(name, href=link)) for name, link in c.dash.DICT_APPS.items()]
             )
         ]
+
+        sidebar = self.get_sidebar()
 
         # Finally add extra things in sidebar
         if sidebar is not None:
