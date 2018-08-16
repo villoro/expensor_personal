@@ -7,6 +7,7 @@ import dash_html_components as html
 
 import constants as c
 
+
 PLOT_CONFIG = {
     "displaylogo": False,
     "modeBarButtonsToRemove": ["sendDataToCloud", "select2d", "lasso2d", "resetScale2d"]
@@ -20,7 +21,7 @@ def get_options(iterable):
     return [{"label": x, "value": x} for x in iterable]
 
 
-def create_sidebar(kwa):
+def create_sidebar(sidebar):
     """
         Creates the sidebar given a list of elements.
         Each element should have a title and some data
@@ -50,8 +51,8 @@ def create_sidebar(kwa):
     ]
 
     # Finally add extra things in sidebar
-    if c.dash.KEY_SIDEBAR in kwa:
-        elements += kwa[c.dash.KEY_SIDEBAR]
+    if sidebar is not None:
+        elements += sidebar
 
     return [_get_sidebar_elem(title, data) for title, data in elements]
 
@@ -87,7 +88,7 @@ def get_one_column(data, n_rows=12):
     return html.Div(data, className="{} columns".format(c.dash.NUM_DICT[n_rows]))
 
 
-def get_row(data):
+def get_row(data, style=None):
     """
         Creates one row that will contain the data
 
@@ -98,4 +99,26 @@ def get_row(data):
             html div containg the data
     """
 
-    return html.Div(data, className="row")
+    kwa = None if style is None else {"style": style}
+    return html.Div(data, className="row", **kwa)
+
+
+class AppPage():
+
+    def __init__(self, dload):
+        self.dload = dload
+
+    def gdf(self, name):
+        return self.dload.dfs[name]
+
+    def get_body(self):
+        return None
+
+    def get_sidebar(self):
+        return None
+
+    def get_body_html(self):
+        return create_body(self.get_body())
+
+    def get_sidebar_html(self):
+        return create_sidebar(self.get_sidebar())

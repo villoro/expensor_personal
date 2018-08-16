@@ -23,7 +23,18 @@ def get_money_lover_filename(dbx=None):
     if dbx is None:
         dbx = get_dropbox_conector()
 
-    return max([x.name for x in dbx.files_list_folder(c.io.PATH_MONEY_LOVER).entries])
+    names = []
+
+    for x in dbx.files_list_folder(c.io.PATH_MONEY_LOVER).entries:
+        try:
+            # Try to parse date, if possible if a money lover file
+            pd.to_datetime(x.name.split(".")[0])
+            names.append(x.name)
+            
+        except (TypeError, ValueError):
+            pass
+
+    return max(names)
 
 
 def get_df_transactions(dbx):
@@ -68,4 +79,14 @@ def get_data():
     dfs = get_data_without_transactions(dbx)
     dfs[c.dfs.TRANS] = fix_df_trans(get_df_transactions(dbx))
 
+    print("getting_data")
+
     return dfs
+
+class DataLoader():
+
+    def __init__(self):
+        self.dfs = get_data()
+
+    def sync_data(self):
+        self.__init__()

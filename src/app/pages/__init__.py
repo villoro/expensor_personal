@@ -4,9 +4,10 @@
 
 import os
 import importlib
+from dash.dependencies import Input, Output
 
 import constants as c
-from utilities.io import get_data
+from utilities.io import DataLoader
 from app import ui_utils as uiu
 
 def get_pages(app):
@@ -28,7 +29,21 @@ def get_pages(app):
                 --sidebar
     """
 
-    dfs = get_data()
+    dload = DataLoader()
+
+    @app.callback(Output("sync_count", "children"),
+                  [Input("sync", "n_clicks")])
+    #pylint: disable=unused-variable,unused-argument
+    def update_sync_count(x):
+        """
+            Updates the liquid vs expenses plot
+
+            Args:
+                avg_month:  month to use in rolling average
+        """
+        dload.sync_data()
+
+        return x
 
     output = {}
     for app_name in os.listdir("src/app/pages"):
@@ -40,17 +55,10 @@ def get_pages(app):
             app_name = ".{}".format(app_name.split(".")[0])
 
             # Import it programatically
-            m_app = importlib.import_module(app_name, "app.pages")
-
-            # Retrive content from the page
-            content = m_app.get_content(app, dfs)
-
-            # Construct body and sidebar
-            body = uiu.create_body(content[c.dash.KEY_BODY])
-            sidebar = uiu.create_sidebar(content)
+            m_page = importlib.import_module(app_name, "app.pages").Page(dload, app)
 
             # Add content to the output dict
-            output[m_app.LINK] = {c.dash.KEY_BODY: body, c.dash.KEY_SIDEBAR: sidebar}
+            output[m_page.link] = m_page
 
     # Clone content of the page that will appear in the root path
     output[c.dash.LINK_MAIN] = output[c.dash.LANDING_APP]
