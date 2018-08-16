@@ -14,7 +14,7 @@ PADDING_H = 15
 COLOR_HEADER = get_colors(("blue", 500))
 COLOR_SIDEBAR, COLOR_SIDEBAR_SEP = get_colors([("grey", 200), ("grey", 400)])
 
-STYLE_HEADER = {
+HEADER = {
     "background-color": COLOR_HEADER,
     "top": 0,
     "left": 0,
@@ -28,7 +28,15 @@ STYLE_HEADER = {
     "z-index": "9999"
 }
 
-STYLE_SIDEBAR = {
+SYNC_BUTTON = {
+    "background-color": "white",
+    "border-color": "white",
+    "position": "absolute",
+    "top": "50%",
+    "transform": "translateY(-50%)",
+}
+
+SIDEBAR = {
     "background-color": COLOR_SIDEBAR,
     "top": HEIGHT_HEADER,
     "left": 0,
@@ -42,7 +50,7 @@ STYLE_SIDEBAR = {
     "padding-right": "{}px".format(PADDING_H),
 }
 
-STYLE_FILTER_DIV = {
+FILTER_DIV = {
     "top": HEIGHT_HEADER,
     "left": WIDTH_SIDEBAR,
     "height": "{}px".format(HEIGHT_FILTERS),
@@ -51,7 +59,7 @@ STYLE_FILTER_DIV = {
     "overflow": "hidden",
 }
 
-STYLE_BODY = {
+BODY = {
     "top": HEIGHT_HEADER + HEIGHT_FILTERS,
     "left": WIDTH_SIDEBAR,
     "right": 0,
@@ -61,18 +69,18 @@ STYLE_BODY = {
     "overflow-y": "scroll"
 }
 
-STYLE_SIDEBAR_ELEM = {
+SIDEBAR_ELEM = {
     "padding-bottom": "25px",
     "border-bottom": "1px solid {}".format(COLOR_SIDEBAR_SEP)
 }
 
-STYLE_DIV_CONTROL_IN_BODY = {
+DIV_CONTROL_IN_BODY = {
     "text-align": "center",
     "padding-bottom": "15px",
     "border-bottom": "2px solid {}".format(COLOR_SIDEBAR)
 }
 
-STYLE_UPLOAD_CONTAINER = {
+UPLOAD_CONTAINER = {
     "height": "60px",
     "lineHeight": "60px",
     "borderWidth": "1px",
@@ -84,13 +92,13 @@ STYLE_UPLOAD_CONTAINER = {
     "margin-right": "{}px".format(PADDING_H),
 }
 
-STYLE_UPLOAD_INFO = {
+UPLOAD_INFO = {
     "text-align": "left",
     "margin-left": "{}px".format(20),
     "margin-right": "{}px".format(20),
 }
 
-STYLE_HIDDEN = {"display": "none"}
+HIDDEN = {"display": "none"}
 
 
 def get_style_wraper(margin_h=10, margin_v=10):

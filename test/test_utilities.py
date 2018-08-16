@@ -62,11 +62,14 @@ class TestUtilities(unittest.TestCase):
         self.assertTrue(all([x in dfs for x in c.dfs.ALL_FROM_DATA]))
 
 
-    def test_get_data(self):
+    def test_get_data_from_loader(self):
         """ Test that is able to retrive all dataframes """
 
+        dload = u.io.DataLoader()
+        dload.sync()
+
         # Check that all needed dataframes are present
-        self.assertTrue(all([x in u.io.get_data() for x in c.dfs.ALL]))
+        self.assertTrue(all([x in dload.get_data() for x in c.dfs.ALL]))
 
 
 
