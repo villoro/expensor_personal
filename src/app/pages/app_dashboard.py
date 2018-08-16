@@ -18,6 +18,7 @@ class Page(uiu.AppPage):
     link = c.dash.LINK_DASHBOARD
     def_ma = 12
 
+
     def __init__(self, dload, app):
         super().__init__(dload)
 
@@ -65,6 +66,7 @@ class Page(uiu.AppPage):
                 self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.TRANS), avg_month, False
             )
 
+
     def get_body(self):
         return [
             [
@@ -95,6 +97,7 @@ class Page(uiu.AppPage):
                 )
             ],
         ]
+
 
     def get_sidebar(self):
         return [
