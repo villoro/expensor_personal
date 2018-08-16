@@ -25,12 +25,13 @@ def get_money_lover_filename(dbx=None):
 
     names = []
 
+    # Explore all files and save all that are valid
     for x in dbx.files_list_folder(c.io.PATH_MONEY_LOVER).entries:
         try:
             # Try to parse date, if possible if a money lover file
             pd.to_datetime(x.name.split(".")[0])
             names.append(x.name)
-            
+
         except (TypeError, ValueError):
             pass
 
@@ -71,22 +72,21 @@ def get_data_without_transactions(dbx):
     return dfs
 
 
-def get_data():
-    """ Retrives all dataframes """
-
-    dbx = get_dropbox_conector()
-
-    dfs = get_data_without_transactions(dbx)
-    dfs[c.dfs.TRANS] = fix_df_trans(get_df_transactions(dbx))
-
-    print("getting_data")
-
-    return dfs
-
 class DataLoader():
+    """ Class that handles data """
 
     def __init__(self):
-        self.dfs = get_data()
+        """ Retrives all dataframes """
+        dbx = get_dropbox_conector()
+        self.dfs = get_data_without_transactions(dbx)
+        self.dfs[c.dfs.TRANS] = fix_df_trans(get_df_transactions(dbx))
+
 
     def sync_data(self):
+        """ It will force a data loading """
         self.__init__()
+
+
+    def get_data(self):
+        """ Returns the dict of dataframes """
+        return self.dfs

@@ -104,21 +104,29 @@ def get_row(data, style=None):
 
 
 class AppPage():
+    """
+        Raw Page class that is meant to be extended
+    """
 
     def __init__(self, dload):
         self.dload = dload
 
     def gdf(self, name):
+        """ Get one dataframe by it's name """
         return self.dload.dfs[name]
 
     def get_body(self):
+        """ Dummy function to be overrided by every page. It should create the body """
         return None
 
     def get_sidebar(self):
+        """ Dummy function to be overrided by every page. It should create the sidebar """
         return None
 
     def get_body_html(self):
+        """ Retrives the html body """
         return create_body(self.get_body())
 
     def get_sidebar_html(self):
+        """ Retrives the html sidebar """
         return create_sidebar(self.get_sidebar())

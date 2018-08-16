@@ -13,6 +13,7 @@ from plots import plots_dashboard as plt_db
 
 
 class Page(uiu.AppPage):
+    """ Page Dashboard """
 
     link = c.dash.LINK_DASHBOARD
     def_ma = 12

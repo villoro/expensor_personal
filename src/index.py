@@ -7,8 +7,6 @@ from dash.dependencies import Input, Output, State
 from app.pages import get_pages
 from dash_app import create_dash_app
 
-import constants as c
-
 
 # Create dash app with styles
 APP = create_dash_app()
