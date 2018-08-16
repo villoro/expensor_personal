@@ -93,4 +93,4 @@ class DataLoader():
 
     def gdf(self, name):
         """ Returns one dataframe """
-        return self.dfs[name]
+        return self.dfs.get(name, None)
