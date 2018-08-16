@@ -81,6 +81,8 @@ class DataLoader():
         self.dfs = get_data_without_transactions(dbx)
         self.dfs[c.dfs.TRANS] = fix_df_trans(get_df_transactions(dbx))
 
+        print(self.dfs.keys())
+
 
     def sync(self):
         """ It will force a data loading """
@@ -93,4 +95,4 @@ class DataLoader():
 
     def gdf(self, name):
         """ Returns one dataframe """
-        return self.dfs.get(name, None)
+        return self.dfs[name]
