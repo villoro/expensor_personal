@@ -81,7 +81,7 @@ class DataLoader():
         self.dfs = get_data_without_transactions(dbx)
         self.dfs[c.dfs.TRANS] = fix_df_trans(get_df_transactions(dbx))
 
-        print(self.dfs.keys())
+        print("init", self.dfs.keys())
 
 
     def sync(self):
@@ -91,8 +91,10 @@ class DataLoader():
 
     def get_data(self):
         """ Returns the dict of dataframes """
+        print("get_data", self.dfs.keys())
         return self.dfs
 
     def gdf(self, name):
         """ Returns one dataframe """
+        print("gdf", self.dfs.keys())
         return self.dfs[name]
