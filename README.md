@@ -6,7 +6,7 @@ This is a [dash](https://plot.ly/products/dash/) app that allows users to visual
 
 **It is intended only for personal use.** There is another repository ([expensor](https://github.com/villoro/expensor)) with a similar dash app for public use.
 
-It takes personal information from dropbox and uses google login to verify the identity.
+It takes personal information from dropbox and uses dash login to verify the identity.
 
 ## Authors
 * [Arnau Villoro](villoro.com)
