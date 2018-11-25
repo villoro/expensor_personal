@@ -61,14 +61,17 @@ class AppPage():
 
         return [
             html.Div(
-                [
-                    html.Div(
-                        html.H5(title), className="w3-col l1 m2 s12", style={"padding-left": "16px"}
-                    ),
-                    html.Div(
-                        data, className="w3-col l11 m10 s12 w3-padding"
-                    )
-                ],
-                className="w3-row w3-card w3-margin w3-white" 
+                html.Div(
+                    [
+                        html.Div(
+                            html.H5(title), className="w3-third", style={"padding-left": "16px"}
+                        ),
+                        html.Div(
+                            data, className="w3-twothird w3-padding"
+                        )
+                    ],
+                    className="w3-row w3-card w3-margin w3-white", style={"height": "50px"}
+                ),
+                className="w3-col l4 m6 s12"
             ) for title, data in filters.items()
         ]
