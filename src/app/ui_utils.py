@@ -46,9 +46,11 @@ class AppPage():
     def get_body_html(self):
         """ Retrives the html body """
 
-        classes = "w3-card w3-padding-large w3-margin w3-center"
-
-        return [html.Div(data, className=classes) for data in self.get_body()]
+        return [
+            html.Div(
+                data, className="w3-card w3-padding-large w3-margin w3-center"
+            ) for data in self.get_body()
+        ]
 
 
     def get_filters_html(self):
