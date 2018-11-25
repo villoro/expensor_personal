@@ -56,7 +56,7 @@ class Page(uiu.AppPage):
             ],
             dcc.Graph(
                 id="plot_invest_with_liquid", config=uiu.PLOT_CONFIG,
-                figure=plots.invest_evolution_plot(
+                figure=plots.invest_and_liquid_plot(
                     self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.WORTH), self.def_ma
                 )
             ),
