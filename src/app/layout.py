@@ -38,7 +38,7 @@ def get_layout():
         # Filters
         html.Div(
             id="filters", style={"margin-top": "32px"},
-            className="w3-padding-32 w3-light-grey w3-padding-large"
+            className="w3-padding-32 w3-light-grey"
         ),
 
         # Body

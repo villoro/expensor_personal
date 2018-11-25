@@ -103,9 +103,10 @@ class Page(uiu.AppPage):
 
 
     def get_filters(self):
-        return [
-            ("Categories", dcc.Dropdown(
-                id="drop_pie_categ", multi=True,
-                options=uiu.get_options(self.gdf(c.dfs.TRANS)[c.cols.CATEGORY].unique())
-            ))
-        ]
+        return {
+            "Categories":
+                dcc.Dropdown(
+                    id="drop_pie_categ", multi=True,
+                    options=uiu.get_options(self.gdf(c.dfs.TRANS)[c.cols.CATEGORY].unique())
+                ),
+        }

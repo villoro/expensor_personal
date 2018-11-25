@@ -79,15 +79,17 @@ class Page(uiu.AppPage):
         ]
 
     def get_filters(self):
-        return [
-            ("Categories", dcc.Dropdown(
-                id="drop_evol_categ", multi=True,
-                options=uiu.get_options(self.gdf(c.dfs.TRANS)[c.cols.CATEGORY].unique())
-            )),
-            ("Group by", dcc.RadioItems(
-                id="radio_evol_tw", value=self.def_tw,
-                options=[{"label": "Day", "value": "D"},
-                         {"label": "Month", "value": "M"},
-                         {"label": "Year", "value": "Y"}]
-            )),
-        ]
+        return {
+            "Categories":
+                dcc.Dropdown(
+                    id="drop_evol_categ", multi=True,
+                    options=uiu.get_options(self.gdf(c.dfs.TRANS)[c.cols.CATEGORY].unique())
+                ),
+            "Group by":
+                dcc.RadioItems(
+                    id="radio_evol_tw", value=self.def_tw,
+                    options=[{"label": "Day", "value": "D"},
+                             {"label": "Month", "value": "M"},
+                             {"label": "Year", "value": "Y"}]
+                ),
+        }

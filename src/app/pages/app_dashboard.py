@@ -100,10 +100,11 @@ class Page(uiu.AppPage):
 
 
     def get_filters(self):
-        return [
-            ("Rolling Average", dcc.Slider(
-                id="slider_dash_rolling_avg",
-                min=1, max=12, value=self.def_ma,
-                marks={i: str(i) if i > 1 else "None" for i in range(1, 13)},
-            ))
-        ]
+        return {
+            "Rolling Average":
+                dcc.Slider(
+                    id="slider_dash_rolling_avg",
+                    min=1, max=12, value=self.def_ma,
+                    marks={i: str(i) if i > 1 else "None" for i in range(1, 13)},
+                ),
+        }
