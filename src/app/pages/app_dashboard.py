@@ -3,6 +3,7 @@
 """
 
 import dash_core_components as dcc
+import dash_html_components as html
 from dash.dependencies import Input, Output
 
 import constants as c
@@ -10,6 +11,7 @@ from app import ui_utils as uiu
 from plots import plots_evolution as plt_ev
 from plots import plots_liquid as plt_li
 from plots import plots_dashboard as plt_db
+from plots import plots_investment as plt_inv
 
 
 class Page(uiu.AppPage):
@@ -66,36 +68,69 @@ class Page(uiu.AppPage):
                 self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.TRANS), avg_month, False
             )
 
+        @app.callback(Output("plot_dash_total_worth", "figure"),
+                      [Input("slider_dash_rolling_avg", "value")])
+        #pylint: disable=unused-variable,unused-argument
+        def update_plot_total_worth(avg_month):
+            """
+                Updates the timeserie gradient plot
+
+                Args:
+                    avg_month:  month to use in rolling average
+            """
+
+            return plt_inv.total_worth_plot(
+                self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.WORTH), avg_month
+            )
+
 
     def get_body(self):
         return [
-            [
-                uiu.get_one_column(plt_db.get_summary(self.dload.dfs), n_rows=4),
-                uiu.get_one_column(
-                    dcc.Graph(
-                        id="plot_dash_evol", config=uiu.PLOT_CONFIG,
-                        figure=plt_ev.plot_timeserie(self.gdf(c.dfs.TRANS), avg_month=self.def_ma)
-                    ), n_rows=8
-                ),
-            ],
-            [
-                uiu.get_one_column(
-                    dcc.Graph(
-                        id="plot_dash_l_vs_e", config=uiu.PLOT_CONFIG,
-                        figure=plt_li.plot_expenses_vs_liquid(
-                            self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.TRANS), self.def_ma, False
-                        )
-                    ), n_rows=7
-                ),
-                uiu.get_one_column(
-                    dcc.Graph(
-                        id="plot_dash_liq_months", config=uiu.PLOT_CONFIG,
-                        figure=plt_li.plot_months(
-                            self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.TRANS), self.def_ma, False
-                        )
-                    ), n_rows=5
-                )
-            ],
+            plt_db.get_summary(self.dload.dfs),
+            html.Div(
+                [
+                    html.Div(
+                        dcc.Graph(
+                            id="plot_dash_evol", config=uiu.PLOT_CONFIG,
+                            figure=plt_ev.plot_timeserie(self.gdf(c.dfs.TRANS), avg_month=self.def_ma)
+                        ),
+                        className="w3-col l6 m6 s12"
+                    ),
+                    html.Div(
+                        dcc.Graph(
+                            id="plot_dash_total_worth", config=uiu.PLOT_CONFIG,
+                            figure=plt_inv.total_worth_plot(
+                                self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.WORTH), self.def_ma
+                            )
+                        ),
+                        className="w3-col l6 m6 s12"
+                    ),
+                ],
+                className="w3-row"
+            ),
+            html.Div(
+                [
+                    html.Div(
+                        dcc.Graph(
+                            id="plot_dash_l_vs_e", config=uiu.PLOT_CONFIG,
+                            figure=plt_li.plot_expenses_vs_liquid(
+                                self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.TRANS), self.def_ma, False
+                            )
+                        ),
+                        className="w3-col l6 m6 s12"
+                    ),
+                    html.Div(
+                        dcc.Graph(
+                            id="plot_dash_liq_months", config=uiu.PLOT_CONFIG,
+                            figure=plt_li.plot_months(
+                                self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.TRANS), self.def_ma, False
+                            )
+                        ),
+                        className="w3-col l6 m6 s12"
+                    )
+                ],
+                className="w3-row"
+            )
         ]
 
 
