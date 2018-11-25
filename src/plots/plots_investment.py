@@ -4,7 +4,6 @@
 
 import plotly.graph_objs as go
 
-import utilities as u
 import constants as c
 
 def invest_evolution_plot(df_in, avg_month):

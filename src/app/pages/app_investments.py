@@ -3,10 +3,8 @@
 """
 
 import dash_core_components as dcc
-import dash_html_components as html
 from dash.dependencies import Input, Output
 
-import utilities as u
 import constants as c
 from app import ui_utils as uiu
 from plots import plots_investment as plots
