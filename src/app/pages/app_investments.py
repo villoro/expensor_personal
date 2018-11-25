@@ -42,6 +42,22 @@ class Page(uiu.AppPage):
             return plots.invest_evolution_plot(df, avg_month)
 
 
+        @app.callback(Output("plot_invest_total_worth", "figure"),
+                      [Input("slider_invest_rolling_avg", "value")])
+        #pylint: disable=unused-variable,unused-argument
+        def update_plot_total_worth(avg_month):
+            """
+                Updates the timeserie gradient plot
+
+                Args:
+                    avg_month:  month to use in rolling average
+            """
+
+            return plots.total_worth_plot(
+                self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.WORTH), avg_month
+            )
+
+
     def get_body(self):
         body = [
             [
@@ -55,8 +71,8 @@ class Page(uiu.AppPage):
                 )
             ],
             dcc.Graph(
-                id="plot_invest_with_liquid", config=uiu.PLOT_CONFIG,
-                figure=plots.invest_and_liquid_plot(
+                id="plot_invest_total_worth", config=uiu.PLOT_CONFIG,
+                figure=plots.total_worth_plot(
                     self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.WORTH), self.def_ma
                 )
             ),

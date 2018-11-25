@@ -34,7 +34,7 @@ def invest_evolution_plot(df_in, avg_month):
     return go.Figure(data=data, layout=layout)
 
 
-def invest_and_liquid_plot(df_liq_in, df_wor_in, avg_month):
+def total_worth_plot(df_liq_in, df_wor_in, avg_month):
     """
         Creates a plot with investment and liquid
 
