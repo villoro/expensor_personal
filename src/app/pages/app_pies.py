@@ -102,7 +102,7 @@ class Page(uiu.AppPage):
         return body
 
 
-    def get_sidebar(self):
+    def get_filters(self):
         return [
             ("Categories", dcc.Dropdown(
                 id="drop_pie_categ", multi=True,

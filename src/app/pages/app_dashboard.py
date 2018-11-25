@@ -99,7 +99,7 @@ class Page(uiu.AppPage):
         ]
 
 
-    def get_sidebar(self):
+    def get_filters(self):
         return [
             ("Rolling Average", dcc.Slider(
                 id="slider_dash_rolling_avg",
