@@ -31,7 +31,7 @@ class TestDataLoader(unittest.TestCase):
         df = dload.get_df_transactions()
 
         # Check that all needed columns are present
-        self.assertTrue(all([x in df.columns for x in c.cols.REPLACES_DF_TRANS]))
+        self.assertTrue(all([x in df.columns for x in c.cols.REPLACES_DF_TRANS.values()]))
 
 
     def test_get_data_without_trans(self):
