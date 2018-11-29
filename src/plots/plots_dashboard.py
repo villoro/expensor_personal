@@ -7,7 +7,7 @@ from datetime import date, timedelta
 import dash_html_components as html
 
 import constants as c
-from utilities.io import get_money_lover_filename
+from data_loader import get_money_lover_filename
 
 
 ARROWS = {True: "▲", False: "▼"}
@@ -51,13 +51,11 @@ def get_summary(dfs):
     stats = _get_stats(dfs, date_m1)
     stats2 = _get_stats(dfs, date_m2)
 
-    margin_h = 30
 
     # Header of the summary
-    text = "Stats for months {:%Y/%m} ({:%Y/%m})".format(date_m1, date_m2)
-    style = {"text-align": "left"}
-    style.update(c.styles.get_style_wraper(margin_h, 40))
-    data = [html.H4(text, style=style)]
+    text = "Stats for months {:%Y/%m} ({:%Y/%m}):".format(date_m1, date_m2)
+
+    data = [html.Div(html.H4(text), className="w3-col l2 m4 s6")]
 
     # Fill the summary with relevant stats
     for name, color in c.colors.COLORS.items():
@@ -68,16 +66,18 @@ def get_summary(dfs):
 
         # space as thousand separator
         text = text.replace(",", ".")
-        style = {"color": color, "text-align": "left"}
-        style.update(c.styles.get_style_wraper(margin_h, 10))
 
-        data.append(html.H5(text, style=style))
+        data.append(html.Div(
+            html.H5(text, style={"color": color}),
+            className="w3-col l2 m4 s6"
+        ))
 
     # Show a text with transactions excel file date
     name = get_money_lover_filename()
     text = "* Using data from {}".format(name.split(".")[0].replace("-", "/"))
-    style = {"text-align": "left"}
-    style.update(c.styles.get_style_wraper(margin_h, 40))
-    data.append(html.Div(text, style=style))
 
-    return data
+    data.append(html.Div(
+        html.H5(text), className="w3-col l2 m4 s6"
+    ))
+
+    return html.Div(data, className="w3-row")

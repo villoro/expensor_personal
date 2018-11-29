@@ -12,6 +12,8 @@ TOTAL = "Total"
 LIQUID = "Liquid"
 LIQUID_MIN_REC = "Minimum liquid recomended"
 LIQUID_REC = "Liquid recomended"
+WORTH = "worth"
+INVESTED = "invested"
 
 MONTHS = {
     1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June", 7: "July",
