@@ -16,9 +16,11 @@ SERVER = APP.server
 PAGES = get_pages(APP)
 
 
-@APP.callback(Output('body', 'children'),
-              [Input('url', 'pathname')],
-              [State('sync_count', 'children')])
+@APP.callback(
+    Output('body', 'children'),
+    [Input('url', 'pathname')],
+    [State('sync_count', 'children')]
+)
 #pylint: disable=unused-variable
 def display_content(pathname, _):
     """Updates content based on current page"""
@@ -28,15 +30,17 @@ def display_content(pathname, _):
     return "404"
 
 
-@APP.callback(Output('sidebar', 'children'),
-              [Input('url', 'pathname')],
-              [State('sync_count', 'children')])
+@APP.callback(
+    Output('filters', 'children'),
+    [Input('url', 'pathname')],
+    [State('sync_count', 'children')]
+)
 #pylint: disable=unused-variable
 def display_sidebar(pathname, _):
     """Updates sidebar based on current page"""
 
     if pathname in PAGES:
-        return PAGES[pathname].get_sidebar_html()
+        return PAGES[pathname].get_filters_html()
     return "404"
 
 

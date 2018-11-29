@@ -26,8 +26,6 @@ LINKS_ALL = [
     LINK_INVESTMENTS
 ]
 
-DICT_APPS = {"{}. {}".format(i + 1, x[1:].title()): x for i, x in enumerate(LINKS_ALL)}
-
 CONTENT = "content"
 SIDEBAR = "sidebar"
 

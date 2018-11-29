@@ -72,40 +72,46 @@ class Page(uiu.AppPage):
                             options=uiu.get_options(self.all_years),
                             # prevent long list selected
                             value=myears if myears != self.all_years else None
-                        ), style=c.styles.get_style_wraper(10)
-                    ),
-                    uiu.get_row([
-                        uiu.get_one_column(
-                            dcc.Graph(
-                                id="plot_pie_{}_{}".format(num, c.names.INCOMES),
-                                config=uiu.PLOT_CONFIG,
-                                figure=plots.get_pie(
-                                    self.gdf(c.dfs.TRANS), self.gdf(c.dfs.CATEG),
-                                    c.names.INCOMES, myears
-                                )
-                            ), n_rows=6
                         ),
-                        uiu.get_one_column(
-                            dcc.Graph(
-                                id="plot_pie_{}_{}".format(num, c.names.EXPENSES),
-                                config=uiu.PLOT_CONFIG,
-                                figure=plots.get_pie(
-                                    self.gdf(c.dfs.TRANS), self.gdf(c.dfs.CATEG),
-                                    c.names.EXPENSES, myears
-                                )
-                            ), n_rows=6
-                        )
-                    ])
-                ],
+                    ),
+                    html.Div(
+                        [
+                            html.Div(
+                                dcc.Graph(
+                                    id="plot_pie_{}_{}".format(num, c.names.INCOMES),
+                                    config=uiu.PLOT_CONFIG,
+                                    figure=plots.get_pie(
+                                        self.gdf(c.dfs.TRANS), self.gdf(c.dfs.CATEG),
+                                        c.names.INCOMES, myears
+                                    )
+                                ),
+                                className="w3-col l6 m6 s12"
+                            ),
+                            html.Div(
+                                dcc.Graph(
+                                    id="plot_pie_{}_{}".format(num, c.names.EXPENSES),
+                                    config=uiu.PLOT_CONFIG,
+                                    figure=plots.get_pie(
+                                        self.gdf(c.dfs.TRANS), self.gdf(c.dfs.CATEG),
+                                        c.names.EXPENSES, myears
+                                    )
+                                ),
+                                className="w3-col l6 m6 s12"
+                            ),
+                        ],
+                        className="w3-row"
+                    )
+                ]
             )
 
         return body
 
 
-    def get_sidebar(self):
-        return [
-            ("Categories", dcc.Dropdown(
-                id="drop_pie_categ", multi=True,
-                options=uiu.get_options(self.gdf(c.dfs.TRANS)[c.cols.CATEGORY].unique())
-            ))
-        ]
+    def get_filters(self):
+        return {
+            "Categories":
+                dcc.Dropdown(
+                    id="drop_pie_categ", multi=True,
+                    options=uiu.get_options(self.gdf(c.dfs.TRANS)[c.cols.CATEGORY].unique())
+                ),
+        }

@@ -84,15 +84,17 @@ class Page(uiu.AppPage):
             ]
         ]
 
-    def get_sidebar(self):
-        return [
-            ("Categories", dcc.Dropdown(
-                id="drop_comp_categ", multi=True,
-                options=uiu.get_options(self.gdf(c.dfs.TRANS)[c.cols.CATEGORY].unique())
-            )),
-            ("Rolling Average", dcc.Slider(
-                id="slider_comp_rolling_avg",
-                min=1, max=12, value=self.def_ma,
-                marks={i: str(i) if i > 1 else "None" for i in range(1, 13)},
-            ))
-        ]
+    def get_filters(self):
+        return {
+            "Categories":
+                dcc.Dropdown(
+                    id="drop_comp_categ", multi=True,
+                    options=uiu.get_options(self.gdf(c.dfs.TRANS)[c.cols.CATEGORY].unique())
+                ),
+            "Rolling Average":
+                dcc.Slider(
+                    id="slider_comp_rolling_avg",
+                    min=1, max=12, value=self.def_ma,
+                    marks={i: str(i) if i > 1 else "None" for i in range(1, 13)},
+                ),
+        }

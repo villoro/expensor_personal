@@ -9,33 +9,46 @@ import constants as c
 from app import ui_utils as uiu
 
 
+HEADER_HEIGHT = "48px"
+
 def get_layout():
     """ Creates the dash layout """
 
     return html.Div([
         # Header
-        uiu.get_row(
+        html.Div(
             [
-                uiu.get_one_column(
-                    html.H1(c.names.TITLE, id="title", style={"color": "white"}), 11
+                html.Div(
+                    [
+                        html.A(
+                            x[1:], href=x, id="section_{}".format(x[1:]),
+                            className="w3-bar-item w3-button w3-padding-large w3-hover-white",
+                            style={"font-size": "18px"}
+                        ) for x in c.dash.LINKS_ALL
+                    ]
                 ),
-                uiu.get_one_column(
-                    html.Button('Sync', id='sync', style=c.styles.SYNC_BUTTON), 1
-                ),
+                html.Div(
+                    html.Button(
+                        'Sync', id='sync',
+                        className="w3-bar-item w3-button w3-padding-large w3-hover-white"
+                    ),
+                    className="w3-right"
+                )
             ],
-            style=c.styles.HEADER
+            className="w3-top w3-bar w3-left-align w3-green w3-text-white w3-card",
+            style={"height": HEADER_HEIGHT}
         ),
 
-        # Sidebar
-        html.Div(id="sidebar", style=c.styles.SIDEBAR),
-
-        # Sub-header
-        html.Div([html.H2("Filters")], style=c.styles.FILTER_DIV),
+        # Filters
+        html.Div(
+            id="filters", style={"margin-top": HEADER_HEIGHT},
+            className="w3-padding-16 w3-light-grey w3-row"
+        ),
 
         # Body
-        html.Div(id="body", style=c.styles.BODY),
+        html.Div(id="body"),
 
         # Others
-        html.Div(id="sync_count", style=c.styles.HIDDEN),
+        html.Div(id="sync_count", style={"display": "none"}),
         dcc.Location(id='url', refresh=False),
     ])

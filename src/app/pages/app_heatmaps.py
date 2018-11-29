@@ -3,6 +3,7 @@
 """
 
 import dash_core_components as dcc
+import dash_html_components as html
 from dash.dependencies import Input, Output
 
 import utilities as u
@@ -64,30 +65,36 @@ class Page(uiu.AppPage):
 
     def get_body(self):
         return [
-            [
-                uiu.get_one_column(
-                    dcc.Graph(
-                        id="plot_heat_i", config=uiu.PLOT_CONFIG,
-                        figure=plots.get_heatmap(self.gdf(c.dfs.TRANS), c.names.INCOMES)
-                    ), n_rows=6
-                ),
-                uiu.get_one_column(
-                    dcc.Graph(
-                        id="plot_heat_e", config=uiu.PLOT_CONFIG,
-                        figure=plots.get_heatmap(self.gdf(c.dfs.TRANS), c.names.EXPENSES)
-                    ), n_rows=6
-                )
-            ],
+            html.Div(
+                [
+                    html.Div(
+                        dcc.Graph(
+                            id="plot_heat_i", config=uiu.PLOT_CONFIG,
+                            figure=plots.get_heatmap(self.gdf(c.dfs.TRANS), c.names.INCOMES)
+                        ),
+                        className="w3-col l6 m6 s12"
+                    ),
+                    html.Div(
+                        dcc.Graph(
+                            id="plot_heat_e", config=uiu.PLOT_CONFIG,
+                            figure=plots.get_heatmap(self.gdf(c.dfs.TRANS), c.names.EXPENSES)
+                        ),
+                        className="w3-col l6 m6 s12"
+                    ),
+                ],
+                className="w3-row"
+            ),
             dcc.Graph(
                 id="plot_heat_distribution", config=uiu.PLOT_CONFIG,
                 figure=plots.dist_plot(self.gdf(c.dfs.TRANS))
             ),
         ]
 
-    def get_sidebar(self):
-        return [
-            ("Categories", dcc.Dropdown(
-                id="drop_heat_categ", multi=True,
-                options=uiu.get_options(self.gdf(c.dfs.TRANS)[c.cols.CATEGORY].unique())
-            ))
-        ]
+    def get_filters(self):
+        return {
+            "Categories":
+                dcc.Dropdown(
+                    id="drop_heat_categ", multi=True,
+                    options=uiu.get_options(self.gdf(c.dfs.TRANS)[c.cols.CATEGORY].unique())
+                ),
+        }
