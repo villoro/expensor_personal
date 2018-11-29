@@ -92,7 +92,7 @@ class Page(uiu.AppPage):
                         )
                     ),
                 ])
-        ])
+            ])
 
         return body
 

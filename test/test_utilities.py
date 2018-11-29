@@ -6,7 +6,7 @@ import unittest
 
 from src import constants as c
 from src import utilities as u
-from data_loader import DFS
+from src.data_loader import DFS
 
 class TestUtilities(unittest.TestCase):
     """Test utilities"""
