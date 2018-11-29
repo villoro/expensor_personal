@@ -8,7 +8,6 @@ from dash.dependencies import Input, Output
 
 import constants as c
 from app import ui_utils as uiu
-from data_loader import sync
 
 
 def get_pages(app):
@@ -30,31 +29,17 @@ def get_pages(app):
                 --sidebar
     """
 
-    @app.callback(Output("sync_count", "children"),
-                  [Input("sync", "n_clicks")])
-    #pylint: disable=unused-variable,unused-argument
-    def update_sync_count(x):
-        """
-            Updates the liquid vs expenses plot
-
-            Args:
-                avg_month:  month to use in rolling average
-        """
-        sync()
-
-        return x
-
     output = {}
-    for app_name in os.listdir("src/app/pages"):
+    for page_name in os.listdir("src/app/pages"):
 
-        # Check if it is an app
-        if (app_name.startswith("app")) and (app_name.endswith(".py")):
+        # Check if it is a page
+        if (page_name.startswith("page")) and (page_name.endswith(".py")):
 
             # Fix app name
-            app_name = ".{}".format(app_name.split(".")[0])
+            page_name = ".{}".format(page_name.split(".")[0])
 
             # Import it programatically
-            m_page = importlib.import_module(app_name, "app.pages").Page(app)
+            m_page = importlib.import_module(page_name, "app.pages").Page(app)
 
             # Add content to the output dict
             output[m_page.link] = m_page
