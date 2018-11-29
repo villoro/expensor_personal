@@ -2,10 +2,7 @@
     Dash app
 """
 
-import dash_core_components as dcc
 import dash_html_components as html
-
-import constants as c
 
 
 PLOT_CONFIG = {
@@ -21,17 +18,27 @@ def get_options(iterable):
     return [{"label": x, "value": x} for x in iterable]
 
 
+def two_columns(elements):
+    """
+        Creates a layout with two columns.
+        In large screens will be displayed as two columns.
+        In medium and smalls will be shown as only one.
+    """
+
+    return html.Div(
+        [
+            html.Div(
+                x, className="w3-col l6 m12 s12"
+            ) for x in elements
+        ],
+        className="w3-row"
+    )
+
+
 class AppPage():
     """
         Raw Page class that is meant to be extended
     """
-
-    def __init__(self, dload):
-        self.dload = dload
-
-    def gdf(self, name):
-        """ Get one dataframe by it's name """
-        return self.dload.gdf(name)
 
     #pylint: disable=R0201
     def get_body(self):

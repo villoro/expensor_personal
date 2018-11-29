@@ -6,6 +6,7 @@ from dash.dependencies import Input, Output, State
 
 from app.pages import get_pages
 from dash_app import create_dash_app
+from data_loader import sync
 
 
 # Create dash app with styles
@@ -42,6 +43,18 @@ def display_sidebar(pathname, _):
     if pathname in PAGES:
         return PAGES[pathname].get_filters_html()
     return "404"
+
+
+@APP.callback(
+    Output("sync_count", "children"),
+    [Input("sync", "n_clicks")]
+)
+#pylint: disable=unused-variable,unused-argument
+def update_sync_count(x):
+    """ sync data using the data_loader function """
+
+    sync()
+    return x
 
 
 if __name__ == '__main__':

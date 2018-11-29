@@ -18,18 +18,20 @@ class TestApp(unittest.TestCase):
     def test_pages(self):
         """ Test that is possible to open all pages """
 
-        for page in c.dash.DICT_APPS.values():
+        for page in c.dash.LINKS_ALL:
             self.driver.get(c.dash.LINK_ROOT + page)
             wait_until_loaded(self.driver)
 
-            # Check that there is a sidebar and a body
-            self.driver.find_element_by_id("sidebar")
+            # Check that there is a body and filters divs
             self.driver.find_element_by_id("body")
+            self.driver.find_element_by_id("filters")
 
 
     def _check_one_page(self, page_link, elements):
         """
-            Check the existence of some elements in a page
+            Check the existence of some elements in a page.
+
+            WARNING: it is not possible to check a slider.
 
             Args:
                 page_link:  relative url to the page
@@ -48,8 +50,7 @@ class TestApp(unittest.TestCase):
         """ Test the content of page heatmaps """
 
         body_elem = ["plot_dash_evol", "plot_dash_l_vs_e", "plot_dash_liq_months"]
-        #sidebar_elem = ["slider_dash_rolling_avg"]
-        self._check_one_page(c.dash.LINK_DASHBOARD, body_elem) # + sidebar_elem)
+        self._check_one_page(c.dash.LINK_DASHBOARD, body_elem)
 
 
     def test_page_evolution(self):
@@ -64,7 +65,7 @@ class TestApp(unittest.TestCase):
         """ Test the content of page comparison """
 
         body_elem = ["plot_comp_1", "radio_comp_1", "plot_comp_2", "radio_comp_2"]
-        sidebar_elem = ["drop_comp_categ"] #, "slider_comp_rolling_avg"]
+        sidebar_elem = ["drop_comp_categ"]
         self._check_one_page(c.dash.LINK_COMPARISON, body_elem + sidebar_elem)
 
 
@@ -79,7 +80,10 @@ class TestApp(unittest.TestCase):
     def test_page_pies(self):
         """ Test the content of page pies """
 
-        body_elem = ["drop_pie_1"] # "drop_pie_2", "plot_pie_1", "plot_pie_2"
+        types = [c.names.INCOMES, c.names.EXPENSES]
+        body_elem = ["plot_pie_{}_{}".format(i, x) for i in range(2) for x in types]
+        body_elem += ["drop_pie_0", "drop_pie_1"]
+
         sidebar_elem = ["drop_pie_categ"]
         self._check_one_page(c.dash.LINK_PIES, body_elem + sidebar_elem)
 

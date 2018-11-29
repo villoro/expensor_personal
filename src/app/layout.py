@@ -6,7 +6,6 @@ import dash_core_components as dcc
 import dash_html_components as html
 
 import constants as c
-from app import ui_utils as uiu
 
 
 HEADER_HEIGHT = "48px"
