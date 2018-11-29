@@ -4,8 +4,8 @@
 
 import unittest
 
-import data_loader as dload
 from src import constants as c
+from src import data_loader as dload
 
 class TestDataLoader(unittest.TestCase):
     """Test utilities"""
