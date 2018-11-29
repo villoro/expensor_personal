@@ -3,7 +3,6 @@
 """
 
 import dash_core_components as dcc
-import dash_html_components as html
 from dash.dependencies import Input, Output
 
 import constants as c
@@ -89,50 +88,32 @@ class Page(uiu.AppPage):
     def get_body(self):
         return [
             plt_db.get_summary(DFS),
-            html.Div(
-                [
-                    html.Div(
-                        dcc.Graph(
-                            id="plot_dash_evol", config=uiu.PLOT_CONFIG,
-                            figure=plt_ev.plot_timeserie(DFS[c.dfs.TRANS], avg_month=self.def_ma)
-                        ),
-                        className="w3-col l6 m6 s12"
-                    ),
-                    html.Div(
-                        dcc.Graph(
-                            id="plot_dash_total_worth", config=uiu.PLOT_CONFIG,
-                            figure=plt_inv.total_worth_plot(
-                                DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], self.def_ma
-                            )
-                        ),
-                        className="w3-col l6 m6 s12"
-                    ),
-                ],
-                className="w3-row"
-            ),
-            html.Div(
-                [
-                    html.Div(
-                        dcc.Graph(
-                            id="plot_dash_l_vs_e", config=uiu.PLOT_CONFIG,
-                            figure=plt_li.plot_expenses_vs_liquid(
-                                DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], self.def_ma, False
-                            )
-                        ),
-                        className="w3-col l6 m6 s12"
-                    ),
-                    html.Div(
-                        dcc.Graph(
-                            id="plot_dash_liq_months", config=uiu.PLOT_CONFIG,
-                            figure=plt_li.plot_months(
-                                DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], self.def_ma, False
-                            )
-                        ),
-                        className="w3-col l6 m6 s12"
+            uiu.two_columns([
+                dcc.Graph(
+                    id="plot_dash_evol", config=uiu.PLOT_CONFIG,
+                    figure=plt_ev.plot_timeserie(DFS[c.dfs.TRANS], avg_month=self.def_ma)
+                ),
+                dcc.Graph(
+                    id="plot_dash_total_worth", config=uiu.PLOT_CONFIG,
+                    figure=plt_inv.total_worth_plot(
+                        DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], self.def_ma
                     )
-                ],
-                className="w3-row"
-            )
+                )
+            ]),
+            uiu.two_columns([
+                dcc.Graph(
+                    id="plot_dash_l_vs_e", config=uiu.PLOT_CONFIG,
+                    figure=plt_li.plot_expenses_vs_liquid(
+                        DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], self.def_ma, False
+                    )
+                ),
+                dcc.Graph(
+                    id="plot_dash_liq_months", config=uiu.PLOT_CONFIG,
+                    figure=plt_li.plot_months(
+                        DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], self.def_ma, False
+                    )
+                )
+            ])
         ]
 
 

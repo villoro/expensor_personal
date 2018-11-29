@@ -75,33 +75,24 @@ class Page(uiu.AppPage):
                             value=myears if myears != self.all_years else None
                         ),
                     ),
-                    html.Div(
-                        [
-                            html.Div(
-                                dcc.Graph(
-                                    id="plot_pie_{}_{}".format(num, c.names.INCOMES),
-                                    config=uiu.PLOT_CONFIG,
-                                    figure=plots.get_pie(
-                                        DFS[c.dfs.TRANS], DFS[c.dfs.CATEG],
-                                        c.names.INCOMES, myears
-                                    )
-                                ),
-                                className="w3-col l6 m6 s12"
-                            ),
-                            html.Div(
-                                dcc.Graph(
-                                    id="plot_pie_{}_{}".format(num, c.names.EXPENSES),
-                                    config=uiu.PLOT_CONFIG,
-                                    figure=plots.get_pie(
-                                        DFS[c.dfs.TRANS], DFS[c.dfs.CATEG],
-                                        c.names.EXPENSES, myears
-                                    )
-                                ),
-                                className="w3-col l6 m6 s12"
-                            ),
-                        ],
-                        className="w3-row"
-                    )
+                    uiu.two_columns([
+                        dcc.Graph(
+                            id="plot_pie_{}_{}".format(num, c.names.INCOMES),
+                            config=uiu.PLOT_CONFIG,
+                            figure=plots.get_pie(
+                                DFS[c.dfs.TRANS], DFS[c.dfs.CATEG],
+                                c.names.INCOMES, myears
+                            )
+                        ),
+                        dcc.Graph(
+                            id="plot_pie_{}_{}".format(num, c.names.EXPENSES),
+                            config=uiu.PLOT_CONFIG,
+                            figure=plots.get_pie(
+                                DFS[c.dfs.TRANS], DFS[c.dfs.CATEG],
+                                c.names.EXPENSES, myears
+                            )
+                        ),
+                    ])
                 ]
             )
 
