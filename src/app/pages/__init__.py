@@ -7,8 +7,9 @@ import importlib
 from dash.dependencies import Input, Output
 
 import constants as c
-from utilities.io import DataLoader
 from app import ui_utils as uiu
+from data_loader import sync
+
 
 def get_pages(app):
     """
@@ -29,8 +30,6 @@ def get_pages(app):
                 --sidebar
     """
 
-    dload = DataLoader()
-
     @app.callback(Output("sync_count", "children"),
                   [Input("sync", "n_clicks")])
     #pylint: disable=unused-variable,unused-argument
@@ -41,7 +40,7 @@ def get_pages(app):
             Args:
                 avg_month:  month to use in rolling average
         """
-        dload.sync()
+        sync()
 
         return x
 
@@ -55,7 +54,7 @@ def get_pages(app):
             app_name = ".{}".format(app_name.split(".")[0])
 
             # Import it programatically
-            m_page = importlib.import_module(app_name, "app.pages").Page(dload, app)
+            m_page = importlib.import_module(app_name, "app.pages").Page(app)
 
             # Add content to the output dict
             output[m_page.link] = m_page

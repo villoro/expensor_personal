@@ -7,7 +7,7 @@ from datetime import date, timedelta
 import dash_html_components as html
 
 import constants as c
-from utilities.io import get_money_lover_filename
+from data_loader import get_money_lover_filename
 
 
 ARROWS = {True: "▲", False: "▼"}

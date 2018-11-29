@@ -10,6 +10,7 @@ import utilities as u
 import constants as c
 from app import ui_utils as uiu
 from plots import plots_pies as plots
+from data_loader import DFS
 
 
 class Page(uiu.AppPage):
@@ -18,10 +19,9 @@ class Page(uiu.AppPage):
     link = c.dash.LINK_PIES
 
 
-    def __init__(self, dload, app):
-        super().__init__(dload)
+    def __init__(self, app):
 
-        self.all_years = self.gdf(c.dfs.TRANS)[c.cols.YEAR].unique().tolist()
+        self.all_years = DFS[c.dfs.TRANS][c.cols.YEAR].unique().tolist()
         self.last_year_as_list = [max(self.all_years)]
 
         for num, _ in enumerate([self.all_years, self.last_year_as_list]):
@@ -37,8 +37,8 @@ class Page(uiu.AppPage):
                         categories: categories to use
                         years:      years to include in pie
                 """
-                df = u.dfs.filter_data(self.gdf(c.dfs.TRANS), categories)
-                return plots.get_pie(df, self.gdf(c.dfs.CATEG), c.names.INCOMES, years)
+                df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
+                return plots.get_pie(df, DFS[c.dfs.CATEG], c.names.INCOMES, years)
 
 
             @app.callback(Output("plot_pie_{}_{}".format(num, c.names.EXPENSES), "figure"),
@@ -53,8 +53,8 @@ class Page(uiu.AppPage):
                         categories: categories to use
                         years:      years to include in pie
                 """
-                df = u.dfs.filter_data(self.gdf(c.dfs.TRANS), categories)
-                return plots.get_pie(df, self.gdf(c.dfs.CATEG), c.names.EXPENSES, years)
+                df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
+                return plots.get_pie(df, DFS[c.dfs.CATEG], c.names.EXPENSES, years)
 
 
     def get_body(self):
@@ -81,7 +81,7 @@ class Page(uiu.AppPage):
                                     id="plot_pie_{}_{}".format(num, c.names.INCOMES),
                                     config=uiu.PLOT_CONFIG,
                                     figure=plots.get_pie(
-                                        self.gdf(c.dfs.TRANS), self.gdf(c.dfs.CATEG),
+                                        DFS[c.dfs.TRANS], DFS[c.dfs.CATEG],
                                         c.names.INCOMES, myears
                                     )
                                 ),
@@ -92,7 +92,7 @@ class Page(uiu.AppPage):
                                     id="plot_pie_{}_{}".format(num, c.names.EXPENSES),
                                     config=uiu.PLOT_CONFIG,
                                     figure=plots.get_pie(
-                                        self.gdf(c.dfs.TRANS), self.gdf(c.dfs.CATEG),
+                                        DFS[c.dfs.TRANS], DFS[c.dfs.CATEG],
                                         c.names.EXPENSES, myears
                                     )
                                 ),
@@ -112,6 +112,6 @@ class Page(uiu.AppPage):
             "Categories":
                 dcc.Dropdown(
                     id="drop_pie_categ", multi=True,
-                    options=uiu.get_options(self.gdf(c.dfs.TRANS)[c.cols.CATEGORY].unique())
+                    options=uiu.get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
                 ),
         }

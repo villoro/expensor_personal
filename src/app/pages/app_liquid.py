@@ -8,6 +8,7 @@ from dash.dependencies import Input, Output
 import constants as c
 from app import ui_utils as uiu
 from plots import plots_liquid as plots
+from data_loader import DFS
 
 
 class Page(uiu.AppPage):
@@ -17,8 +18,7 @@ class Page(uiu.AppPage):
     def_ma = 12
 
 
-    def __init__(self, dload, app):
-        super().__init__(dload)
+    def __init__(self, app):
 
         @app.callback(Output("plot_liquid_vs_expenses", "figure"),
                       [Input("slider_liq_rolling_avg", "value")])
@@ -32,7 +32,7 @@ class Page(uiu.AppPage):
             """
 
             return plots.plot_expenses_vs_liquid(
-                self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.TRANS), avg_month
+                DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], avg_month
             )
 
 
@@ -48,7 +48,7 @@ class Page(uiu.AppPage):
             """
 
             return plots.plot_months(
-                self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.TRANS), avg_month
+                DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], avg_month
             )
 
 
@@ -56,17 +56,17 @@ class Page(uiu.AppPage):
         return [
             dcc.Graph(
                 id="plot_liquid_evo", config=uiu.PLOT_CONFIG,
-                figure=plots.liquid_plot(self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.LIQUID_LIST))
+                figure=plots.liquid_plot(DFS[c.dfs.LIQUID], DFS[c.dfs.LIQUID_LIST])
             ),
             dcc.Graph(
                 id="plot_liquid_vs_expenses", config=uiu.PLOT_CONFIG,
                 figure=plots.plot_expenses_vs_liquid(
-                    self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.TRANS), self.def_ma
+                    DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], self.def_ma
                 )
             ),
             dcc.Graph(
                 id="plot_liquid_months", config=uiu.PLOT_CONFIG,
-                figure=plots.plot_months(self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.TRANS), self.def_ma)
+                figure=plots.plot_months(DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], self.def_ma)
             ),
         ]
 

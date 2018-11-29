@@ -9,6 +9,7 @@ import utilities as u
 import constants as c
 from app import ui_utils as uiu
 from plots import plots_comparison as plots
+from data_loader import DFS
 
 
 class Page(uiu.AppPage):
@@ -19,8 +20,7 @@ class Page(uiu.AppPage):
     radio_opt = uiu.get_options([c.names.INCOMES, c.names.EXPENSES, c.names.EBIT])
 
 
-    def __init__(self, dload, app):
-        super().__init__(dload)
+    def __init__(self, app):
 
         @app.callback(Output("plot_comp_1", "figure"),
                       [Input("drop_comp_categ", "value"),
@@ -37,7 +37,7 @@ class Page(uiu.AppPage):
                     type_trans: expenses/incomes
             """
 
-            df = u.dfs.filter_data(self.gdf(c.dfs.TRANS), categories)
+            df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
             return plots.ts_gradient(df, type_trans, avg_month)
 
 
@@ -56,7 +56,7 @@ class Page(uiu.AppPage):
                     type_trans: expenses/incomes
             """
 
-            df = u.dfs.filter_data(self.gdf(c.dfs.TRANS), categories)
+            df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
             return plots.ts_gradient(df, type_trans, avg_month)
 
 
@@ -65,7 +65,7 @@ class Page(uiu.AppPage):
             [
                 dcc.Graph(
                     id="plot_comp_1", config=uiu.PLOT_CONFIG,
-                    figure=plots.ts_gradient(self.gdf(c.dfs.TRANS), c.names.INCOMES, self.def_ma)
+                    figure=plots.ts_gradient(DFS[c.dfs.TRANS], c.names.INCOMES, self.def_ma)
                 ),
                 dcc.RadioItems(
                     id="radio_comp_1", options=self.radio_opt,
@@ -75,7 +75,7 @@ class Page(uiu.AppPage):
             [
                 dcc.Graph(
                     id="plot_comp_2", config=uiu.PLOT_CONFIG,
-                    figure=plots.ts_gradient(self.gdf(c.dfs.TRANS), c.names.EXPENSES, self.def_ma)
+                    figure=plots.ts_gradient(DFS[c.dfs.TRANS], c.names.EXPENSES, self.def_ma)
                 ),
                 dcc.RadioItems(
                     id="radio_comp_2", options=self.radio_opt,
@@ -89,7 +89,7 @@ class Page(uiu.AppPage):
             "Categories":
                 dcc.Dropdown(
                     id="drop_comp_categ", multi=True,
-                    options=uiu.get_options(self.gdf(c.dfs.TRANS)[c.cols.CATEGORY].unique())
+                    options=uiu.get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
                 ),
             "Rolling Average":
                 dcc.Slider(

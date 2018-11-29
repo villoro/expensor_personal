@@ -8,6 +8,7 @@ from dash.dependencies import Input, Output
 import constants as c
 from app import ui_utils as uiu
 from plots import plots_investment as plots
+from data_loader import DFS
 
 
 class Page(uiu.AppPage):
@@ -17,8 +18,7 @@ class Page(uiu.AppPage):
     def_ma = 1
     dict_types = {c.names.INVESTED: c.dfs.INVEST, c.names.WORTH: c.dfs.WORTH}
 
-    def __init__(self, dload, app):
-        super().__init__(dload)
+    def __init__(self, app):
 
         @app.callback(Output("plot_invest_detail", "figure"),
                       [Input("radio_invest", "value"),
@@ -35,7 +35,7 @@ class Page(uiu.AppPage):
 
 
 
-            df = self.gdf(self.dict_types[type_df])
+            df = DFS[self.dict_types[type_df]]
 
             return plots.invest_evolution_plot(df, avg_month)
 
@@ -52,7 +52,7 @@ class Page(uiu.AppPage):
             """
 
             return plots.total_worth_plot(
-                self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.WORTH), avg_month
+                DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], avg_month
             )
 
 
@@ -61,7 +61,7 @@ class Page(uiu.AppPage):
             [
                 dcc.Graph(
                     id="plot_invest_detail", config=uiu.PLOT_CONFIG,
-                    figure=plots.invest_evolution_plot(self.gdf(c.dfs.INVEST), self.def_ma)
+                    figure=plots.invest_evolution_plot(DFS[c.dfs.INVEST], self.def_ma)
                 ),
                 dcc.RadioItems(
                     id="radio_invest", options=uiu.get_options([c.names.INVESTED, c.names.WORTH]),
@@ -71,7 +71,7 @@ class Page(uiu.AppPage):
             dcc.Graph(
                 id="plot_invest_total_worth", config=uiu.PLOT_CONFIG,
                 figure=plots.total_worth_plot(
-                    self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.WORTH), self.def_ma
+                    DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], self.def_ma
                 )
             ),
         ]

@@ -10,6 +10,7 @@ import utilities as u
 import constants as c
 from app import ui_utils as uiu
 from plots import plots_heatmaps as plots
+from data_loader import DFS
 
 
 class Page(uiu.AppPage):
@@ -18,8 +19,7 @@ class Page(uiu.AppPage):
     link = c.dash.LINK_HEATMAPS
 
 
-    def __init__(self, dload, app):
-        super().__init__(dload)
+    def __init__(self, app):
 
         @app.callback(Output("plot_heat_i", "figure"),
                       [Input("drop_heat_categ", "value")])
@@ -31,7 +31,7 @@ class Page(uiu.AppPage):
                 Args:
                     categories: categories to use
             """
-            df = u.dfs.filter_data(self.gdf(c.dfs.TRANS), categories)
+            df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
             return plots.get_heatmap(df, c.names.INCOMES)
 
 
@@ -45,7 +45,7 @@ class Page(uiu.AppPage):
                 Args:
                     categories: categories to use
             """
-            df = u.dfs.filter_data(self.gdf(c.dfs.TRANS), categories)
+            df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
             return plots.get_heatmap(df, c.names.EXPENSES)
 
 
@@ -59,7 +59,7 @@ class Page(uiu.AppPage):
                 Args:
                     categories: categories to use
             """
-            df = u.dfs.filter_data(self.gdf(c.dfs.TRANS), categories)
+            df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
             return plots.dist_plot(df)
 
 
@@ -70,14 +70,14 @@ class Page(uiu.AppPage):
                     html.Div(
                         dcc.Graph(
                             id="plot_heat_i", config=uiu.PLOT_CONFIG,
-                            figure=plots.get_heatmap(self.gdf(c.dfs.TRANS), c.names.INCOMES)
+                            figure=plots.get_heatmap(DFS[c.dfs.TRANS], c.names.INCOMES)
                         ),
                         className="w3-col l6 m6 s12"
                     ),
                     html.Div(
                         dcc.Graph(
                             id="plot_heat_e", config=uiu.PLOT_CONFIG,
-                            figure=plots.get_heatmap(self.gdf(c.dfs.TRANS), c.names.EXPENSES)
+                            figure=plots.get_heatmap(DFS[c.dfs.TRANS], c.names.EXPENSES)
                         ),
                         className="w3-col l6 m6 s12"
                     ),
@@ -86,7 +86,7 @@ class Page(uiu.AppPage):
             ),
             dcc.Graph(
                 id="plot_heat_distribution", config=uiu.PLOT_CONFIG,
-                figure=plots.dist_plot(self.gdf(c.dfs.TRANS))
+                figure=plots.dist_plot(DFS[c.dfs.TRANS])
             ),
         ]
 
@@ -95,6 +95,6 @@ class Page(uiu.AppPage):
             "Categories":
                 dcc.Dropdown(
                     id="drop_heat_categ", multi=True,
-                    options=uiu.get_options(self.gdf(c.dfs.TRANS)[c.cols.CATEGORY].unique())
+                    options=uiu.get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
                 ),
         }

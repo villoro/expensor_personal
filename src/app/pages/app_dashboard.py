@@ -13,6 +13,8 @@ from plots import plots_liquid as plt_li
 from plots import plots_dashboard as plt_db
 from plots import plots_investment as plt_inv
 
+from data_loader import DFS
+
 
 class Page(uiu.AppPage):
     """ Page Dashboard """
@@ -21,8 +23,7 @@ class Page(uiu.AppPage):
     def_ma = 12
 
 
-    def __init__(self, dload, app):
-        super().__init__(dload)
+    def __init__(self, app):
 
         @app.callback(Output("plot_dash_evol", "figure"),
                       [Input("slider_dash_rolling_avg", "value")])
@@ -34,7 +35,7 @@ class Page(uiu.AppPage):
                 Args:
                     avg_month:  month to use in rolling average
             """
-            return plt_ev.plot_timeserie(self.gdf(c.dfs.TRANS), avg_month=avg_month)
+            return plt_ev.plot_timeserie(DFS[c.dfs.TRANS], avg_month=avg_month)
 
 
         @app.callback(Output("plot_dash_l_vs_e", "figure"),
@@ -49,7 +50,7 @@ class Page(uiu.AppPage):
             """
 
             return plt_li.plot_expenses_vs_liquid(
-                self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.TRANS), avg_month, False
+                DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], avg_month, False
             )
 
 
@@ -65,7 +66,7 @@ class Page(uiu.AppPage):
             """
 
             return plt_li.plot_months(
-                self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.TRANS), avg_month, False
+                DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], avg_month, False
             )
 
         @app.callback(Output("plot_dash_total_worth", "figure"),
@@ -80,19 +81,19 @@ class Page(uiu.AppPage):
             """
 
             return plt_inv.total_worth_plot(
-                self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.WORTH), avg_month
+                DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], avg_month
             )
 
 
     def get_body(self):
         return [
-            plt_db.get_summary(self.dload.dfs),
+            plt_db.get_summary(DFS),
             html.Div(
                 [
                     html.Div(
                         dcc.Graph(
                             id="plot_dash_evol", config=uiu.PLOT_CONFIG,
-                            figure=plt_ev.plot_timeserie(self.gdf(c.dfs.TRANS), avg_month=self.def_ma)
+                            figure=plt_ev.plot_timeserie(DFS[c.dfs.TRANS], avg_month=self.def_ma)
                         ),
                         className="w3-col l6 m6 s12"
                     ),
@@ -100,7 +101,7 @@ class Page(uiu.AppPage):
                         dcc.Graph(
                             id="plot_dash_total_worth", config=uiu.PLOT_CONFIG,
                             figure=plt_inv.total_worth_plot(
-                                self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.WORTH), self.def_ma
+                                DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], self.def_ma
                             )
                         ),
                         className="w3-col l6 m6 s12"
@@ -114,7 +115,7 @@ class Page(uiu.AppPage):
                         dcc.Graph(
                             id="plot_dash_l_vs_e", config=uiu.PLOT_CONFIG,
                             figure=plt_li.plot_expenses_vs_liquid(
-                                self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.TRANS), self.def_ma, False
+                                DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], self.def_ma, False
                             )
                         ),
                         className="w3-col l6 m6 s12"
@@ -123,7 +124,7 @@ class Page(uiu.AppPage):
                         dcc.Graph(
                             id="plot_dash_liq_months", config=uiu.PLOT_CONFIG,
                             figure=plt_li.plot_months(
-                                self.gdf(c.dfs.LIQUID), self.gdf(c.dfs.TRANS), self.def_ma, False
+                                DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], self.def_ma, False
                             )
                         ),
                         className="w3-col l6 m6 s12"
