@@ -18,7 +18,7 @@ class TestApp(unittest.TestCase):
     def test_pages(self):
         """ Test that is possible to open all pages """
 
-        for page in c.dash.DICT_APPS.values():
+        for page in c.dash.LINKS_ALL:
             self.driver.get(c.dash.LINK_ROOT + page)
             wait_until_loaded(self.driver)
 

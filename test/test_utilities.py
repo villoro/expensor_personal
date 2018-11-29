@@ -6,11 +6,10 @@ import unittest
 
 from src import constants as c
 from src import utilities as u
+from data_loader import DFS
 
 class TestUtilities(unittest.TestCase):
     """Test utilities"""
-
-    dummy_path = "imaginary_path_for_testing/"
 
     # ------------------------------ palette -------------------------------------------------------
     def test_palette(self):
@@ -27,59 +26,11 @@ class TestUtilities(unittest.TestCase):
                          ["#FFCDD2", "#BBDEFB"])
 
 
-    # ------------------------------ io ------------------------------------------------------------
-    def test_dropbox_connector(self):
-        """ Check that is able to connect to drobpox """
-
-        self.assertIsNotNone(u.io.get_dropbox_conector())
-
-
-    def test_get_filename(self):
-        """ Check that is able to connect to drobpox """
-
-        name = u.io.get_money_lover_filename()
-
-        self.assertIn(name.split(".")[-1], ["xls", "xlsx"])
-
-
-    def test_get_df_trans(self):
-        """ Test that is able to retrive a valid excel for transactions """
-
-        dbx = u.io.get_dropbox_conector()
-        df = u.io.get_df_transactions(dbx)
-
-        # Check that all needed columns are present
-        self.assertTrue(all([x in df.columns for x in c.cols.REPLACES_DF_TRANS]))
-
-
-    def test_get_data_without_trans(self):
-        """ Test that is able to retrive dataframes from data.xlsx """
-
-        dbx = u.io.get_dropbox_conector()
-        dfs = u.io.get_data_without_transactions(dbx)
-
-        # Check that all needed dataframes are present
-        self.assertTrue(all([x in dfs for x in c.dfs.ALL_FROM_DATA]))
-
-
-    def test_get_data_from_loader(self):
-        """ Test that is able to retrive all dataframes """
-
-        dload = u.io.DataLoader()
-        dload.sync()
-
-        # Check that all needed dataframes are present
-        self.assertTrue(all([x in dload.get_data() for x in c.dfs.ALL]))
-
-
-
     # ------------------------------ dfs -----------------------------------------------------------
     def test_fix_df_trans(self):
         """ Test that is able to retrive dataframes from data.xlsx """
 
-        dbx = u.io.get_dropbox_conector()
-        df = u.io.get_df_transactions(dbx)
-        df = u.dfs.fix_df_trans(df)
+        df = DFS[c.dfs.TRANS]
 
         # Check that all needed columns are present
         self.assertTrue(all([x in df.columns for x in c.cols.DF_TRANS]))
@@ -92,9 +43,7 @@ class TestUtilities(unittest.TestCase):
     def test_filter_data(self):
         """ Test that is able to filter by some column """
 
-        dbx = u.io.get_dropbox_conector()
-        df = u.io.get_df_transactions(dbx)
-        df = u.dfs.fix_df_trans(df)
+        df = DFS[c.dfs.TRANS]
 
         # No filter no modifications
         self.assertEqual(df.shape, u.dfs.filter_data(df).shape)
@@ -110,9 +59,7 @@ class TestUtilities(unittest.TestCase):
     def test_groupby(self):
         """ Test that is able group by timewindow """
 
-        dbx = u.io.get_dropbox_conector()
-        df = u.io.get_df_transactions(dbx)
-        df = u.dfs.fix_df_trans(df)
+        df = DFS[c.dfs.TRANS]
 
         # When filtered by month, all dates are from day 1
         aux = u.dfs.group_df_by(df, "M")
