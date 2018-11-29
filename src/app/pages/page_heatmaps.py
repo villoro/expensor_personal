@@ -20,6 +20,7 @@ class Page(uiu.AppPage):
 
 
     def __init__(self, app):
+        super().__init__()
 
         @app.callback(Output("plot_heat_i", "figure"),
                       [Input("drop_heat_categ", "value")])

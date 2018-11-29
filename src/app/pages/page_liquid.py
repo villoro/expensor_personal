@@ -19,6 +19,7 @@ class Page(uiu.AppPage):
 
 
     def __init__(self, app):
+        super().__init__()
 
         @app.callback(Output("plot_liquid_vs_expenses", "figure"),
                       [Input("slider_liq_rolling_avg", "value")])

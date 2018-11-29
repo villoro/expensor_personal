@@ -21,6 +21,7 @@ class Page(uiu.AppPage):
 
 
     def __init__(self, app):
+        super().__init__()
 
         @app.callback(Output("plot_comp_1", "figure"),
                       [Input("drop_comp_categ", "value"),

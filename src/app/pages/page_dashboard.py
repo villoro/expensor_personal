@@ -24,6 +24,7 @@ class Page(uiu.AppPage):
 
 
     def __init__(self, app):
+        super().__init__()
 
         @app.callback(Output("plot_dash_evol", "figure"),
                       [Input("slider_dash_rolling_avg", "value")])

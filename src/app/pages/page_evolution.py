@@ -21,6 +21,7 @@ class Page(uiu.AppPage):
 
 
     def __init__(self, app):
+        super().__init__()
 
         @app.callback(Output("plot_evol", "figure"),
                       [Input("drop_evol_categ", "value"),
