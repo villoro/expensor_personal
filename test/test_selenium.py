@@ -80,20 +80,6 @@ class TestApp(unittest.TestCase):
         self._check_one_page(c.dash.LINK_HEATMAPS, body_elem + sidebar_elem)
 
 
-    def test_page_liquid(self):
-        """ Test the content of page liquid """
-
-        body_elem = ["plot_liquid_evo", "plot_liquid_vs_expenses", "plot_liquid_months"]
-        self._check_one_page(c.dash.LINK_LIQUID, body_elem)
-
-
-    def test_page_investments(self):
-        """ Test the content of page investments """
-
-        body_elem = ["radio_invest", "plot_invest_total_worth"]
-        self._check_one_page(c.dash.LINK_LIQUID, body_elem)
-
-
     def test_page_pies(self):
         """ Test the content of page pies """
 
@@ -103,6 +89,22 @@ class TestApp(unittest.TestCase):
 
         sidebar_elem = ["drop_categories"]
         self._check_one_page(c.dash.LINK_PIES, body_elem + sidebar_elem)
+
+
+    def test_page_liquid(self):
+        """ Test the content of page liquid """
+
+        body_elem = ["plot_liquid_evo", "plot_liquid_vs_expenses", "plot_liquid_months"]
+        sidebar_elem = ["input_time_average"]
+        self._check_one_page(c.dash.LINK_LIQUID, body_elem + sidebar_elem)
+
+
+    def test_page_investments(self):
+        """ Test the content of page investments """
+
+        body_elem = ["plot_invest_detail", "radio_invest", "plot_invest_total_worth"]
+        sidebar_elem = ["input_time_average"]
+        self._check_one_page(c.dash.LINK_INVESTMENTS, body_elem + sidebar_elem)
 
 
 
