@@ -24,7 +24,7 @@ class Page(uiu.AppPage):
         super().__init__()
 
         @app.callback(Output("plot_comp_1", "figure"),
-                      [Input("drop_comp_categ", "value"),
+                      [Input("drop_categories", "value"),
                        Input("input_time_average", "value"),
                        Input("radio_comp_1", "value")])
         #pylint: disable=unused-variable,unused-argument
@@ -43,7 +43,7 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_comp_2", "figure"),
-                      [Input("drop_comp_categ", "value"),
+                      [Input("drop_categories", "value"),
                        Input("input_time_average", "value"),
                        Input("radio_comp_2", "value")])
         #pylint: disable=unused-variable,unused-argument
@@ -84,12 +84,3 @@ class Page(uiu.AppPage):
                 )
             ]
         ]
-
-    def get_filters(self):
-        return {
-            "Categories":
-                dcc.Dropdown(
-                    id="drop_comp_categ", multi=True,
-                    options=uiu.get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
-                ),
-        }

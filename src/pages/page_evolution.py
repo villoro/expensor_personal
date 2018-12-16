@@ -24,7 +24,7 @@ class Page(uiu.AppPage):
         super().__init__()
 
         @app.callback(Output("plot_evol", "figure"),
-                      [Input("drop_evol_categ", "value"),
+                      [Input("drop_categories", "value"),
                        Input("radio_timewindow", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_timeserie_plot(categories, timewindow):
@@ -40,7 +40,7 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_evo_detail", "figure"),
-                      [Input("drop_evol_categ", "value"),
+                      [Input("drop_categories", "value"),
                        Input("radio_evol_type", "value"),
                        Input("radio_timewindow", "value")])
         #pylint: disable=unused-variable,unused-argument
@@ -78,12 +78,3 @@ class Page(uiu.AppPage):
                 )
             ],
         ]
-
-    def get_filters(self):
-        return {
-            "Categories":
-                dcc.Dropdown(
-                    id="drop_evol_categ", multi=True,
-                    options=uiu.get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
-                ),
-        }

@@ -40,15 +40,15 @@ class AppPage():
         Raw Page class that is meant to be extended
     """
 
+    def __init__(self):
+        self.show_drop_categories = False
+        self.show_months_average = False
+        self.show_grouping = False
+
     #pylint: disable=R0201
     def get_body(self):
         """ Dummy function to be overrided by every page. It should create the body """
         return []
-
-    #pylint: disable=R0201
-    def get_filters(self):
-        """ Dummy function to be overrided by every page. It should create the sidebar """
-        return None
 
     def get_body_html(self):
         """ Retrives the html body """
@@ -57,30 +57,4 @@ class AppPage():
             html.Div(
                 data, className="w3-card w3-padding-large w3-margin w3-center"
             ) for data in self.get_body()
-        ]
-
-
-    def get_filters_html(self):
-        """ Retrives the html filters """
-
-        filters = self.get_filters()
-
-        if filters is None:
-            return []
-
-        return [
-            html.Div(
-                html.Div(
-                    [
-                        html.Div(
-                            html.H5(title), className="w3-third", style={"padding-left": "16px"}
-                        ),
-                        html.Div(
-                            data, className="w3-twothird w3-padding"
-                        )
-                    ],
-                    className="w3-row w3-card w3-margin w3-white", style={"height": "50px"}
-                ),
-                className="w3-col l4 m6 s12"
-            ) for title, data in filters.items()
         ]

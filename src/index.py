@@ -32,6 +32,21 @@ def display_content(pathname, _):
 
 
 @APP.callback(
+    Output('filters', 'style'),
+    [Input('url', 'pathname')],
+    [State('sync_count', 'children')]
+)
+#pylint: disable=unused-variable
+def toggle_categories(pathname, _):
+    """Updates content based on current page"""
+
+    if pathname in PAGES:
+        mbool = PAGES[pathname].show_drop_categories
+        return {"display": "block" if mbool else "none"}
+    return {}
+
+
+@APP.callback(
     Output("sync_count", "children"),
     [Input("sync", "n_clicks")]
 )

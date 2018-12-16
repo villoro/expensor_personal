@@ -80,6 +80,7 @@ def get_layout():
                     }
                 )
             ],
+            id="filters",
             className="w3-row w3-card",
         ),
 

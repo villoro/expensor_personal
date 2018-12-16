@@ -22,7 +22,7 @@ class Page(uiu.AppPage):
         super().__init__()
 
         @app.callback(Output("plot_heat_i", "figure"),
-                      [Input("drop_heat_categ", "value")])
+                      [Input("drop_categories", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_heatmap_i(categories):
             """
@@ -36,7 +36,7 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_heat_e", "figure"),
-                      [Input("drop_heat_categ", "value")])
+                      [Input("drop_categories", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_heatmap_e(categories):
             """
@@ -50,7 +50,7 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_heat_distribution", "figure"),
-                      [Input("drop_heat_categ", "value")])
+                      [Input("drop_categories", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_distplot(categories):
             """
@@ -80,12 +80,3 @@ class Page(uiu.AppPage):
                 figure=plots.dist_plot(DFS[c.dfs.TRANS])
             ),
         ]
-
-    def get_filters(self):
-        return {
-            "Categories":
-                dcc.Dropdown(
-                    id="drop_heat_categ", multi=True,
-                    options=uiu.get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
-                ),
-        }
