@@ -90,7 +90,7 @@ class TestApp(unittest.TestCase):
     def test_page_investments(self):
         """ Test the content of page investments """
 
-        body_elem = ["plot_invest_detail", "radio_invest", "plot_invest_total_worth"]
+        body_elem = ["radio_invest", "plot_invest_total_worth"]
         self._check_one_page(c.dash.LINK_LIQUID, body_elem)
 
 
