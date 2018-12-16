@@ -27,10 +27,24 @@ def get_layout():
                     ]
                 ),
                 html.Div(
-                    html.Button(
-                        'Sync', id='sync',
-                        className="w3-bar-item w3-button w3-padding-large w3-hover-white"
-                    ),
+                    [
+                        dcc.Input(
+                            id='input_time_average',
+                            type='number',
+                            value=12, min=1, max=12,
+                            className="w3-bar-item w3-padding-large w3-green"
+                        ),
+                        dcc.RadioItems(
+                            id="radio_timewindow", value="M",
+                            options=[{"label": "Month ", "value": "M"},
+                                     {"label": "Year ", "value": "Y"}],
+                            className="w3-bar-item w3-padding-large"
+                        ),
+                        html.Button(
+                            'Sync', id='sync',
+                            className="w3-bar-item w3-padding-large w3-button w3-hover-white"
+                        ),
+                    ],
                     className="w3-right"
                 )
             ],
