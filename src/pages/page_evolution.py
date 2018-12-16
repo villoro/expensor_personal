@@ -42,8 +42,6 @@ class Page(uiu.AppPage):
                     avg_month:  month to use in time average
             """
 
-            print(f"timewindow: {timewindow}")
-
             df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
             return plots.plot_timeserie(df, timewindow, avg_month)
 

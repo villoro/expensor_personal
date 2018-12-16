@@ -58,8 +58,8 @@ def plot_timeserie(dfg, timewindow="M", avg_month=12):
 
 
 def plot_timeserie_by_categories(
-    dfg, df_categ, type_trans=c.names.EXPENSES, timewindow="M", avg_month=12
-):
+        dfg, df_categ, type_trans=c.names.EXPENSES, timewindow="M", avg_month=12
+    ):
     """
         Creates a timeseries plot detailed by category
 

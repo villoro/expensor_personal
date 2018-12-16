@@ -11,19 +11,21 @@ import utilities as u
 MONTHS_MIN = 3
 MONTHS_REC = 6
 
-def liquid_plot(df_liq_in, df_list):
+def liquid_plot(df_liq_in, df_list, avg_month):
     """
         Creates a plot for the liquid evolution
 
         Args:
             df_liq_in:  dataframe with liquid info
             df_list:    dataframe with types of liquids
+            avg_month:  month to use in time average
 
         Returns:
             the plotly plot as html-div format
     """
 
     df_liq = df_liq_in.set_index(c.cols.DATE)
+    df_liq = u.dfs.time_average(df_liq.fillna(0), avg_month)
 
     data = [go.Scatter(x=df_liq.index, y=df_liq[c.names.TOTAL],
                        marker={"color": "black"}, name=c.names.TOTAL)]
@@ -57,7 +59,7 @@ def plot_expenses_vs_liquid(df_liquid_in, df_trans_in, avg_month, show_rec=True)
     """
 
     df_l = df_liquid_in.set_index(c.cols.DATE).copy()
-    df_l = u.dfs.time_average(df_l, avg_month)
+    df_l = u.dfs.time_average(df_l.fillna(0), avg_month)
 
     df_t = u.dfs.group_df_by(df_trans_in[df_trans_in[c.cols.TYPE] == c.names.EXPENSES], "M")
     df_t = u.dfs.time_average(df_t, avg_month)
@@ -94,7 +96,7 @@ def plot_months(df_liquid_in, df_trans_in, avg_month, show_rec=True):
     """
 
     df_l = df_liquid_in.set_index(c.cols.DATE).copy()
-    df_l = u.dfs.time_average(df_l, avg_month)
+    df_l = u.dfs.time_average(df_l.fillna(0), avg_month)
 
     df_t = u.dfs.group_df_by(df_trans_in[df_trans_in[c.cols.TYPE] == c.names.EXPENSES], "M")
     df_t = u.dfs.time_average(df_t, avg_month)
