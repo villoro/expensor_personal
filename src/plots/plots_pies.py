@@ -7,6 +7,7 @@ import plotly.graph_objs as go
 import utilities as u
 import constants as c
 
+
 def get_pie(dfg, df_categ, type_trans, years=None, height=None):
     """
         Creates a pie with expenses or incomes

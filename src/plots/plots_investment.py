@@ -5,6 +5,8 @@
 import plotly.graph_objs as go
 
 import constants as c
+import utilities as u
+
 
 def invest_evolution_plot(df_in, avg_month):
     """
@@ -12,7 +14,7 @@ def invest_evolution_plot(df_in, avg_month):
 
         Args:
             df_in:      dataframe to plot
-            avg_month:  month to use in rolling average
+            avg_month:  month to use in time average
 
         Returns:
             the plotly plot as html-div format
@@ -20,7 +22,7 @@ def invest_evolution_plot(df_in, avg_month):
 
     df = df_in.set_index(c.cols.DATE)
 
-    df = df.rolling(avg_month, min_periods=1).mean().apply(lambda x: round(x, 2))
+    df = u.dfs.time_average(df, avg_month)
 
     data = [go.Scatter(x=df.index, y=df[c.names.TOTAL],
                        marker={"color": "black"}, name=c.names.TOTAL)]
@@ -40,7 +42,7 @@ def total_worth_plot(df_liq_in, df_wor_in, avg_month):
         Args:
             df_liq_in:  dataframe with liquid
             df_wor_in:  dataframe with investment worth
-            avg_month:  month to use in rolling average
+            avg_month:  month to use in time average
 
         Returns:
             the plotly plot as html-div format
@@ -49,8 +51,8 @@ def total_worth_plot(df_liq_in, df_wor_in, avg_month):
     df_liq = df_liq_in.set_index(c.cols.DATE)[[c.names.TOTAL]]
     df_wor = df_wor_in.set_index(c.cols.DATE)[[c.names.TOTAL]]
 
-    df_liq = df_liq.rolling(avg_month, min_periods=1).mean().apply(lambda x: round(x, 2))
-    df_wor = df_wor.rolling(avg_month, min_periods=1).mean().apply(lambda x: round(x, 2))
+    df_liq = u.dfs.time_average(df_liq, avg_month)
+    df_wor = u.dfs.time_average(df_wor, avg_month)
 
     # If indexs have different lenghts, normalize them
     index = df_wor.index if df_wor.shape[0] > df_liq.shape[0] else df_liq.index

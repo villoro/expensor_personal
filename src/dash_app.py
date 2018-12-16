@@ -8,7 +8,7 @@ import dash_auth
 from dash import Dash
 
 import constants as c
-from app import layout
+import layout
 
 VALID_USERNAME_PASSWORD_PAIRS = [
     [os.environ[c.io.VAR_USER], os.environ[c.io.VAR_PASSWORD]]
