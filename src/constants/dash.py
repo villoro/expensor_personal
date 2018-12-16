@@ -6,13 +6,13 @@ LINK_ROOT = "http://localhost:8050"
 LINK_ROOT_LOGIN = "http://{}:{}@localhost:8050"
 
 LINK_MAIN = "/"
-LINK_DASHBOARD = "/dashboard"
+LINK_DASHBOARD = "/dash"
 LINK_EVOLUTION = "/evolution"
-LINK_COMPARISON = "/comparison"
+LINK_COMPARISON = "/compare"
 LINK_HEATMAPS = "/heatmaps"
 LINK_PIES = "/pies"
 LINK_LIQUID = "/liquid"
-LINK_INVESTMENTS = "/investments"
+LINK_INVESTMENTS = "/invest"
 
 LANDING_APP = LINK_DASHBOARD
 
