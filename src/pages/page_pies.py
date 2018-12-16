@@ -20,14 +20,16 @@ class Page(uiu.AppPage):
 
 
     def __init__(self, app):
-        super().__init__()
+        super().__init__({
+            c.dash.SHOW_CATEGORIES: True,
+        })
 
         self.all_years = DFS[c.dfs.TRANS][c.cols.YEAR].unique().tolist()
         self.last_year_as_list = [max(self.all_years)]
 
         for num, _ in enumerate([self.all_years, self.last_year_as_list]):
             @app.callback(Output("plot_pie_{}_{}".format(num, c.names.INCOMES), "figure"),
-                          [Input("drop_pie_categ", "value"),
+                          [Input("drop_categories", "value"),
                            Input("drop_pie_{}".format(num), "value")])
             #pylint: disable=unused-variable,unused-argument
             def update_pie_incomes(categories, years):
@@ -43,7 +45,7 @@ class Page(uiu.AppPage):
 
 
             @app.callback(Output("plot_pie_{}_{}".format(num, c.names.EXPENSES), "figure"),
-                          [Input("drop_pie_categ", "value"),
+                          [Input("drop_categories", "value"),
                            Input("drop_pie_{}".format(num), "value")])
             #pylint: disable=unused-variable,unused-argument
             def update_pie_expenses(categories, years):
@@ -95,13 +97,3 @@ class Page(uiu.AppPage):
             ])
 
         return body
-
-
-    def get_filters(self):
-        return {
-            "Categories":
-                dcc.Dropdown(
-                    id="drop_pie_categ", multi=True,
-                    options=uiu.get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
-                ),
-        }

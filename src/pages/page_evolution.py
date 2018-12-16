@@ -21,11 +21,15 @@ class Page(uiu.AppPage):
 
 
     def __init__(self, app):
-        super().__init__()
+        super().__init__({
+            c.dash.SHOW_CATEGORIES: True,
+            c.dash.SHOW_MONTH_AVERAGE: True,
+            c.dash.SHOW_GROUPING: True
+        })
 
         @app.callback(Output("plot_evol", "figure"),
-                      [Input("drop_evol_categ", "value"),
-                       Input("radio_evol_tw", "value")])
+                      [Input("drop_categories", "value"),
+                       Input("radio_timewindow", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_timeserie_plot(categories, timewindow):
             """
@@ -40,9 +44,9 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_evo_detail", "figure"),
-                      [Input("drop_evol_categ", "value"),
+                      [Input("drop_categories", "value"),
                        Input("radio_evol_type", "value"),
-                       Input("radio_evol_tw", "value")])
+                       Input("radio_timewindow", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_ts_by_categories_plot(categories, type_trans, timewindow):
             """
@@ -78,19 +82,3 @@ class Page(uiu.AppPage):
                 )
             ],
         ]
-
-    def get_filters(self):
-        return {
-            "Categories":
-                dcc.Dropdown(
-                    id="drop_evol_categ", multi=True,
-                    options=uiu.get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
-                ),
-            "Group by":
-                dcc.RadioItems(
-                    id="radio_evol_tw", value=self.def_tw,
-                    options=[{"label": "Day", "value": "D"},
-                             {"label": "Month", "value": "M"},
-                             {"label": "Year", "value": "Y"}]
-                ),
-        }

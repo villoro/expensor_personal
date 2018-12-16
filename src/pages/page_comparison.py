@@ -21,11 +21,14 @@ class Page(uiu.AppPage):
 
 
     def __init__(self, app):
-        super().__init__()
+        super().__init__({
+            c.dash.SHOW_CATEGORIES: True,
+            c.dash.SHOW_MONTH_AVERAGE: True,
+        })
 
         @app.callback(Output("plot_comp_1", "figure"),
-                      [Input("drop_comp_categ", "value"),
-                       Input("slider_comp_rolling_avg", "value"),
+                      [Input("drop_categories", "value"),
+                       Input("input_time_average", "value"),
                        Input("radio_comp_1", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_ts_grad_1(categories, avg_month, type_trans):
@@ -43,8 +46,8 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_comp_2", "figure"),
-                      [Input("drop_comp_categ", "value"),
-                       Input("slider_comp_rolling_avg", "value"),
+                      [Input("drop_categories", "value"),
+                       Input("input_time_average", "value"),
                        Input("radio_comp_2", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_ts_grad_2(categories, avg_month, type_trans):
@@ -84,18 +87,3 @@ class Page(uiu.AppPage):
                 )
             ]
         ]
-
-    def get_filters(self):
-        return {
-            "Categories":
-                dcc.Dropdown(
-                    id="drop_comp_categ", multi=True,
-                    options=uiu.get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
-                ),
-            "Rolling Average":
-                dcc.Slider(
-                    id="slider_comp_rolling_avg",
-                    min=1, max=12, value=self.def_ma,
-                    marks={i: str(i) if i > 1 else "None" for i in range(1, 13)},
-                ),
-        }

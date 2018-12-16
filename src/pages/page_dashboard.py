@@ -23,10 +23,12 @@ class Page(uiu.AppPage):
 
 
     def __init__(self, app):
-        super().__init__()
+        super().__init__({
+            c.dash.SHOW_MONTH_AVERAGE: True,
+        })
 
         @app.callback(Output("plot_dash_evol", "figure"),
-                      [Input("slider_dash_rolling_avg", "value")])
+                      [Input("input_time_average", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_timeserie_plot(avg_month):
             """
@@ -39,7 +41,7 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_dash_l_vs_e", "figure"),
-                      [Input("slider_dash_rolling_avg", "value")])
+                      [Input("input_time_average", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_liquid_vs_expenses(avg_month):
             """
@@ -55,7 +57,7 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_dash_liq_months", "figure"),
-                      [Input("slider_dash_rolling_avg", "value")])
+                      [Input("input_time_average", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_liquid_months(avg_month):
             """
@@ -70,7 +72,7 @@ class Page(uiu.AppPage):
             )
 
         @app.callback(Output("plot_dash_total_worth", "figure"),
-                      [Input("slider_dash_rolling_avg", "value")])
+                      [Input("input_time_average", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_plot_total_worth(avg_month):
             """
@@ -115,14 +117,3 @@ class Page(uiu.AppPage):
                 )
             ])
         ]
-
-
-    def get_filters(self):
-        return {
-            "Rolling Average":
-                dcc.Slider(
-                    id="slider_dash_rolling_avg",
-                    min=1, max=12, value=self.def_ma,
-                    marks={i: str(i) if i > 1 else "None" for i in range(1, 13)},
-                ),
-        }
