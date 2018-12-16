@@ -69,3 +69,9 @@ def fix_df_trans(df_in):
     df[c.cols.AMOUNT] = df[c.cols.AMOUNT].apply(abs)
 
     return df[c.cols.DF_TRANS]
+
+
+def time_average(df, months):
+    """ do some time average """
+
+    return df.ewm(months, min_periods=1).mean().apply(lambda x: round(x, 2)).copy()

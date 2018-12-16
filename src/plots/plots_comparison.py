@@ -15,7 +15,7 @@ def ts_gradient(dfg, type_trans, avg_month):
         Args:
             dfg:        dataframe to use
             type_trans: type of transaction [Income/Expense]
-            avg_month:  month to use in rolling average
+            avg_month:  month to use in time average
 
         Returns:
             the plotly plot as html-div format
@@ -34,9 +34,9 @@ def ts_gradient(dfg, type_trans, avg_month):
     if df.shape[0] == 0:
         return {}
 
-    # Compute rolling average
+    # Compute time average
     if avg_month > 0:
-        df = df.rolling(avg_month, min_periods=1).mean().apply(lambda x: round(x, 2))
+        df = u.dfs.time_average(df, avg_month)
 
     max_width = 5
 

@@ -33,7 +33,7 @@ class Page(uiu.AppPage):
 
                 Args:
                     type_df:    invested/worth
-                    avg_month:  month to use in rolling average
+                    avg_month:  month to use in time average
             """
 
 
@@ -51,7 +51,7 @@ class Page(uiu.AppPage):
                 Updates the timeserie gradient plot
 
                 Args:
-                    avg_month:  month to use in rolling average
+                    avg_month:  month to use in time average
             """
 
             return plots.total_worth_plot(

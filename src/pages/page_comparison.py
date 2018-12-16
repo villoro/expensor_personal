@@ -37,7 +37,7 @@ class Page(uiu.AppPage):
 
                 Args:
                     categories: categories to use
-                    avg_month:  month to use in rolling average
+                    avg_month:  month to use in time average
                     type_trans: expenses/incomes
             """
 
@@ -56,7 +56,7 @@ class Page(uiu.AppPage):
 
                 Args:
                     categories: categories to use
-                    avg_month:  month to use in rolling average
+                    avg_month:  month to use in time average
                     type_trans: expenses/incomes
             """
 

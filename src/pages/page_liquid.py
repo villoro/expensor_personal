@@ -31,7 +31,7 @@ class Page(uiu.AppPage):
                 Updates the liquid vs expenses plot
 
                 Args:
-                    avg_month:  month to use in rolling average
+                    avg_month:  month to use in time average
             """
 
             return plots.plot_expenses_vs_liquid(
@@ -47,7 +47,7 @@ class Page(uiu.AppPage):
                 Updates the survival months plot
 
                 Args:
-                    avg_month:  month to use in rolling average
+                    avg_month:  month to use in time average
             """
 
             return plots.plot_months(
