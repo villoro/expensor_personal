@@ -23,7 +23,7 @@ class Page(uiu.AppPage):
 
         @app.callback(Output("plot_invest_detail", "figure"),
                       [Input("radio_invest", "value"),
-                       Input("slider_invest_rolling_avg", "value")])
+                       Input("input_time_average", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_plot_invest(type_df, avg_month):
             """
@@ -42,7 +42,7 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_invest_total_worth", "figure"),
-                      [Input("slider_invest_rolling_avg", "value")])
+                      [Input("input_time_average", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_plot_total_worth(avg_month):
             """
@@ -78,14 +78,3 @@ class Page(uiu.AppPage):
         ]
 
         return body
-
-
-    def get_filters(self):
-        return {
-            "Rolling Average":
-                dcc.Slider(
-                    id="slider_invest_rolling_avg",
-                    min=1, max=12, value=self.def_ma,
-                    marks={i: str(i) if i > 1 else "None" for i in range(1, 13)},
-                )
-        }

@@ -22,7 +22,7 @@ class Page(uiu.AppPage):
         super().__init__()
 
         @app.callback(Output("plot_liquid_vs_expenses", "figure"),
-                      [Input("slider_liq_rolling_avg", "value")])
+                      [Input("input_time_average", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_liquid_vs_expenses(avg_month):
             """
@@ -38,7 +38,7 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_liquid_months", "figure"),
-                      [Input("slider_liq_rolling_avg", "value")])
+                      [Input("input_time_average", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_liquid_months(avg_month):
             """
@@ -70,14 +70,3 @@ class Page(uiu.AppPage):
                 figure=plots.plot_months(DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], self.def_ma)
             ),
         ]
-
-
-    def get_filters(self):
-        return {
-            "Rolling Average":
-                dcc.Slider(
-                    id="slider_liq_rolling_avg",
-                    min=1, max=12, value=self.def_ma,
-                    marks={i: str(i) if i > 1 else "None" for i in range(1, 13)},
-                )
-        }
