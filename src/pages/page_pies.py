@@ -20,7 +20,9 @@ class Page(uiu.AppPage):
 
 
     def __init__(self, app):
-        super().__init__()
+        super().__init__({
+            c.dash.SHOW_CATEGORIES: True,
+        })
 
         self.all_years = DFS[c.dfs.TRANS][c.cols.YEAR].unique().tolist()
         self.last_year_as_list = [max(self.all_years)]

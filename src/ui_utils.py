@@ -40,10 +40,8 @@ class AppPage():
         Raw Page class that is meant to be extended
     """
 
-    def __init__(self):
-        self.show_drop_categories = False
-        self.show_months_average = False
-        self.show_grouping = False
+    def __init__(self, show_dict={}):
+        self.show_dict = show_dict
 
     #pylint: disable=R0201
     def get_body(self):

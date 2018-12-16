@@ -4,6 +4,7 @@
 
 from dash.dependencies import Input, Output, State
 
+import constants as c
 from pages import get_pages
 from dash_app import create_dash_app
 from data_loader import sync
@@ -41,8 +42,7 @@ def toggle_categories(pathname, _):
     """Updates content based on current page"""
 
     if pathname in PAGES:
-        mbool = PAGES[pathname].show_drop_categories
-        return {"display": "block" if mbool else "none"}
+        return c.dash.SHOW_DICT(PAGES[pathname].show_dict.get(c.dash.SHOW_CATEGORIES, False))
     return {}
 
 
