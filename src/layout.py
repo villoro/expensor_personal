@@ -28,11 +28,19 @@ def get_layout():
                 ),
                 html.Div(
                     [
+                        html.Div(
+                            "Months average:",
+                            className="w3-bar-item w3-padding-large"
+                        ),
                         dcc.Input(
                             id='input_time_average',
                             type='number',
                             value=12, min=1, max=12,
                             className="w3-bar-item w3-padding-large w3-green"
+                        ),
+                        html.Div(
+                            "Grouping:",
+                            className="w3-bar-item w3-padding-large"
                         ),
                         dcc.RadioItems(
                             id="radio_timewindow", value="M",
@@ -42,7 +50,7 @@ def get_layout():
                         ),
                         html.Button(
                             'Sync', id='sync',
-                            className="w3-bar-item w3-padding-large w3-button w3-hover-white"
+                            className="w3-bar-item w3-button w3-padding-large w3-hover-white"
                         ),
                     ],
                     className="w3-right"
