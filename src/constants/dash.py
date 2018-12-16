@@ -37,3 +37,5 @@ SHOW_DICT = (lambda x: {"display": "block" if bool(x) else "none"})
 SHOW_CATEGORIES = "show_categories"
 SHOW_MONTH_AVERAGE = "show_month_average"
 SHOW_GROUPING = "show_grouping"
+
+DEFAULT_SMOOTHING = 1
