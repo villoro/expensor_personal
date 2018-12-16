@@ -59,6 +59,22 @@ class Page(uiu.AppPage):
             )
 
 
+        @app.callback(Output("plot_passive_income", "figure"),
+                      [Input("input_time_average", "value")])
+        #pylint: disable=unused-variable,unused-argument
+        def update_plot_passive_income(avg_month):
+            """
+                Updates the timeserie gradient plot
+
+                Args:
+                    avg_month:  month to use in time average
+            """
+
+            return plots.passive_income_vs_expenses(
+                DFS[c.dfs.WORTH], DFS[c.dfs.TRANS], avg_month
+            )
+
+
     def get_body(self):
         body = [
             [
@@ -75,6 +91,12 @@ class Page(uiu.AppPage):
                 id="plot_invest_total_worth", config=uiu.PLOT_CONFIG,
                 figure=plots.total_worth_plot(
                     DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], self.def_ma
+                )
+            ),
+            dcc.Graph(
+                id="plot_passive_income", config=uiu.PLOT_CONFIG,
+                figure=plots.passive_income_vs_expenses(
+                    DFS[c.dfs.WORTH], DFS[c.dfs.TRANS], self.def_ma
                 )
             ),
         ]

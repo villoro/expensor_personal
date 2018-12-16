@@ -72,3 +72,37 @@ def total_worth_plot(df_liq_in, df_wor_in, avg_month):
 
     layout = go.Layout(title="Total worth evolution", barmode="stack")
     return go.Figure(data=data, layout=layout)
+
+
+def passive_income_vs_expenses(df_wor_in, df_trans_in, avg_month):
+    """
+        Compares what can be generated with passive income to expanses
+
+        Args:
+            df_wor_in:      dataframe with investment worth
+            df_trans_in:    dataframe with transactions
+            avg_month:      month to use in time average
+
+        Returns:
+            the plotly plot as html-div format
+    """
+
+    dfw = df_wor_in.set_index(c.cols.DATE)[[c.names.TOTAL]]
+    dfw = u.dfs.time_average(dfw, avg_month)
+
+    dfe = u.dfs.group_df_by(df_trans_in[df_trans_in[c.cols.TYPE] == c.names.EXPENSES], "M")
+    dfe = u.dfs.time_average(dfe, avg_month)
+
+    data = [
+        go.Scatter(
+            x=dfw.index, y=dfw[c.names.TOTAL]*0.04/12,
+            name="Passive income", marker={"color": c.colors.INCOMES_PASSIVE}
+        ),
+        go.Scatter(
+            x=dfe.index, y=dfe[c.cols.AMOUNT],
+            name="Expenses", marker={"color": c.colors.EXPENSES}
+        ),
+    ]
+
+    layout = go.Layout(title="Passive income vs expenses", barmode="stack")
+    return go.Figure(data=data, layout=layout)
