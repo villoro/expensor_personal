@@ -6,9 +6,8 @@ import dash_core_components as dcc
 import dash_html_components as html
 
 import constants as c
-
-
-HEADER_HEIGHT = "48px"
+from ui_utils import get_options
+from data_loader import DFS
 
 def get_layout():
     """ Creates the dash layout """
@@ -56,14 +55,32 @@ def get_layout():
                     className="w3-right"
                 )
             ],
-            className="w3-top w3-bar w3-left-align w3-green w3-text-white w3-card",
-            style={"height": HEADER_HEIGHT}
+            className="w3-bar w3-left-align w3-green w3-text-white w3-card",
+            style={"z-index": 10000}
         ),
 
         # Filters
         html.Div(
-            id="filters", style={"margin-top": HEADER_HEIGHT},
-            className="w3-padding-16 w3-light-grey w3-row"
+            [
+                html.Div(
+                    html.H5("Categories"),
+                    className="w3-col l1 m2 s4 w3-padding"
+                ),
+                html.Div(
+                    dcc.Dropdown(
+                        id="drop_categories", multi=True,
+                        options=get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
+                    ),
+                    className="w3-col l11 m10 s8",
+                    style={
+                        "padding-top": "14px",
+                        "padding-bottom": "14px",
+                        "padding-left": "16px",
+                        "padding-right": "16px",
+                    }
+                )
+            ],
+            className="w3-row w3-card",
         ),
 
         # Body

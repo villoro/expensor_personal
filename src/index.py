@@ -32,20 +32,6 @@ def display_content(pathname, _):
 
 
 @APP.callback(
-    Output('filters', 'children'),
-    [Input('url', 'pathname')],
-    [State('sync_count', 'children')]
-)
-#pylint: disable=unused-variable
-def display_sidebar(pathname, _):
-    """Updates sidebar based on current page"""
-
-    if pathname in PAGES:
-        return PAGES[pathname].get_filters_html()
-    return "404"
-
-
-@APP.callback(
     Output("sync_count", "children"),
     [Input("sync", "n_clicks")]
 )
