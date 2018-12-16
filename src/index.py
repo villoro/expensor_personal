@@ -4,11 +4,10 @@
 
 from dash.dependencies import Input, Output, State
 
-import constants as c
 from pages import get_pages
 from dash_app import create_dash_app
 from data_loader import sync
-
+from toggles import add_toggle_callbacks
 
 # Create dash app with styles
 APP = create_dash_app()
@@ -25,25 +24,11 @@ PAGES = get_pages(APP)
 )
 #pylint: disable=unused-variable
 def display_content(pathname, _):
-    """Updates content based on current page"""
+    """ Updates content based on current page """
 
     if pathname in PAGES:
         return PAGES[pathname].get_body_html()
     return "404"
-
-
-@APP.callback(
-    Output('filters', 'style'),
-    [Input('url', 'pathname')],
-    [State('sync_count', 'children')]
-)
-#pylint: disable=unused-variable
-def toggle_categories(pathname, _):
-    """Updates content based on current page"""
-
-    if pathname in PAGES:
-        return c.dash.SHOW_DICT(PAGES[pathname].show_dict.get(c.dash.SHOW_CATEGORIES, False))
-    return {}
 
 
 @APP.callback(
@@ -56,6 +41,10 @@ def update_sync_count(x):
 
     sync()
     return x
+
+
+add_toggle_callbacks(APP, PAGES)
+
 
 
 if __name__ == '__main__':

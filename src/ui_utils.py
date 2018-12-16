@@ -40,8 +40,8 @@ class AppPage():
         Raw Page class that is meant to be extended
     """
 
-    def __init__(self, show_dict={}):
-        self.show_dict = show_dict
+    def __init__(self, show_dict=None):
+        self.show_dict = show_dict if show_dict is not None else {}
 
     #pylint: disable=R0201
     def get_body(self):
