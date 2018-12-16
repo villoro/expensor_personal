@@ -102,7 +102,9 @@ class TestApp(unittest.TestCase):
     def test_page_investments(self):
         """ Test the content of page investments """
 
-        body_elem = ["plot_invest_detail", "radio_invest", "plot_invest_total_worth"]
+        body_elem = [
+            "plot_invest_detail", "radio_invest", "plot_invest_total_worth", "plot_passive_income"
+        ]
         sidebar_elem = ["input_time_average"]
         self._check_one_page(c.dash.LINK_INVESTMENTS, body_elem + sidebar_elem)
 
