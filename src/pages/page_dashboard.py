@@ -6,7 +6,7 @@ import dash_core_components as dcc
 from dash.dependencies import Input, Output
 
 import constants as c
-from app import ui_utils as uiu
+import ui_utils as uiu
 from plots import plots_evolution as plt_ev
 from plots import plots_liquid as plt_li
 from plots import plots_dashboard as plt_db

@@ -7,7 +7,7 @@ import importlib
 from dash.dependencies import Input, Output
 
 import constants as c
-from app import ui_utils as uiu
+import ui_utils as uiu
 
 
 def get_pages(app):
@@ -30,7 +30,7 @@ def get_pages(app):
     """
 
     output = {}
-    for page_name in os.listdir("src/app/pages"):
+    for page_name in os.listdir("src/pages"):
 
         # Check if it is a page
         if (page_name.startswith("page")) and (page_name.endswith(".py")):
@@ -39,7 +39,7 @@ def get_pages(app):
             page_name = ".{}".format(page_name.split(".")[0])
 
             # Import it programatically
-            m_page = importlib.import_module(page_name, "app.pages").Page(app)
+            m_page = importlib.import_module(page_name, "pages").Page(app)
 
             # Add content to the output dict
             output[m_page.link] = m_page

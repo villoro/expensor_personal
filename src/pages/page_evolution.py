@@ -7,7 +7,7 @@ from dash.dependencies import Input, Output
 
 import utilities as u
 import constants as c
-from app import ui_utils as uiu
+import ui_utils as uiu
 from plots import plots_evolution as plots
 from data_loader import DFS
 
