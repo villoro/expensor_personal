@@ -8,14 +8,14 @@ import constants as c
 import utilities as u
 
 
-def plot_timeserie(dfg, timewindow="M", avg_month=1):
+def plot_timeserie(dfg, timewindow="M", avg_month=12):
     """
         Creates a timeseries plot with expenses, incomes and their regressions
 
         Args:
             dfg:        dataframe with info
             timewindow: temporal grouping
-            avg_month:  month to use in rolling average
+            avg_month:  month to use in time average
 
         Returns:
             the plotly plot as html-div format
@@ -28,7 +28,7 @@ def plot_timeserie(dfg, timewindow="M", avg_month=1):
 
     for name, color in iter_data.items():
         df = u.dfs.group_df_by(dfg[dfg[c.cols.TYPE] == name], timewindow)
-        df = df.rolling(avg_month, min_periods=1).mean().apply(lambda x: round(x, 2))
+        df = u.dfs.time_average(df, avg_month)
         data.append(
             go.Scatter(
                 x=df.index, y=df[c.cols.AMOUNT],
@@ -44,7 +44,7 @@ def plot_timeserie(dfg, timewindow="M", avg_month=1):
 
     # EBIT trace
     df = u.dfs.group_df_by(df, timewindow)
-    df = df.rolling(avg_month, min_periods=1).mean().apply(lambda x: round(x, 2))
+    df = u.dfs.time_average(df, avg_month)
     data.append(
         go.Scatter(
             x=df.index, y=df[c.cols.AMOUNT],
@@ -57,7 +57,9 @@ def plot_timeserie(dfg, timewindow="M", avg_month=1):
     return go.Figure(data=data, layout=layout)
 
 
-def plot_timeserie_by_categories(dfg, df_categ, type_trans=c.names.EXPENSES, timewindow="M"):
+def plot_timeserie_by_categories(
+        dfg, df_categ, type_trans=c.names.EXPENSES, timewindow="M", avg_month=12
+    ):
     """
         Creates a timeseries plot detailed by category
 
@@ -66,6 +68,7 @@ def plot_timeserie_by_categories(dfg, df_categ, type_trans=c.names.EXPENSES, tim
             df_categ:   categories dataframe
             type_trans: type of transaction [Income/Expense]
             timewindow: temporal grouping
+            avg_month:  month to use in time average
 
         Returns:
             the plotly plot as html-div format
@@ -75,6 +78,8 @@ def plot_timeserie_by_categories(dfg, df_categ, type_trans=c.names.EXPENSES, tim
     df_cat = df_categ[df_categ[c.cols.TYPE] == type_trans].set_index(c.cols.NAME)
 
     df_aux = u.dfs.group_df_by(df, timewindow)
+    df_aux = df_aux.reindex(dfg["Month_date"].unique(), fill_value=0)
+    df_aux = u.dfs.time_average(df_aux, avg_month)
     data = [go.Scatter(x=df_aux.index, y=df_aux[c.cols.AMOUNT],
                        marker={"color": "black"}, name=c.names.TOTAL)]
 
@@ -87,6 +92,8 @@ def plot_timeserie_by_categories(dfg, df_categ, type_trans=c.names.EXPENSES, tim
             color = u.get_colors(("black", 500))
 
         df_aux = u.dfs.group_df_by(df[df[c.cols.CATEGORY] == cat], timewindow)
+        df_aux = df_aux.reindex(dfg["Month_date"].unique(), fill_value=0)
+        df_aux = u.dfs.time_average(df_aux, avg_month)
         data.append(go.Bar(
             x=df_aux.index, y=df_aux[c.cols.AMOUNT],
             marker={"color": color}, name=cat

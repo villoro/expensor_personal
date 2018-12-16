@@ -28,7 +28,7 @@ def get_layout():
                 html.Div(
                     [
                         html.Div(
-                            "Months average:",
+                            "Smoothing:",
                             id="title_time_average",
                             className="w3-bar-item w3-padding-large",
                             style=c.dash.SHOW_DICT(False)
@@ -36,7 +36,7 @@ def get_layout():
                         dcc.Input(
                             id='input_time_average',
                             type='number',
-                            value=12, min=1, max=12,
+                            value=12, min=0, max=12,
                             className="w3-bar-item w3-padding-large w3-green",
                             style=c.dash.SHOW_DICT(False)
                         ),

@@ -35,7 +35,7 @@ class Page(uiu.AppPage):
                 Updates the timeserie plot
 
                 Args:
-                    avg_month:  month to use in rolling average
+                    avg_month:  month to use in time average
             """
             return plt_ev.plot_timeserie(DFS[c.dfs.TRANS], avg_month=avg_month)
 
@@ -48,7 +48,7 @@ class Page(uiu.AppPage):
                 Updates the liquid vs expenses plot
 
                 Args:
-                    avg_month:  month to use in rolling average
+                    avg_month:  month to use in time average
             """
 
             return plt_li.plot_expenses_vs_liquid(
@@ -64,7 +64,7 @@ class Page(uiu.AppPage):
                 Updates the survival months plot
 
                 Args:
-                    avg_month:  month to use in rolling average
+                    avg_month:  month to use in time average
             """
 
             return plt_li.plot_months(
@@ -79,7 +79,7 @@ class Page(uiu.AppPage):
                 Updates the timeserie gradient plot
 
                 Args:
-                    avg_month:  month to use in rolling average
+                    avg_month:  month to use in time average
             """
 
             return plt_inv.total_worth_plot(

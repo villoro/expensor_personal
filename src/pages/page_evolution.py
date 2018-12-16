@@ -29,26 +29,30 @@ class Page(uiu.AppPage):
 
         @app.callback(Output("plot_evol", "figure"),
                       [Input("drop_categories", "value"),
-                       Input("radio_timewindow", "value")])
+                       Input("radio_timewindow", "value"),
+                       Input("input_time_average", "value")])
         #pylint: disable=unused-variable,unused-argument
-        def update_timeserie_plot(categories, timewindow):
+        def update_timeserie_plot(categories, timewindow, avg_month):
             """
                 Updates the timeserie plot
 
                 Args:
                     categories: categories to use
                     timewindow: timewindow to use for grouping
+                    avg_month:  month to use in time average
             """
+
             df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
-            return plots.plot_timeserie(df, timewindow)
+            return plots.plot_timeserie(df, timewindow, avg_month)
 
 
         @app.callback(Output("plot_evo_detail", "figure"),
                       [Input("drop_categories", "value"),
                        Input("radio_evol_type", "value"),
-                       Input("radio_timewindow", "value")])
+                       Input("radio_timewindow", "value"),
+                       Input("input_time_average", "value")])
         #pylint: disable=unused-variable,unused-argument
-        def update_ts_by_categories_plot(categories, type_trans, timewindow):
+        def update_ts_by_categories_plot(categories, type_trans, timewindow, avg_month):
             """
                 Updates the timeserie by categories plot
 
@@ -56,10 +60,11 @@ class Page(uiu.AppPage):
                     categories: categories to use
                     type_trans: type of transacions [Expenses/Inc]
                     timewindow: timewindow to use for grouping
+                    avg_month:  month to use in time average
             """
             df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
             return plots.plot_timeserie_by_categories(
-                df, DFS[c.dfs.CATEG], type_trans, timewindow
+                df, DFS[c.dfs.CATEG], type_trans, timewindow, avg_month
             )
 
     def get_body(self):
