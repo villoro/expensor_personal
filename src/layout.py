@@ -28,7 +28,7 @@ def get_layout():
                 html.Div(
                     [
                         html.Div(
-                            "Smoothing:",
+                            "Months avg:",
                             id="title_time_average",
                             className="w3-bar-item w3-padding-large",
                             style=c.dash.SHOW_DICT(False)
@@ -37,7 +37,7 @@ def get_layout():
                             id='input_time_average',
                             type='number',
                             value=c.dash.DEFAULT_SMOOTHING,
-                            min=0, max=12,
+                            min=1, max=12,
                             className="w3-bar-item w3-padding-large w3-green",
                             style=c.dash.SHOW_DICT(False)
                         ),

@@ -8,6 +8,7 @@ from utilities.upalette import get_colors
 
 EXPENSES = get_colors(("red", 500))
 INCOMES = get_colors(("green", 500))
+INCOMES_PASSIVE = get_colors(("green", 700))
 EBIT = get_colors(("amber", 500))
 EBIT_CUM = get_colors(("blue", 500))
 LIQUID = get_colors(("blue", 400))
