@@ -15,7 +15,6 @@ class Page(uiu.AppPage):
     """ Page Liquid """
 
     link = c.dash.LINK_LIQUID
-    def_ma = 12
 
 
     def __init__(self, app):
@@ -75,16 +74,20 @@ class Page(uiu.AppPage):
         return [
             dcc.Graph(
                 id="plot_liquid_evo", config=uiu.PLOT_CONFIG,
-                figure=plots.liquid_plot(DFS[c.dfs.LIQUID], DFS[c.dfs.LIQUID_LIST], self.def_ma)
+                figure=plots.liquid_plot(
+                    DFS[c.dfs.LIQUID], DFS[c.dfs.LIQUID_LIST], c.dash.DEFAULT_SMOOTHING
+                )
             ),
             dcc.Graph(
                 id="plot_liquid_vs_expenses", config=uiu.PLOT_CONFIG,
                 figure=plots.plot_expenses_vs_liquid(
-                    DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], self.def_ma
+                    DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING
                 )
             ),
             dcc.Graph(
                 id="plot_liquid_months", config=uiu.PLOT_CONFIG,
-                figure=plots.plot_months(DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], self.def_ma)
+                figure=plots.plot_months(
+                    DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING
+                )
             ),
         ]

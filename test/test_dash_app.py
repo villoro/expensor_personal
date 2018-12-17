@@ -18,8 +18,6 @@ class TestDashApp(unittest.TestCase):
 
         app = dash_app.create_dash_app()
 
-        self.assertEqual(app.url_base_pathname, "/")
-
         self.assertTrue(app.config['supress_callback_exceptions'])
 
 
