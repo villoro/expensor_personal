@@ -75,7 +75,7 @@ class TestApp(unittest.TestCase):
     def test_page_heatmaps(self):
         """ Test the content of page heatmaps """
 
-        body_elem = ["plot_heat_i", "plot_heat_e", "plot_heat_distribution"]
+        body_elem = ["plot_heat_e", "plot_heat_distribution"]
         sidebar_elem = ["drop_categories"]
         self._check_one_page(c.dash.LINK_HEATMAPS, body_elem + sidebar_elem)
 
