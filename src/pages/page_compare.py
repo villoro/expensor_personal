@@ -68,7 +68,9 @@ class Page(uiu.AppPage):
             [
                 dcc.Graph(
                     id="plot_comp_1", config=uiu.PLOT_CONFIG,
-                    figure=plots.ts_gradient(DFS[c.dfs.TRANS], c.names.INCOMES, c.dash.DEFAULT_SMOOTHING)
+                    figure=plots.ts_gradient(
+                        DFS[c.dfs.TRANS], c.names.INCOMES, c.dash.DEFAULT_SMOOTHING
+                    )
                 ),
                 dcc.RadioItems(
                     id="radio_comp_1", options=self.radio_opt,
@@ -78,7 +80,9 @@ class Page(uiu.AppPage):
             [
                 dcc.Graph(
                     id="plot_comp_2", config=uiu.PLOT_CONFIG,
-                    figure=plots.ts_gradient(DFS[c.dfs.TRANS], c.names.EXPENSES, c.dash.DEFAULT_SMOOTHING)
+                    figure=plots.ts_gradient(
+                        DFS[c.dfs.TRANS], c.names.EXPENSES, c.dash.DEFAULT_SMOOTHING
+                    )
                 ),
                 dcc.RadioItems(
                     id="radio_comp_2", options=self.radio_opt,
