@@ -16,7 +16,6 @@ class Page(uiu.AppPage):
     """ Page Comparison """
 
     link = c.dash.LINK_COMPARISON
-    def_ma = 1
     radio_opt = uiu.get_options([c.names.INCOMES, c.names.EXPENSES, c.names.EBIT])
 
 
@@ -69,7 +68,7 @@ class Page(uiu.AppPage):
             [
                 dcc.Graph(
                     id="plot_comp_1", config=uiu.PLOT_CONFIG,
-                    figure=plots.ts_gradient(DFS[c.dfs.TRANS], c.names.INCOMES, self.def_ma)
+                    figure=plots.ts_gradient(DFS[c.dfs.TRANS], c.names.INCOMES, c.dash.DEFAULT_SMOOTHING)
                 ),
                 dcc.RadioItems(
                     id="radio_comp_1", options=self.radio_opt,
@@ -79,7 +78,7 @@ class Page(uiu.AppPage):
             [
                 dcc.Graph(
                     id="plot_comp_2", config=uiu.PLOT_CONFIG,
-                    figure=plots.ts_gradient(DFS[c.dfs.TRANS], c.names.EXPENSES, self.def_ma)
+                    figure=plots.ts_gradient(DFS[c.dfs.TRANS], c.names.EXPENSES, c.dash.DEFAULT_SMOOTHING)
                 ),
                 dcc.RadioItems(
                     id="radio_comp_2", options=self.radio_opt,

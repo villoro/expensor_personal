@@ -15,7 +15,6 @@ class Page(uiu.AppPage):
     """ Page Pies """
 
     link = c.dash.LINK_INVESTMENTS
-    def_ma = 1
     dict_types = {c.names.INVESTED: c.dfs.INVEST, c.names.WORTH: c.dfs.WORTH}
 
     def __init__(self, app):
@@ -80,7 +79,7 @@ class Page(uiu.AppPage):
             [
                 dcc.Graph(
                     id="plot_invest_detail", config=uiu.PLOT_CONFIG,
-                    figure=plots.invest_evolution_plot(DFS[c.dfs.INVEST], self.def_ma)
+                    figure=plots.invest_evolution_plot(DFS[c.dfs.INVEST], c.dash.DEFAULT_SMOOTHING)
                 ),
                 dcc.RadioItems(
                     id="radio_invest", options=uiu.get_options([c.names.INVESTED, c.names.WORTH]),
@@ -90,13 +89,13 @@ class Page(uiu.AppPage):
             dcc.Graph(
                 id="plot_invest_total_worth", config=uiu.PLOT_CONFIG,
                 figure=plots.total_worth_plot(
-                    DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], self.def_ma
+                    DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], c.dash.DEFAULT_SMOOTHING
                 )
             ),
             dcc.Graph(
                 id="plot_passive_income", config=uiu.PLOT_CONFIG,
                 figure=plots.passive_income_vs_expenses(
-                    DFS[c.dfs.WORTH], DFS[c.dfs.TRANS], self.def_ma
+                    DFS[c.dfs.WORTH], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING
                 )
             ),
         ]
