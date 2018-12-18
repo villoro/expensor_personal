@@ -13,19 +13,21 @@ from data_loader import DFS
 def get_layout():
     """ Creates the dash layout """
 
+    dropdown_items = [
+        dbc.DropdownMenu(
+            nav=True,
+            in_navbar=True,
+            label="Pages",
+            children=[
+                dbc.DropdownMenuItem(
+                    x[1:], href=x, id="section_{}".format(x[1:]),
+                ) for x in c.dash.LINKS_ALL
+            ]
+        ),
+    ]
+
     navbar = dbc.Navbar(
-        [
-            dbc.DropdownMenu(
-                nav=True,
-                in_navbar=True,
-                label="Pages",
-                children=[
-                    dbc.DropdownMenuItem(
-                        x[1:], href=x, id="section_{}".format(x[1:]),
-                    ) for x in c.dash.LINKS_ALL
-                ]
-            ),
-        ],
+        [dbc.Button("Sync", id="sync", className="mr-1")] + dropdown_items,
         brand="Expensor",
         color="success",
         brand_href="/",
