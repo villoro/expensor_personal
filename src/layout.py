@@ -13,16 +13,43 @@ from data_loader import DFS
 def get_layout():
     """ Creates the dash layout """
 
-    navbar = html.Div(
+    navbar = dbc.Navbar(
         [
-            html.Div(
-                [
-                    html.A(
+            dbc.DropdownMenu(
+                nav=True,
+                in_navbar=True,
+                label="Pages",
+                children=[
+                    dbc.DropdownMenuItem(
                         x[1:], href=x, id="section_{}".format(x[1:]),
-                        className="w3-bar-item w3-button w3-padding-large w3-hover-white",
-                        style={"font-size": "18px"}
                     ) for x in c.dash.LINKS_ALL
                 ]
+            ),
+        ],
+        brand="Expensor",
+        color="success",
+        brand_href="/",
+        sticky="top",
+    )
+
+    filters = html.Div(
+        [
+            html.Div(
+                html.H5("Categories"),
+                className="w3-col l1 m2 s4 w3-padding"
+            ),
+            html.Div(
+                dcc.Dropdown(
+                    id="drop_categories", multi=True,
+                    options=get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
+                ),
+                className="w3-col l11 m10 s8",
+                style={
+                    "padding-top": "14px",
+                    "padding-bottom": "14px",
+                    "padding-left": "16px",
+                    "padding-right": "16px",
+                }
             ),
             html.Div(
                 [
@@ -53,36 +80,8 @@ def get_layout():
                         className="w3-bar-item w3-padding-large",
                         style=c.dash.SHOW_DICT(False)
                     ),
-                    html.Button(
-                        'Sync', id='sync',
-                        className="w3-bar-item w3-button w3-padding-large w3-hover-white"
-                    ),
                 ],
                 className="w3-right"
-            )
-        ],
-        className="w3-bar w3-left-align w3-green w3-text-white w3-card",
-        style={"z-index": 10000}
-    )
-
-    filters = html.Div(
-        [
-            html.Div(
-                html.H5("Categories"),
-                className="w3-col l1 m2 s4 w3-padding"
-            ),
-            html.Div(
-                dcc.Dropdown(
-                    id="drop_categories", multi=True,
-                    options=get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
-                ),
-                className="w3-col l11 m10 s8",
-                style={
-                    "padding-top": "14px",
-                    "padding-bottom": "14px",
-                    "padding-left": "16px",
-                    "padding-right": "16px",
-                }
             )
         ],
         id="filters",
