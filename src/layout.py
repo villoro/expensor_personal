@@ -52,7 +52,7 @@ def get_layout():
 
     dropdown_items = [
         dbc.Button(
-            "Sync", 
+            "Sync",
             id="sync",
             className="mr-1",
             outline=True,
@@ -134,7 +134,8 @@ class AppPage():
                 [
                     dbc.CardHeader(title),
                     html.Div(element, className="w3-padding")
-                ]
+                ],
+                color="secondary", inverse=True,
             ) for title, element in self.filters
         ]
 

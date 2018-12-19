@@ -37,7 +37,7 @@ def display_content(pathname, _):
     [State('sync_count', 'children')]
 )
 #pylint: disable=unused-variable
-def display_content(pathname, _):
+def display_filters(pathname, _):
     """ Updates content based on current page """
 
     if pathname in PAGES:
@@ -63,8 +63,10 @@ def update_sync_count(x):
     [Input("filters-button", "n_clicks")],
     [State("filters-container", "is_open")],
 )
-def toggle_filters(n, is_open):
-    if n:
+def toggle_filters(count, is_open):
+    """ hides/opens the filter block """
+
+    if count:
         return not is_open
     return is_open
 
