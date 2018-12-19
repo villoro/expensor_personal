@@ -7,7 +7,7 @@ from dash.dependencies import Input, Output, State
 from pages import get_pages
 from dash_app import create_dash_app
 from data_loader import sync
-from toggles import add_toggle_callbacks
+
 
 # Create dash app with styles
 APP = create_dash_app()
@@ -41,9 +41,6 @@ def update_sync_count(x):
 
     sync()
     return x
-
-
-add_toggle_callbacks(APP, PAGES)
 
 
 

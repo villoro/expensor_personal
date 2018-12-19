@@ -14,6 +14,21 @@ def get_layout():
     """ Creates the dash layout """
 
     dropdown_items = [
+        dbc.Button(
+            "Sync", 
+            id="sync",
+            className="mr-1",
+            outline=True,
+            color="primary",
+        ),
+        dbc.Button(
+            "Filters",
+            id="collapse-button",
+            outline=True,
+            color="primary",
+            className="mr-1"
+        ),
+    ] + [
         dbc.DropdownMenu(
             nav=True,
             in_navbar=True,
@@ -27,9 +42,8 @@ def get_layout():
     ]
 
     navbar = dbc.Navbar(
-        [dbc.Button("Sync", id="sync", className="mr-1")] + dropdown_items,
+        dropdown_items,
         brand="Expensor",
-        color="success",
         brand_href="/",
         sticky="top",
     )
