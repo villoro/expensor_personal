@@ -7,7 +7,7 @@ from dash.dependencies import Input, Output, State
 from pages import get_pages
 from dash_app import create_dash_app
 from data_loader import sync
-from toggles import add_toggle_callbacks
+
 
 # Create dash app with styles
 APP = create_dash_app()
@@ -32,6 +32,21 @@ def display_content(pathname, _):
 
 
 @APP.callback(
+    Output('filters', 'children'),
+    [Input('url', 'pathname')],
+    [State('sync_count', 'children')]
+)
+#pylint: disable=unused-variable
+def display_filters(pathname, _):
+    """ Updates content based on current page """
+
+    if pathname in PAGES:
+        return PAGES[pathname].get_filters()
+    return "404"
+
+
+
+@APP.callback(
     Output("sync_count", "children"),
     [Input("sync", "n_clicks")]
 )
@@ -43,8 +58,17 @@ def update_sync_count(x):
     return x
 
 
-add_toggle_callbacks(APP, PAGES)
+@APP.callback(
+    Output("filters-container", "is_open"),
+    [Input("filters-button", "n_clicks")],
+    [State("filters-container", "is_open")],
+)
+def toggle_filters(count, is_open):
+    """ hides/opens the filter block """
 
+    if count:
+        return not is_open
+    return is_open
 
 
 if __name__ == '__main__':

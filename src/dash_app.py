@@ -6,6 +6,7 @@ import os
 
 import dash_auth
 from dash import Dash
+from dash_bootstrap_components.themes import BOOTSTRAP
 
 import constants as c
 import layout
@@ -19,7 +20,7 @@ def create_dash_app():
         Creates the dash app and gets the related data
     """
 
-    app = Dash('auth')
+    app = Dash('expensor_personal', external_stylesheets=[BOOTSTRAP])
     app.config.supress_callback_exceptions = True
 
     _ = dash_auth.BasicAuth(

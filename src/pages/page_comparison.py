@@ -7,27 +7,27 @@ from dash.dependencies import Input, Output
 
 import utilities as u
 import constants as c
-import ui_utils as uiu
+import layout as lay
 from plots import plots_comparison as plots
 from data_loader import DFS
 
 
-class Page(uiu.AppPage):
+class Page(lay.AppPage):
     """ Page Comparison """
 
     link = c.dash.LINK_COMPARISON
-    radio_opt = uiu.get_options([c.names.INCOMES, c.names.EXPENSES, c.names.EBIT])
+    radio_opt = lay.get_options([c.names.INCOMES, c.names.EXPENSES, c.names.EBIT])
 
 
     def __init__(self, app):
-        super().__init__({
-            c.dash.SHOW_CATEGORIES: True,
-            c.dash.SHOW_MONTH_AVERAGE: True,
-        })
+        super().__init__([
+            c.dash.INPUT_CATEGORIES,
+            c.dash.INPUT_SMOOTHING,
+        ])
 
         @app.callback(Output("plot_comp_1", "figure"),
-                      [Input("drop_categories", "value"),
-                       Input("input_time_average", "value"),
+                      [Input("input_categories", "value"),
+                       Input("input_smoothing", "value"),
                        Input("radio_comp_1", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_ts_grad_1(categories, avg_month, type_trans):
@@ -45,8 +45,8 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_comp_2", "figure"),
-                      [Input("drop_categories", "value"),
-                       Input("input_time_average", "value"),
+                      [Input("input_categories", "value"),
+                       Input("input_smoothing", "value"),
                        Input("radio_comp_2", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_ts_grad_2(categories, avg_month, type_trans):
@@ -65,9 +65,9 @@ class Page(uiu.AppPage):
 
     def get_body(self):
         return [
-            [
+            lay.card([
                 dcc.Graph(
-                    id="plot_comp_1", config=uiu.PLOT_CONFIG,
+                    id="plot_comp_1", config=c.dash.PLOT_CONFIG,
                     figure=plots.ts_gradient(
                         DFS[c.dfs.TRANS], c.names.INCOMES, c.dash.DEFAULT_SMOOTHING
                     )
@@ -76,10 +76,10 @@ class Page(uiu.AppPage):
                     id="radio_comp_1", options=self.radio_opt,
                     value=c.names.INCOMES, labelStyle={'display': 'inline-block'}
                 )
-            ],
-            [
+            ]),
+            lay.card([
                 dcc.Graph(
-                    id="plot_comp_2", config=uiu.PLOT_CONFIG,
+                    id="plot_comp_2", config=c.dash.PLOT_CONFIG,
                     figure=plots.ts_gradient(
                         DFS[c.dfs.TRANS], c.names.EXPENSES, c.dash.DEFAULT_SMOOTHING
                     )
@@ -88,5 +88,5 @@ class Page(uiu.AppPage):
                     id="radio_comp_2", options=self.radio_opt,
                     value=c.names.EXPENSES, labelStyle={'display': 'inline-block'}
                 )
-            ]
+            ])
         ]

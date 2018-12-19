@@ -4,9 +4,10 @@
 
 from datetime import date, timedelta
 
-import dash_html_components as html
+import dash_bootstrap_components as dbc
 
 import constants as c
+import layout as lay
 from data_loader import get_money_lover_filename
 
 
@@ -40,6 +41,7 @@ def _get_stats(dfs, date_in):
 
     return out
 
+
 def get_summary(dfs):
     """ Gets a list of h6 with data from previous month """
 
@@ -53,31 +55,34 @@ def get_summary(dfs):
 
 
     # Header of the summary
-    text = "Stats for months {:%Y/%m} ({:%Y/%m}):".format(date_m1, date_m2)
-
-    data = [html.Div(html.H4(text), className="w3-col l2 m4 s6")]
+    data = [["Stats for months", "{:%Y/%m} ({:%Y/%m})".format(date_m1, date_m2), "secundary"]]
 
     # Fill the summary with relevant stats
-    for name, color in c.colors.COLORS.items():
+    for name, color in c.colors.COLORS_CARDS.items():
         # bool stating if it is better than previous month (expenses should be reversed)
         aux = stats[name] > stats2[name]
         symbols = ARROWS[not aux if name == c.names.EXPENSES else aux]
-        text = "{}: {:,.0f}€ ({:,.0f}€) {}".format(name, stats[name], stats2[name], symbols)
 
         # space as thousand separator
-        text = text.replace(",", ".")
+        text = f"{stats[name]:,.0f}€ ({stats2[name]:,.0f}€) {symbols}".replace(",", ".")
 
-        data.append(html.Div(
-            html.H5(text, style={"color": color}),
-            className="w3-col l2 m4 s6"
-        ))
+        data.append([name, text, color])
 
     # Show a text with transactions excel file date
     name = get_money_lover_filename()
-    text = "* Using data from {}".format(name.split(".")[0].replace("-", "/"))
+    data.append(["Using data from", name.split(".")[0].replace("-", "/"), "secundary"])
 
-    data.append(html.Div(
-        html.H5(text), className="w3-col l2 m4 s6"
-    ))
-
-    return html.Div(data, className="w3-row")
+    return dbc.CardDeck(
+        [
+            dbc.Card(
+                [
+                    dbc.CardTitle(title),
+                    dbc.CardText(text)
+                ],
+                color=color,
+                className="w3-center",
+                style=lay.padding()
+            ) for title, text, color in data
+        ],
+        style=lay.padding(),
+    )
