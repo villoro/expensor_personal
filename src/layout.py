@@ -50,20 +50,18 @@ def get_layout():
 
     filters_data = [
         # Time average
-        {
-            "title": "Smoothing:",
-            "size": {"xs": 12, "md": 6, "lg": 3},
-            "data": dbc.Input(
+        (
+            "Smoothing:",
+            dbc.Input(
                 id='input_time_average',
                 type='number',
                 value=c.dash.DEFAULT_SMOOTHING,
             ),
-        },
+        ),
         # Time window
-        {
-            "title": "Grouping:",
-            "size": {"xs": 12, "md": 6, "lg": 3},
-            "data": dcc.Dropdown(
+        (
+            "Grouping:",
+            dcc.Dropdown(
                 id="radio_timewindow",
                 value="M",
                 options=[
@@ -71,17 +69,16 @@ def get_layout():
                     {"label": "Year ", "value": "Y"}
                 ],
             ),
-        },
+        ),
         # Categories
-        {
-            "title": "Categories:",
-            "size": {"xs": 12, "md": 12, "lg": 6},
-            "data": dcc.Dropdown(
+        (
+            "Categories:",
+            dcc.Dropdown(
                 id="drop_categories",
                 multi=True,
                 options=get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
             )
-        }
+        )
     ]
 
     filters = dbc.Collapse(
@@ -89,13 +86,10 @@ def get_layout():
             [
                 dbc.Card(
                     [
-                        dbc.CardHeader(x["title"]),
-                        html.Div(
-                            x["data"],
-                            className="w3-padding"
-                        )
+                        dbc.CardHeader(title),
+                        html.Div(element, className="w3-padding")
                     ]
-                ) for x in filters_data
+                ) for title, element in filters_data
             ],
         ),
         id="filters",
