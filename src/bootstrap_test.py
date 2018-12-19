@@ -75,26 +75,18 @@ filters_data = [
 ]
 
 filters = dbc.Collapse(
-    dbc.Row(
+    dbc.CardDeck(
         [
-            dbc.Col(
-                html.Div(
-                    dbc.FormGroup(
-                        [
-                            dbc.Label(x["title"], width=4),
-                            dbc.Col(x["data"], width=8)
-                        ], 
-                        row=True, 
-                        className="w3-card",
-                        style={"padding-top": "8px", "padding-bottom": "8px"}
-                    ),
-                    style={"padding-left": "32px", "padding-right": "32px"}
-                ),
-                style={"padding-top": "16px"},
-                **x["size"],
+            dbc.Card(
+                [
+                    dbc.CardHeader(x["title"]),
+                    html.Div(
+                        x["data"],
+                        className="w3-padding"
+                    )
+                ]
             ) for x in filters_data
         ],
-        form=True,
     ),
     id="collapse",
     className="w3-padding-large"
