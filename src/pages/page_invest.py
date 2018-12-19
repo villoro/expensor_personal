@@ -19,12 +19,12 @@ class Page(lay.AppPage):
 
     def __init__(self, app):
         super().__init__([
-            c.dash.SHOW_MONTH_AVERAGE,
+            c.dash.INPUT_SMOOTHING,
         ])
 
         @app.callback(Output("plot_invest_detail", "figure"),
                       [Input("radio_invest", "value"),
-                       Input("input_time_average", "value")])
+                       Input("input_smoothing", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_plot_invest(type_df, avg_month):
             """
@@ -43,7 +43,7 @@ class Page(lay.AppPage):
 
 
         @app.callback(Output("plot_invest_total_worth", "figure"),
-                      [Input("input_time_average", "value")])
+                      [Input("input_smoothing", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_plot_total_worth(avg_month):
             """
@@ -59,7 +59,7 @@ class Page(lay.AppPage):
 
 
         @app.callback(Output("plot_passive_income", "figure"),
-                      [Input("input_time_average", "value")])
+                      [Input("input_smoothing", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_plot_passive_income(avg_month):
             """

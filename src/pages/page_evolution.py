@@ -22,15 +22,15 @@ class Page(lay.AppPage):
 
     def __init__(self, app):
         super().__init__([
-            c.dash.SHOW_CATEGORIES,
-            c.dash.SHOW_MONTH_AVERAGE,
-            c.dash.SHOW_GROUPING
+            c.dash.INPUT_CATEGORIES,
+            c.dash.INPUT_SMOOTHING,
+            c.dash.INPUT_TIMEWINDOW
         ])
 
         @app.callback(Output("plot_evol", "figure"),
                       [Input("input_categories", "value"),
                        Input("input_timewindow", "value"),
-                       Input("input_time_average", "value")])
+                       Input("input_smoothing", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_timeserie_plot(categories, timewindow, avg_month):
             """
@@ -50,7 +50,7 @@ class Page(lay.AppPage):
                       [Input("input_categories", "value"),
                        Input("radio_evol_type", "value"),
                        Input("input_timewindow", "value"),
-                       Input("input_time_average", "value")])
+                       Input("input_smoothing", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_ts_by_categories_plot(categories, type_trans, timewindow, avg_month):
             """

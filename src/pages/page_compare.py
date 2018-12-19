@@ -21,13 +21,13 @@ class Page(lay.AppPage):
 
     def __init__(self, app):
         super().__init__([
-            c.dash.SHOW_CATEGORIES,
-            c.dash.SHOW_MONTH_AVERAGE,
+            c.dash.INPUT_CATEGORIES,
+            c.dash.INPUT_SMOOTHING,
         ])
 
         @app.callback(Output("plot_comp_1", "figure"),
                       [Input("input_categories", "value"),
-                       Input("input_time_average", "value"),
+                       Input("input_smoothing", "value"),
                        Input("radio_comp_1", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_ts_grad_1(categories, avg_month, type_trans):
@@ -46,7 +46,7 @@ class Page(lay.AppPage):
 
         @app.callback(Output("plot_comp_2", "figure"),
                       [Input("input_categories", "value"),
-                       Input("input_time_average", "value"),
+                       Input("input_smoothing", "value"),
                        Input("radio_comp_2", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_ts_grad_2(categories, avg_month, type_trans):

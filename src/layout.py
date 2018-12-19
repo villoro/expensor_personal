@@ -18,15 +18,15 @@ def get_options(iterable):
 
 
 FILTERS = {
-    c.dash.SHOW_MONTH_AVERAGE: (
+    c.dash.INPUT_SMOOTHING: (
         "Smoothing:",
         dbc.Input(
-            id='input_time_average',
+            id='input_smoothing',
             type='number',
             value=c.dash.DEFAULT_SMOOTHING,
         ),
     ),
-    c.dash.SHOW_GROUPING: (
+    c.dash.INPUT_TIMEWINDOW: (
         "Grouping:",
         dcc.Dropdown(
             id="input_timewindow",
@@ -37,7 +37,7 @@ FILTERS = {
             ],
         ),
     ),
-    c.dash.SHOW_CATEGORIES: (
+    c.dash.INPUT_CATEGORIES: (
         "Categories:",
         dcc.Dropdown(
             id="input_categories",

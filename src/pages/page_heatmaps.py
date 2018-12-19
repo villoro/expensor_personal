@@ -20,7 +20,7 @@ class Page(lay.AppPage):
 
     def __init__(self, app):
         super().__init__([
-            c.dash.SHOW_CATEGORIES
+            c.dash.INPUT_CATEGORIES
         ])
 
         @app.callback(Output("plot_heat_i", "figure"),

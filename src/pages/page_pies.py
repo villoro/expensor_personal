@@ -21,7 +21,7 @@ class Page(lay.AppPage):
 
     def __init__(self, app):
         super().__init__([
-            c.dash.SHOW_CATEGORIES
+            c.dash.INPUT_CATEGORIES
         ])
 
         self.all_years = DFS[c.dfs.TRANS][c.cols.YEAR].unique().tolist()

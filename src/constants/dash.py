@@ -26,9 +26,9 @@ LINKS_ALL = [
     LINK_INVESTMENTS
 ]
 
-SHOW_CATEGORIES = "show_categories"
-SHOW_MONTH_AVERAGE = "show_month_average"
-SHOW_GROUPING = "show_grouping"
+INPUT_CATEGORIES = "categories"
+INPUT_SMOOTHING = "smoothing"
+INPUT_TIMEWINDOW = "timewindow"
 
 DEFAULT_SMOOTHING = 1
 

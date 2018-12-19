@@ -23,11 +23,11 @@ class Page(lay.AppPage):
 
     def __init__(self, app):
         super().__init__({
-            c.dash.SHOW_MONTH_AVERAGE: True,
+            c.dash.INPUT_SMOOTHING: True,
         })
 
         @app.callback(Output("plot_dash_evol", "figure"),
-                      [Input("input_time_average", "value")])
+                      [Input("input_smoothing", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_timeserie_plot(avg_month):
             """
@@ -40,7 +40,7 @@ class Page(lay.AppPage):
 
 
         @app.callback(Output("plot_dash_l_vs_e", "figure"),
-                      [Input("input_time_average", "value")])
+                      [Input("input_smoothing", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_liquid_vs_expenses(avg_month):
             """
@@ -56,7 +56,7 @@ class Page(lay.AppPage):
 
 
         @app.callback(Output("plot_dash_liq_months", "figure"),
-                      [Input("input_time_average", "value")])
+                      [Input("input_smoothing", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_liquid_months(avg_month):
             """
@@ -71,7 +71,7 @@ class Page(lay.AppPage):
             )
 
         @app.callback(Output("plot_dash_total_worth", "figure"),
-                      [Input("input_time_average", "value")])
+                      [Input("input_smoothing", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_plot_total_worth(avg_month):
             """
