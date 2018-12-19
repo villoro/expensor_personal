@@ -6,12 +6,12 @@ import dash_core_components as dcc
 from dash.dependencies import Input, Output
 
 import constants as c
-import ui_utils as uiu
+import layout as lay
 from plots import plots_investment as plots
 from data_loader import DFS
 
 
-class Page(uiu.AppPage):
+class Page(lay.AppPage):
     """ Page Pies """
 
     link = c.dash.LINK_INVESTMENTS
@@ -78,22 +78,22 @@ class Page(uiu.AppPage):
         body = [
             [
                 dcc.Graph(
-                    id="plot_invest_detail", config=uiu.PLOT_CONFIG,
+                    id="plot_invest_detail", config=c.dash.PLOT_CONFIG,
                     figure=plots.invest_evolution_plot(DFS[c.dfs.INVEST], c.dash.DEFAULT_SMOOTHING)
                 ),
                 dcc.RadioItems(
-                    id="radio_invest", options=uiu.get_options([c.names.INVESTED, c.names.WORTH]),
+                    id="radio_invest", options=lay.get_options([c.names.INVESTED, c.names.WORTH]),
                     value=c.names.INVESTED, labelStyle={'display': 'inline-block'}
                 )
             ],
             dcc.Graph(
-                id="plot_invest_total_worth", config=uiu.PLOT_CONFIG,
+                id="plot_invest_total_worth", config=c.dash.PLOT_CONFIG,
                 figure=plots.total_worth_plot(
                     DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], c.dash.DEFAULT_SMOOTHING
                 )
             ),
             dcc.Graph(
-                id="plot_passive_income", config=uiu.PLOT_CONFIG,
+                id="plot_passive_income", config=c.dash.PLOT_CONFIG,
                 figure=plots.passive_income_vs_expenses(
                     DFS[c.dfs.WORTH], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING
                 )

@@ -26,7 +26,7 @@ FILTERS = {
             value=c.dash.DEFAULT_SMOOTHING,
         ),
     ),
-    c.dash.SHOW_MONTH_AVERAGE: (
+    c.dash.SHOW_GROUPING: (
         "Grouping:",
         dcc.Dropdown(
             id="input_timewindow",
@@ -99,3 +99,58 @@ def get_layout():
     ]
 
     return html.Div([navbar, filters] + content)
+
+
+def two_columns(elements):
+    """
+        Creates a layout with two columns.
+        In large screens will be displayed as two columns.
+        In medium and smalls will be shown as only one.
+    """
+
+    return html.Div(
+        [
+            html.Div(
+                x, className="w3-col l6 m12 s12"
+            ) for x in elements
+        ],
+        className="w3-row"
+    )
+
+
+class AppPage():
+    """
+        Raw Page class that is meant to be extended
+    """
+
+    def __init__(self, mlist=[]):
+        self.filters = [FILTERS[x] for x in mlist]
+
+
+    def get_filters(self):
+        """ Retrives the html body """
+
+        return [
+            dbc.Card(
+                [
+                    dbc.CardHeader(title),
+                    html.Div(element, className="w3-padding")
+                ]
+            ) for title, element in self.filters
+        ]
+
+
+    #pylint: disable=R0201
+    def get_body(self):
+        """ Dummy function to be overrided by every page. It should create the body """
+        return []
+
+
+    def get_body_html(self):
+        """ Retrives the html body """
+
+        return [
+            html.Div(
+                data, className="w3-card w3-padding-large w3-margin w3-center"
+            ) for data in self.get_body()
+        ]

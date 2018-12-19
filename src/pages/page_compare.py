@@ -7,16 +7,16 @@ from dash.dependencies import Input, Output
 
 import utilities as u
 import constants as c
-import ui_utils as uiu
+import layout as lay
 from plots import plots_comparison as plots
 from data_loader import DFS
 
 
-class Page(uiu.AppPage):
+class Page(lay.AppPage):
     """ Page Comparison """
 
     link = c.dash.LINK_COMPARISON
-    radio_opt = uiu.get_options([c.names.INCOMES, c.names.EXPENSES, c.names.EBIT])
+    radio_opt = lay.get_options([c.names.INCOMES, c.names.EXPENSES, c.names.EBIT])
 
 
     def __init__(self, app):
@@ -67,7 +67,7 @@ class Page(uiu.AppPage):
         return [
             [
                 dcc.Graph(
-                    id="plot_comp_1", config=uiu.PLOT_CONFIG,
+                    id="plot_comp_1", config=c.dash.PLOT_CONFIG,
                     figure=plots.ts_gradient(
                         DFS[c.dfs.TRANS], c.names.INCOMES, c.dash.DEFAULT_SMOOTHING
                     )
@@ -79,7 +79,7 @@ class Page(uiu.AppPage):
             ],
             [
                 dcc.Graph(
-                    id="plot_comp_2", config=uiu.PLOT_CONFIG,
+                    id="plot_comp_2", config=c.dash.PLOT_CONFIG,
                     figure=plots.ts_gradient(
                         DFS[c.dfs.TRANS], c.names.EXPENSES, c.dash.DEFAULT_SMOOTHING
                     )

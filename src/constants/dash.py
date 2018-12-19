@@ -31,3 +31,8 @@ SHOW_MONTH_AVERAGE = "show_month_average"
 SHOW_GROUPING = "show_grouping"
 
 DEFAULT_SMOOTHING = 1
+
+PLOT_CONFIG = {
+    "displaylogo": False,
+    "modeBarButtonsToRemove": ["sendDataToCloud", "select2d", "lasso2d", "resetScale2d"]
+}

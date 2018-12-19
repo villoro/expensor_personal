@@ -7,12 +7,12 @@ from dash.dependencies import Input, Output
 
 import utilities as u
 import constants as c
-import ui_utils as uiu
+import layout as lay
 from plots import plots_heatmaps as plots
 from data_loader import DFS
 
 
-class Page(uiu.AppPage):
+class Page(lay.AppPage):
     """ Page Heatmaps """
 
     link = c.dash.LINK_HEATMAPS
@@ -67,18 +67,18 @@ class Page(uiu.AppPage):
 
     def get_body(self):
         return [
-            uiu.two_columns([
+            lay.two_columns([
                 dcc.Graph(
-                    id="plot_heat_i", config=uiu.PLOT_CONFIG,
+                    id="plot_heat_i", config=c.dash.PLOT_CONFIG,
                     figure=plots.get_heatmap(DFS[c.dfs.TRANS], c.names.INCOMES)
                 ),
                 dcc.Graph(
-                    id="plot_heat_e", config=uiu.PLOT_CONFIG,
+                    id="plot_heat_e", config=c.dash.PLOT_CONFIG,
                     figure=plots.get_heatmap(DFS[c.dfs.TRANS], c.names.EXPENSES)
                 ),
             ]),
             dcc.Graph(
-                id="plot_heat_distribution", config=uiu.PLOT_CONFIG,
+                id="plot_heat_distribution", config=c.dash.PLOT_CONFIG,
                 figure=plots.dist_plot(DFS[c.dfs.TRANS])
             ),
         ]

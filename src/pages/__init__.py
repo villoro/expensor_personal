@@ -4,10 +4,8 @@
 
 import os
 import importlib
-from dash.dependencies import Input, Output
 
 import constants as c
-import ui_utils as uiu
 
 
 def get_pages(app):

@@ -7,12 +7,12 @@ from dash.dependencies import Input, Output
 
 import utilities as u
 import constants as c
-import ui_utils as uiu
+import layout as lay
 from plots import plots_evolution as plots
 from data_loader import DFS
 
 
-class Page(uiu.AppPage):
+class Page(lay.AppPage):
     """ Page Evolution """
 
     link = c.dash.LINK_EVOLUTION
@@ -70,18 +70,18 @@ class Page(uiu.AppPage):
     def get_body(self):
         return [
             dcc.Graph(
-                id="plot_evol", config=uiu.PLOT_CONFIG,
+                id="plot_evol", config=c.dash.PLOT_CONFIG,
                 figure=plots.plot_timeserie(DFS[c.dfs.TRANS], self.def_tw)),
             [
                 dcc.Graph(
-                    id="plot_evo_detail", config=uiu.PLOT_CONFIG,
+                    id="plot_evo_detail", config=c.dash.PLOT_CONFIG,
                     figure=plots.plot_timeserie_by_categories(
                         DFS[c.dfs.TRANS], DFS[c.dfs.CATEG], self.def_type, self.def_tw
                     )
                 ),
                 dcc.RadioItems(
                     id="radio_evol_type",
-                    options=uiu.get_options([c.names.EXPENSES, c.names.INCOMES]),
+                    options=lay.get_options([c.names.EXPENSES, c.names.INCOMES]),
                     value=self.def_type,
                     labelStyle={'display': 'inline-block'}
                 )
