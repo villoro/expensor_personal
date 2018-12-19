@@ -18,9 +18,9 @@ class Page(uiu.AppPage):
 
 
     def __init__(self, app):
-        super().__init__({
-            c.dash.SHOW_MONTH_AVERAGE: True
-        })
+        super().__init__([
+            c.dash.SHOW_MONTH_AVERAGE
+        ])
 
 
         @app.callback(Output("plot_liquid_evo", "figure"),

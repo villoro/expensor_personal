@@ -18,9 +18,9 @@ class Page(uiu.AppPage):
     dict_types = {c.names.INVESTED: c.dfs.INVEST, c.names.WORTH: c.dfs.WORTH}
 
     def __init__(self, app):
-        super().__init__({
-            c.dash.SHOW_MONTH_AVERAGE: True,
-        })
+        super().__init__([
+            c.dash.SHOW_MONTH_AVERAGE,
+        ])
 
         @app.callback(Output("plot_invest_detail", "figure"),
                       [Input("radio_invest", "value"),

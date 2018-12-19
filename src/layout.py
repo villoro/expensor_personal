@@ -7,8 +7,45 @@ import dash_core_components as dcc
 import dash_html_components as html
 
 import constants as c
-from ui_utils import get_options
 from data_loader import DFS
+
+
+def get_options(iterable):
+    """
+        Populates a dash dropdawn from an iterable
+    """
+    return [{"label": x, "value": x} for x in iterable]
+
+
+FILTERS = {
+    c.dash.SHOW_MONTH_AVERAGE: (
+        "Smoothing:",
+        dbc.Input(
+            id='input_time_average',
+            type='number',
+            value=c.dash.DEFAULT_SMOOTHING,
+        ),
+    ),
+    c.dash.SHOW_MONTH_AVERAGE: (
+        "Grouping:",
+        dcc.Dropdown(
+            id="input_timewindow",
+            value="M",
+            options=[
+                {"label": "Month ", "value": "M"},
+                {"label": "Year ", "value": "Y"}
+            ],
+        ),
+    ),
+    c.dash.SHOW_CATEGORIES: (
+        "Categories:",
+        dcc.Dropdown(
+            id="input_categories",
+            multi=True,
+            options=get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
+        )
+    )
+}
 
 def get_layout():
     """ Creates the dash layout """
@@ -48,52 +85,8 @@ def get_layout():
         sticky="top",
     )
 
-    filters_data = [
-        # Time average
-        (
-            "Smoothing:",
-            dbc.Input(
-                id='input_time_average',
-                type='number',
-                value=c.dash.DEFAULT_SMOOTHING,
-            ),
-        ),
-        # Time window
-        (
-            "Grouping:",
-            dcc.Dropdown(
-                id="input_timewindow",
-                value="M",
-                options=[
-                    {"label": "Month ", "value": "M"},
-                    {"label": "Year ", "value": "Y"}
-                ],
-            ),
-        ),
-        # Categories
-        (
-            "Categories:",
-            dcc.Dropdown(
-                id="input_categories",
-                multi=True,
-                options=get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
-            )
-        )
-    ]
-
     filters = dbc.Collapse(
-        dbc.CardDeck(
-            [
-                dbc.Card(
-                    [
-                        dbc.CardHeader(title),
-                        html.Div(element, className="w3-padding")
-                    ]
-                ) for title, element in filters_data
-            ],
-        ),
-        id="filters",
-        className="w3-padding-large"
+        dbc.CardDeck(id="filters"), id="filters-container", className="w3-padding-large"
     )
 
     content = [

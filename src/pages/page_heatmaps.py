@@ -19,9 +19,9 @@ class Page(uiu.AppPage):
 
 
     def __init__(self, app):
-        super().__init__({
-            c.dash.SHOW_CATEGORIES: True,
-        })
+        super().__init__([
+            c.dash.SHOW_CATEGORIES
+        ])
 
         @app.callback(Output("plot_heat_i", "figure"),
                       [Input("input_categories", "value")])

@@ -21,11 +21,11 @@ class Page(uiu.AppPage):
 
 
     def __init__(self, app):
-        super().__init__({
-            c.dash.SHOW_CATEGORIES: True,
-            c.dash.SHOW_MONTH_AVERAGE: True,
-            c.dash.SHOW_GROUPING: True
-        })
+        super().__init__([
+            c.dash.SHOW_CATEGORIES,
+            c.dash.SHOW_MONTH_AVERAGE,
+            c.dash.SHOW_GROUPING
+        ])
 
         @app.callback(Output("plot_evol", "figure"),
                       [Input("input_categories", "value"),

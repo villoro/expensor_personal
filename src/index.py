@@ -32,6 +32,21 @@ def display_content(pathname, _):
 
 
 @APP.callback(
+    Output('filters', 'children'),
+    [Input('url', 'pathname')],
+    [State('sync_count', 'children')]
+)
+#pylint: disable=unused-variable
+def display_content(pathname, _):
+    """ Updates content based on current page """
+
+    if pathname in PAGES:
+        return PAGES[pathname].get_filters()
+    return "404"
+
+
+
+@APP.callback(
     Output("sync_count", "children"),
     [Input("sync", "n_clicks")]
 )
@@ -44,9 +59,9 @@ def update_sync_count(x):
 
 
 @APP.callback(
-    Output("filters", "is_open"),
+    Output("filters-container", "is_open"),
     [Input("filters-button", "n_clicks")],
-    [State("filters", "is_open")],
+    [State("filters-container", "is_open")],
 )
 def toggle_filters(n, is_open):
     if n:
