@@ -10,6 +10,13 @@ import constants as c
 from data_loader import DFS
 
 
+DEFAULT_PADDING = 9
+
+def padding(value):
+    """ gets a dict with padding in each direction """
+    return {f"padding-{x}": f"{value}px" for x in ["right", "left", "top", "bottom"]}
+
+
 def get_options(iterable):
     """
         Populates a dash dropdawn from an iterable
@@ -86,12 +93,12 @@ def get_layout():
     )
 
     filters = dbc.Collapse(
-        dbc.CardDeck(id="filters"), id="filters-container", className="w3-padding-large"
+        dbc.CardDeck(id="filters"), id="filters-container", style=padding(2*DEFAULT_PADDING)
     )
 
     content = [
         # Body
-        html.Div(id="body", className="w3-padding-large"),
+        html.Div(id="body", style=padding(DEFAULT_PADDING)),
 
         # Others
         html.Div(id="sync_count", style={"display": "none"}),
@@ -150,9 +157,14 @@ class AppPage():
         """ Retrives the html body """
 
         return [
-            html.Div(data, className="w3-center") for data in self.get_body()
+            html.Div(data) for data in self.get_body()
         ]
 
 def card(data):
     """ Create one card """
-    return dbc.Card(data)
+
+    return html.Div(
+        dbc.Card(data, style=padding(DEFAULT_PADDING)),
+        className="w3-center",
+        style=padding(DEFAULT_PADDING)
+    )
