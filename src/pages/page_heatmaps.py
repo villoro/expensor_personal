@@ -69,7 +69,7 @@ class Page(lay.AppPage):
         return [
             lay.two_columns([
                 lay.card(
-                        dcc.Graph(
+                    dcc.Graph(
                         id="plot_heat_i", config=c.dash.PLOT_CONFIG,
                         figure=plots.get_heatmap(DFS[c.dfs.TRANS], c.names.INCOMES)
                     )

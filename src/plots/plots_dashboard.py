@@ -5,7 +5,6 @@
 from datetime import date, timedelta
 
 import dash_bootstrap_components as dbc
-import dash_html_components as html
 
 import constants as c
 import layout as lay
@@ -69,8 +68,8 @@ def get_summary(dfs):
 
         data.append([name, text, color])
 
-
     # Show a text with transactions excel file date
+    name = get_money_lover_filename()
     data.append(["Using data from", name.split(".")[0].replace("-", "/"), "secundary"])
 
     return dbc.CardDeck(
