@@ -67,33 +67,35 @@ class Page(lay.AppPage):
         # One row default with all data, the other with last year
         for num, myears in enumerate([self.all_years, self.last_year_as_list]):
 
-            body.append([
-                html.Div(
-                    dcc.Dropdown(
-                        id="drop_pie_{}".format(num), multi=True,
-                        options=lay.get_options(self.all_years),
-                        # prevent long list selected
-                        value=myears if myears != self.all_years else None
+            body.append(
+                lay.card([
+                    html.Div(
+                        dcc.Dropdown(
+                            id="drop_pie_{}".format(num), multi=True,
+                            options=lay.get_options(self.all_years),
+                            # prevent long list selected
+                            value=myears if myears != self.all_years else None
+                        ),
                     ),
-                ),
-                lay.two_columns([
-                    dcc.Graph(
-                        id="plot_pie_{}_{}".format(num, c.names.INCOMES),
-                        config=c.dash.PLOT_CONFIG,
-                        figure=plots.get_pie(
-                            DFS[c.dfs.TRANS], DFS[c.dfs.CATEG],
-                            c.names.INCOMES, myears
-                        )
-                    ),
-                    dcc.Graph(
-                        id="plot_pie_{}_{}".format(num, c.names.EXPENSES),
-                        config=c.dash.PLOT_CONFIG,
-                        figure=plots.get_pie(
-                            DFS[c.dfs.TRANS], DFS[c.dfs.CATEG],
-                            c.names.EXPENSES, myears
-                        )
-                    ),
+                    lay.two_columns([
+                        dcc.Graph(
+                            id="plot_pie_{}_{}".format(num, c.names.INCOMES),
+                            config=c.dash.PLOT_CONFIG,
+                            figure=plots.get_pie(
+                                DFS[c.dfs.TRANS], DFS[c.dfs.CATEG],
+                                c.names.INCOMES, myears
+                            )
+                        ),
+                        dcc.Graph(
+                            id="plot_pie_{}_{}".format(num, c.names.EXPENSES),
+                            config=c.dash.PLOT_CONFIG,
+                            figure=plots.get_pie(
+                                DFS[c.dfs.TRANS], DFS[c.dfs.CATEG],
+                                c.names.EXPENSES, myears
+                            )
+                        ),
+                    ])
                 ])
-            ])
+            )
 
         return body

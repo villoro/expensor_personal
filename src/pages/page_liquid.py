@@ -72,22 +72,28 @@ class Page(lay.AppPage):
 
     def get_body(self):
         return [
-            dcc.Graph(
-                id="plot_liquid_evo", config=c.dash.PLOT_CONFIG,
-                figure=plots.liquid_plot(
-                    DFS[c.dfs.LIQUID], DFS[c.dfs.LIQUID_LIST], c.dash.DEFAULT_SMOOTHING
+            lay.card(
+                dcc.Graph(
+                    id="plot_liquid_evo", config=c.dash.PLOT_CONFIG,
+                    figure=plots.liquid_plot(
+                        DFS[c.dfs.LIQUID], DFS[c.dfs.LIQUID_LIST], c.dash.DEFAULT_SMOOTHING
+                    )
                 )
             ),
-            dcc.Graph(
-                id="plot_liquid_vs_expenses", config=c.dash.PLOT_CONFIG,
-                figure=plots.plot_expenses_vs_liquid(
-                    DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING
+            lay.card(
+                dcc.Graph(
+                    id="plot_liquid_vs_expenses", config=c.dash.PLOT_CONFIG,
+                    figure=plots.plot_expenses_vs_liquid(
+                        DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING
+                    )
                 )
             ),
-            dcc.Graph(
-                id="plot_liquid_months", config=c.dash.PLOT_CONFIG,
-                figure=plots.plot_months(
-                    DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING
+            lay.card(
+                dcc.Graph(
+                    id="plot_liquid_months", config=c.dash.PLOT_CONFIG,
+                    figure=plots.plot_months(
+                        DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING
+                    )
                 )
             ),
         ]

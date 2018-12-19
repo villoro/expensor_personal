@@ -150,5 +150,9 @@ class AppPage():
         """ Retrives the html body """
 
         return [
-            html.Div(data, className="w3-padding-16 w3-center") for data in self.get_body()
+            html.Div(data, className="w3-center") for data in self.get_body()
         ]
+
+def card(data):
+    """ Create one card """
+    return dbc.Card(data)

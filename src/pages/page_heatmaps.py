@@ -68,17 +68,23 @@ class Page(lay.AppPage):
     def get_body(self):
         return [
             lay.two_columns([
-                dcc.Graph(
-                    id="plot_heat_i", config=c.dash.PLOT_CONFIG,
-                    figure=plots.get_heatmap(DFS[c.dfs.TRANS], c.names.INCOMES)
+                lay.card(
+                        dcc.Graph(
+                        id="plot_heat_i", config=c.dash.PLOT_CONFIG,
+                        figure=plots.get_heatmap(DFS[c.dfs.TRANS], c.names.INCOMES)
+                    )
                 ),
-                dcc.Graph(
-                    id="plot_heat_e", config=c.dash.PLOT_CONFIG,
-                    figure=plots.get_heatmap(DFS[c.dfs.TRANS], c.names.EXPENSES)
+                lay.card(
+                    dcc.Graph(
+                        id="plot_heat_e", config=c.dash.PLOT_CONFIG,
+                        figure=plots.get_heatmap(DFS[c.dfs.TRANS], c.names.EXPENSES)
+                    )
                 ),
             ]),
-            dcc.Graph(
-                id="plot_heat_distribution", config=c.dash.PLOT_CONFIG,
-                figure=plots.dist_plot(DFS[c.dfs.TRANS])
+            lay.card(
+                dcc.Graph(
+                    id="plot_heat_distribution", config=c.dash.PLOT_CONFIG,
+                    figure=plots.dist_plot(DFS[c.dfs.TRANS])
+                )
             ),
         ]

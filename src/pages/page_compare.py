@@ -65,7 +65,7 @@ class Page(lay.AppPage):
 
     def get_body(self):
         return [
-            [
+            lay.card([
                 dcc.Graph(
                     id="plot_comp_1", config=c.dash.PLOT_CONFIG,
                     figure=plots.ts_gradient(
@@ -76,8 +76,8 @@ class Page(lay.AppPage):
                     id="radio_comp_1", options=self.radio_opt,
                     value=c.names.INCOMES, labelStyle={'display': 'inline-block'}
                 )
-            ],
-            [
+            ]),
+            lay.card([
                 dcc.Graph(
                     id="plot_comp_2", config=c.dash.PLOT_CONFIG,
                     figure=plots.ts_gradient(
@@ -88,5 +88,5 @@ class Page(lay.AppPage):
                     id="radio_comp_2", options=self.radio_opt,
                     value=c.names.EXPENSES, labelStyle={'display': 'inline-block'}
                 )
-            ]
+            ])
         ]

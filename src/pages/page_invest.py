@@ -76,7 +76,7 @@ class Page(lay.AppPage):
 
     def get_body(self):
         body = [
-            [
+            lay.card([
                 dcc.Graph(
                     id="plot_invest_detail", config=c.dash.PLOT_CONFIG,
                     figure=plots.invest_evolution_plot(DFS[c.dfs.INVEST], c.dash.DEFAULT_SMOOTHING)
@@ -85,17 +85,21 @@ class Page(lay.AppPage):
                     id="radio_invest", options=lay.get_options([c.names.INVESTED, c.names.WORTH]),
                     value=c.names.INVESTED, labelStyle={'display': 'inline-block'}
                 )
-            ],
-            dcc.Graph(
-                id="plot_invest_total_worth", config=c.dash.PLOT_CONFIG,
-                figure=plots.total_worth_plot(
-                    DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], c.dash.DEFAULT_SMOOTHING
+            ]),
+            lay.card(
+                dcc.Graph(
+                    id="plot_invest_total_worth", config=c.dash.PLOT_CONFIG,
+                    figure=plots.total_worth_plot(
+                        DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], c.dash.DEFAULT_SMOOTHING
+                    )
                 )
             ),
-            dcc.Graph(
-                id="plot_passive_income", config=c.dash.PLOT_CONFIG,
-                figure=plots.passive_income_vs_expenses(
-                    DFS[c.dfs.WORTH], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING
+            lay.card(
+                dcc.Graph(
+                    id="plot_passive_income", config=c.dash.PLOT_CONFIG,
+                    figure=plots.passive_income_vs_expenses(
+                        DFS[c.dfs.WORTH], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING
+                    )
                 )
             ),
         ]

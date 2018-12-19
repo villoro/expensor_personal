@@ -69,21 +69,26 @@ class Page(lay.AppPage):
 
     def get_body(self):
         return [
-            dcc.Graph(
-                id="plot_evol", config=c.dash.PLOT_CONFIG,
-                figure=plots.plot_timeserie(DFS[c.dfs.TRANS], self.def_tw)),
-            [
+            lay.card(
                 dcc.Graph(
-                    id="plot_evo_detail", config=c.dash.PLOT_CONFIG,
-                    figure=plots.plot_timeserie_by_categories(
-                        DFS[c.dfs.TRANS], DFS[c.dfs.CATEG], self.def_type, self.def_tw
-                    )
-                ),
-                dcc.RadioItems(
-                    id="radio_evol_type",
-                    options=lay.get_options([c.names.EXPENSES, c.names.INCOMES]),
-                    value=self.def_type,
-                    labelStyle={'display': 'inline-block'}
+                    id="plot_evol", config=c.dash.PLOT_CONFIG,
+                    figure=plots.plot_timeserie(DFS[c.dfs.TRANS], self.def_tw)
                 )
-            ],
+            ),
+            lay.card(
+                [
+                    dcc.Graph(
+                        id="plot_evo_detail", config=c.dash.PLOT_CONFIG,
+                        figure=plots.plot_timeserie_by_categories(
+                            DFS[c.dfs.TRANS], DFS[c.dfs.CATEG], self.def_type, self.def_tw
+                        )
+                    ),
+                    dcc.RadioItems(
+                        id="radio_evol_type",
+                        options=lay.get_options([c.names.EXPENSES, c.names.INCOMES]),
+                        value=self.def_type,
+                        labelStyle={'display': 'inline-block'}
+                    )
+                ]
+            ),
         ]
