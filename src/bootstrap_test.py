@@ -7,6 +7,11 @@ import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
 
+import constants as c
+from ui_utils import get_options
+from data_loader import DFS
+
+
 app = Dash('expensor_personal', external_stylesheets=[BOOTSTRAP])
 app.config.supress_callback_exceptions = True
 
@@ -18,7 +23,7 @@ dropdown_items = [
         children=[
             dbc.DropdownMenuItem(
                 x[1:], href=x, id="section_{}".format(x[1:]),
-            ) for x in ["/1", "/2"]
+            ) for x in c.dash.LINKS_ALL
         ]
     ),
 ]
@@ -41,7 +46,7 @@ filters_data = [
         "data": dbc.Input(
             id='time_average',
             type='number',
-            value=1,
+            value=c.dash.DEFAULT_SMOOTHING,
         ),
     },
     # Time window
@@ -62,11 +67,9 @@ filters_data = [
         "title": "Categories:",
         "size": {"xs": 12, "md": 12, "lg": 6},
         "data": dcc.Dropdown(
-            id="drop_categories", multi=True,
-            options=[
-                {"label": "Option 1", "value": 1},
-                {"label": "Option 2", "value": 2},
-            ],
+            id="drop_categories",
+            multi=True,
+            options=get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
         )
     }
 ]
