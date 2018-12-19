@@ -90,31 +90,39 @@ class Page(lay.AppPage):
         return [
             plt_db.get_summary(DFS),
             lay.two_columns([
-                dcc.Graph(
-                    id="plot_dash_evol", config=c.dash.PLOT_CONFIG,
-                    figure=plt_ev.plot_timeserie(
-                        DFS[c.dfs.TRANS],
-                        avg_month=c.dash.DEFAULT_SMOOTHING
+                lay.card(
+                    dcc.Graph(
+                        id="plot_dash_evol", config=c.dash.PLOT_CONFIG,
+                        figure=plt_ev.plot_timeserie(
+                            DFS[c.dfs.TRANS],
+                            avg_month=c.dash.DEFAULT_SMOOTHING
+                        )
                     )
                 ),
-                dcc.Graph(
-                    id="plot_dash_total_worth", config=c.dash.PLOT_CONFIG,
-                    figure=plt_inv.total_worth_plot(
-                        DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], c.dash.DEFAULT_SMOOTHING
+                lay.card(
+                    dcc.Graph(
+                        id="plot_dash_total_worth", config=c.dash.PLOT_CONFIG,
+                        figure=plt_inv.total_worth_plot(
+                            DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], c.dash.DEFAULT_SMOOTHING
+                        )
                     )
                 )
             ]),
             lay.two_columns([
-                dcc.Graph(
-                    id="plot_dash_l_vs_e", config=c.dash.PLOT_CONFIG,
-                    figure=plt_li.plot_expenses_vs_liquid(
-                        DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING, False
+                lay.card(
+                    dcc.Graph(
+                        id="plot_dash_l_vs_e", config=c.dash.PLOT_CONFIG,
+                        figure=plt_li.plot_expenses_vs_liquid(
+                            DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING, False
+                        )
                     )
                 ),
-                dcc.Graph(
-                    id="plot_dash_liq_months", config=c.dash.PLOT_CONFIG,
-                    figure=plt_li.plot_months(
-                        DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING, False
+                lay.card(
+                    dcc.Graph(
+                        id="plot_dash_liq_months", config=c.dash.PLOT_CONFIG,
+                        figure=plt_li.plot_months(
+                            DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING, False
+                        )
                     )
                 )
             ])

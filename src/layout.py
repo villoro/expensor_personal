@@ -12,7 +12,7 @@ from data_loader import DFS
 
 DEFAULT_PADDING = 9
 
-def padding(value):
+def padding(value=DEFAULT_PADDING):
     """ gets a dict with padding in each direction """
     return {f"padding-{x}": f"{value}px" for x in ["right", "left", "top", "bottom"]}
 
@@ -98,7 +98,7 @@ def get_layout():
 
     content = [
         # Body
-        html.Div(id="body", style=padding(DEFAULT_PADDING)),
+        html.Div(id="body", style=padding()),
 
         # Others
         html.Div(id="sync_count", style={"display": "none"}),
@@ -142,7 +142,8 @@ class AppPage():
                     dbc.CardHeader(title),
                     html.Div(element, className="w3-padding")
                 ],
-                color="secondary", inverse=True,
+                color="secondary",
+                inverse=True,
             ) for title, element in self.filters
         ]
 
@@ -160,11 +161,11 @@ class AppPage():
             html.Div(data) for data in self.get_body()
         ]
 
-def card(data):
+def card(data, **kwa):
     """ Create one card """
 
     return html.Div(
-        dbc.Card(data, style=padding(DEFAULT_PADDING)),
+        dbc.Card(data, style=padding(), **kwa),
         className="w3-center",
-        style=padding(DEFAULT_PADDING)
+        style=padding(),
     )
