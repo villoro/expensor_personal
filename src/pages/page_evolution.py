@@ -28,8 +28,8 @@ class Page(uiu.AppPage):
         })
 
         @app.callback(Output("plot_evol", "figure"),
-                      [Input("drop_categories", "value"),
-                       Input("radio_timewindow", "value"),
+                      [Input("input_categories", "value"),
+                       Input("input_timewindow", "value"),
                        Input("input_time_average", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_timeserie_plot(categories, timewindow, avg_month):
@@ -47,9 +47,9 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_evo_detail", "figure"),
-                      [Input("drop_categories", "value"),
+                      [Input("input_categories", "value"),
                        Input("radio_evol_type", "value"),
-                       Input("radio_timewindow", "value"),
+                       Input("input_timewindow", "value"),
                        Input("input_time_average", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_ts_by_categories_plot(categories, type_trans, timewindow, avg_month):

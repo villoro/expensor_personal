@@ -24,7 +24,7 @@ class Page(uiu.AppPage):
         })
 
         @app.callback(Output("plot_heat_i", "figure"),
-                      [Input("drop_categories", "value")])
+                      [Input("input_categories", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_heatmap_i(categories):
             """
@@ -38,7 +38,7 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_heat_e", "figure"),
-                      [Input("drop_categories", "value")])
+                      [Input("input_categories", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_heatmap_e(categories):
             """
@@ -52,7 +52,7 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_heat_distribution", "figure"),
-                      [Input("drop_categories", "value")])
+                      [Input("input_categories", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_distplot(categories):
             """

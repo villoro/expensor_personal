@@ -62,7 +62,7 @@ def get_layout():
         (
             "Grouping:",
             dcc.Dropdown(
-                id="radio_timewindow",
+                id="input_timewindow",
                 value="M",
                 options=[
                     {"label": "Month ", "value": "M"},
@@ -74,7 +74,7 @@ def get_layout():
         (
             "Categories:",
             dcc.Dropdown(
-                id="drop_categories",
+                id="input_categories",
                 multi=True,
                 options=get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
             )

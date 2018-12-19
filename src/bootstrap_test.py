@@ -67,7 +67,7 @@ filters_data = [
         "title": "Categories:",
         "size": {"xs": 12, "md": 12, "lg": 6},
         "data": dcc.Dropdown(
-            id="drop_categories",
+            id="input_categories",
             multi=True,
             options=get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
         )

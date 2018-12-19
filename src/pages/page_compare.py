@@ -26,7 +26,7 @@ class Page(uiu.AppPage):
         })
 
         @app.callback(Output("plot_comp_1", "figure"),
-                      [Input("drop_categories", "value"),
+                      [Input("input_categories", "value"),
                        Input("input_time_average", "value"),
                        Input("radio_comp_1", "value")])
         #pylint: disable=unused-variable,unused-argument
@@ -45,7 +45,7 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_comp_2", "figure"),
-                      [Input("drop_categories", "value"),
+                      [Input("input_categories", "value"),
                        Input("input_time_average", "value"),
                        Input("radio_comp_2", "value")])
         #pylint: disable=unused-variable,unused-argument
