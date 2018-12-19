@@ -7,24 +7,24 @@ from dash.dependencies import Input, Output
 
 import utilities as u
 import constants as c
-import ui_utils as uiu
+import layout as lay
 from plots import plots_heatmaps as plots
 from data_loader import DFS
 
 
-class Page(uiu.AppPage):
+class Page(lay.AppPage):
     """ Page Heatmaps """
 
     link = c.dash.LINK_HEATMAPS
 
 
     def __init__(self, app):
-        super().__init__({
-            c.dash.SHOW_CATEGORIES: True,
-        })
+        super().__init__([
+            c.dash.INPUT_CATEGORIES
+        ])
 
         @app.callback(Output("plot_heat_i", "figure"),
-                      [Input("drop_categories", "value")])
+                      [Input("input_categories", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_heatmap_i(categories):
             """
@@ -38,7 +38,7 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_heat_e", "figure"),
-                      [Input("drop_categories", "value")])
+                      [Input("input_categories", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_heatmap_e(categories):
             """
@@ -52,7 +52,7 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_heat_distribution", "figure"),
-                      [Input("drop_categories", "value")])
+                      [Input("input_categories", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_distplot(categories):
             """
@@ -67,18 +67,24 @@ class Page(uiu.AppPage):
 
     def get_body(self):
         return [
-            uiu.two_columns([
-                dcc.Graph(
-                    id="plot_heat_i", config=uiu.PLOT_CONFIG,
-                    figure=plots.get_heatmap(DFS[c.dfs.TRANS], c.names.INCOMES)
+            lay.two_columns([
+                lay.card(
+                    dcc.Graph(
+                        id="plot_heat_i", config=c.dash.PLOT_CONFIG,
+                        figure=plots.get_heatmap(DFS[c.dfs.TRANS], c.names.INCOMES)
+                    )
                 ),
-                dcc.Graph(
-                    id="plot_heat_e", config=uiu.PLOT_CONFIG,
-                    figure=plots.get_heatmap(DFS[c.dfs.TRANS], c.names.EXPENSES)
+                lay.card(
+                    dcc.Graph(
+                        id="plot_heat_e", config=c.dash.PLOT_CONFIG,
+                        figure=plots.get_heatmap(DFS[c.dfs.TRANS], c.names.EXPENSES)
+                    )
                 ),
             ]),
-            dcc.Graph(
-                id="plot_heat_distribution", config=uiu.PLOT_CONFIG,
-                figure=plots.dist_plot(DFS[c.dfs.TRANS])
+            lay.card(
+                dcc.Graph(
+                    id="plot_heat_distribution", config=c.dash.PLOT_CONFIG,
+                    figure=plots.dist_plot(DFS[c.dfs.TRANS])
+                )
             ),
         ]

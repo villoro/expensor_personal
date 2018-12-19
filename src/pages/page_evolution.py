@@ -7,12 +7,12 @@ from dash.dependencies import Input, Output
 
 import utilities as u
 import constants as c
-import ui_utils as uiu
+import layout as lay
 from plots import plots_evolution as plots
 from data_loader import DFS
 
 
-class Page(uiu.AppPage):
+class Page(lay.AppPage):
     """ Page Evolution """
 
     link = c.dash.LINK_EVOLUTION
@@ -21,16 +21,16 @@ class Page(uiu.AppPage):
 
 
     def __init__(self, app):
-        super().__init__({
-            c.dash.SHOW_CATEGORIES: True,
-            c.dash.SHOW_MONTH_AVERAGE: True,
-            c.dash.SHOW_GROUPING: True
-        })
+        super().__init__([
+            c.dash.INPUT_CATEGORIES,
+            c.dash.INPUT_SMOOTHING,
+            c.dash.INPUT_TIMEWINDOW
+        ])
 
         @app.callback(Output("plot_evol", "figure"),
-                      [Input("drop_categories", "value"),
-                       Input("radio_timewindow", "value"),
-                       Input("input_time_average", "value")])
+                      [Input("input_categories", "value"),
+                       Input("input_timewindow", "value"),
+                       Input("input_smoothing", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_timeserie_plot(categories, timewindow, avg_month):
             """
@@ -47,10 +47,10 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_evo_detail", "figure"),
-                      [Input("drop_categories", "value"),
+                      [Input("input_categories", "value"),
                        Input("radio_evol_type", "value"),
-                       Input("radio_timewindow", "value"),
-                       Input("input_time_average", "value")])
+                       Input("input_timewindow", "value"),
+                       Input("input_smoothing", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_ts_by_categories_plot(categories, type_trans, timewindow, avg_month):
             """
@@ -69,21 +69,26 @@ class Page(uiu.AppPage):
 
     def get_body(self):
         return [
-            dcc.Graph(
-                id="plot_evol", config=uiu.PLOT_CONFIG,
-                figure=plots.plot_timeserie(DFS[c.dfs.TRANS], self.def_tw)),
-            [
+            lay.card(
                 dcc.Graph(
-                    id="plot_evo_detail", config=uiu.PLOT_CONFIG,
-                    figure=plots.plot_timeserie_by_categories(
-                        DFS[c.dfs.TRANS], DFS[c.dfs.CATEG], self.def_type, self.def_tw
-                    )
-                ),
-                dcc.RadioItems(
-                    id="radio_evol_type",
-                    options=uiu.get_options([c.names.EXPENSES, c.names.INCOMES]),
-                    value=self.def_type,
-                    labelStyle={'display': 'inline-block'}
+                    id="plot_evol", config=c.dash.PLOT_CONFIG,
+                    figure=plots.plot_timeserie(DFS[c.dfs.TRANS], self.def_tw)
                 )
-            ],
+            ),
+            lay.card(
+                [
+                    dcc.Graph(
+                        id="plot_evo_detail", config=c.dash.PLOT_CONFIG,
+                        figure=plots.plot_timeserie_by_categories(
+                            DFS[c.dfs.TRANS], DFS[c.dfs.CATEG], self.def_type, self.def_tw
+                        )
+                    ),
+                    dcc.RadioItems(
+                        id="radio_evol_type",
+                        options=lay.get_options([c.names.EXPENSES, c.names.INCOMES]),
+                        value=self.def_type,
+                        labelStyle={'display': 'inline-block'}
+                    )
+                ]
+            ),
         ]

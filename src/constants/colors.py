@@ -24,3 +24,10 @@ COLORS = {
     names.EBIT: EBIT,
     names.LIQUID: LIQUID
 }
+
+COLORS_CARDS = {
+    names.INCOMES: "success",
+    names.EXPENSES: "danger",
+    names.EBIT: "warning",
+    names.LIQUID: "primary"
+}

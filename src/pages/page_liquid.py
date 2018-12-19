@@ -6,25 +6,25 @@ import dash_core_components as dcc
 from dash.dependencies import Input, Output
 
 import constants as c
-import ui_utils as uiu
+import layout as lay
 from plots import plots_liquid as plots
 from data_loader import DFS
 
 
-class Page(uiu.AppPage):
+class Page(lay.AppPage):
     """ Page Liquid """
 
     link = c.dash.LINK_LIQUID
 
 
     def __init__(self, app):
-        super().__init__({
-            c.dash.SHOW_MONTH_AVERAGE: True
-        })
+        super().__init__([
+            c.dash.INPUT_SMOOTHING
+        ])
 
 
         @app.callback(Output("plot_liquid_evo", "figure"),
-                      [Input("input_time_average", "value")])
+                      [Input("input_smoothing", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_liquid(avg_month):
             """
@@ -39,7 +39,7 @@ class Page(uiu.AppPage):
             )
 
         @app.callback(Output("plot_liquid_vs_expenses", "figure"),
-                      [Input("input_time_average", "value")])
+                      [Input("input_smoothing", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_liquid_vs_expenses(avg_month):
             """
@@ -55,7 +55,7 @@ class Page(uiu.AppPage):
 
 
         @app.callback(Output("plot_liquid_months", "figure"),
-                      [Input("input_time_average", "value")])
+                      [Input("input_smoothing", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_liquid_months(avg_month):
             """
@@ -72,22 +72,28 @@ class Page(uiu.AppPage):
 
     def get_body(self):
         return [
-            dcc.Graph(
-                id="plot_liquid_evo", config=uiu.PLOT_CONFIG,
-                figure=plots.liquid_plot(
-                    DFS[c.dfs.LIQUID], DFS[c.dfs.LIQUID_LIST], c.dash.DEFAULT_SMOOTHING
+            lay.card(
+                dcc.Graph(
+                    id="plot_liquid_evo", config=c.dash.PLOT_CONFIG,
+                    figure=plots.liquid_plot(
+                        DFS[c.dfs.LIQUID], DFS[c.dfs.LIQUID_LIST], c.dash.DEFAULT_SMOOTHING
+                    )
                 )
             ),
-            dcc.Graph(
-                id="plot_liquid_vs_expenses", config=uiu.PLOT_CONFIG,
-                figure=plots.plot_expenses_vs_liquid(
-                    DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING
+            lay.card(
+                dcc.Graph(
+                    id="plot_liquid_vs_expenses", config=c.dash.PLOT_CONFIG,
+                    figure=plots.plot_expenses_vs_liquid(
+                        DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING
+                    )
                 )
             ),
-            dcc.Graph(
-                id="plot_liquid_months", config=uiu.PLOT_CONFIG,
-                figure=plots.plot_months(
-                    DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING
+            lay.card(
+                dcc.Graph(
+                    id="plot_liquid_months", config=c.dash.PLOT_CONFIG,
+                    figure=plots.plot_months(
+                        DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING
+                    )
                 )
             ),
         ]

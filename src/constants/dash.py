@@ -6,13 +6,13 @@ LINK_ROOT = "http://localhost:8050"
 LINK_ROOT_LOGIN = "http://{}:{}@localhost:8050"
 
 LINK_MAIN = "/"
-LINK_DASHBOARD = "/dash"
+LINK_DASHBOARD = "/dashboard"
 LINK_EVOLUTION = "/evolution"
-LINK_COMPARISON = "/compare"
+LINK_COMPARISON = "/comparison"
 LINK_HEATMAPS = "/heatmaps"
 LINK_PIES = "/pies"
 LINK_LIQUID = "/liquid"
-LINK_INVESTMENTS = "/invest"
+LINK_INVESTMENTS = "/investments"
 
 LANDING_APP = LINK_DASHBOARD
 
@@ -26,16 +26,13 @@ LINKS_ALL = [
     LINK_INVESTMENTS
 ]
 
-CONTENT = "content"
-SIDEBAR = "sidebar"
-
-KEY_BODY = "body"
-KEY_SIDEBAR = "sidebar"
-
-SHOW_DICT = (lambda x: {"display": "block" if bool(x) else "none"})
-
-SHOW_CATEGORIES = "show_categories"
-SHOW_MONTH_AVERAGE = "show_month_average"
-SHOW_GROUPING = "show_grouping"
+INPUT_CATEGORIES = "categories"
+INPUT_SMOOTHING = "smoothing"
+INPUT_TIMEWINDOW = "timewindow"
 
 DEFAULT_SMOOTHING = 1
+
+PLOT_CONFIG = {
+    "displaylogo": False,
+    "modeBarButtonsToRemove": ["sendDataToCloud", "select2d", "lasso2d", "resetScale2d"]
+}

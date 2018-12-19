@@ -52,7 +52,7 @@ class TestApp(unittest.TestCase):
         body_elem = [
             "plot_dash_evol", "plot_dash_total_worth", "plot_dash_l_vs_e", "plot_dash_liq_months"
         ]
-        sidebar_elem = ["input_time_average"]
+        sidebar_elem = ["input_smoothing"]
         self._check_one_page(c.dash.LINK_DASHBOARD, body_elem + sidebar_elem)
 
 
@@ -60,7 +60,7 @@ class TestApp(unittest.TestCase):
         """ Test the content of page evolution """
 
         body_elem = ["plot_evol", "plot_evo_detail", "radio_evol_type"]
-        sidebar_elem = ["drop_categories", "input_time_average", "radio_timewindow"]
+        sidebar_elem = ["input_categories", "input_smoothing", "input_timewindow"]
         self._check_one_page(c.dash.LINK_EVOLUTION, body_elem + sidebar_elem)
 
 
@@ -68,7 +68,7 @@ class TestApp(unittest.TestCase):
         """ Test the content of page comparison """
 
         body_elem = ["plot_comp_1", "radio_comp_1", "plot_comp_2", "radio_comp_2"]
-        sidebar_elem = ["drop_categories", "input_time_average"]
+        sidebar_elem = ["input_categories", "input_smoothing"]
         self._check_one_page(c.dash.LINK_COMPARISON, body_elem + sidebar_elem)
 
 
@@ -76,7 +76,7 @@ class TestApp(unittest.TestCase):
         """ Test the content of page heatmaps """
 
         body_elem = ["plot_heat_i", "plot_heat_e", "plot_heat_distribution"]
-        sidebar_elem = ["drop_categories"]
+        sidebar_elem = ["input_categories"]
         self._check_one_page(c.dash.LINK_HEATMAPS, body_elem + sidebar_elem)
 
 
@@ -87,7 +87,7 @@ class TestApp(unittest.TestCase):
         body_elem = ["plot_pie_{}_{}".format(i, x) for i in range(2) for x in types]
         body_elem += ["drop_pie_0", "drop_pie_1"]
 
-        sidebar_elem = ["drop_categories"]
+        sidebar_elem = ["input_categories"]
         self._check_one_page(c.dash.LINK_PIES, body_elem + sidebar_elem)
 
 
@@ -95,7 +95,7 @@ class TestApp(unittest.TestCase):
         """ Test the content of page liquid """
 
         body_elem = ["plot_liquid_evo", "plot_liquid_vs_expenses", "plot_liquid_months"]
-        sidebar_elem = ["input_time_average"]
+        sidebar_elem = ["input_smoothing"]
         self._check_one_page(c.dash.LINK_LIQUID, body_elem + sidebar_elem)
 
 
@@ -105,7 +105,7 @@ class TestApp(unittest.TestCase):
         body_elem = [
             "plot_invest_detail", "radio_invest", "plot_invest_total_worth", "plot_passive_income"
         ]
-        sidebar_elem = ["input_time_average"]
+        sidebar_elem = ["input_smoothing"]
         self._check_one_page(c.dash.LINK_INVESTMENTS, body_elem + sidebar_elem)
 
 
