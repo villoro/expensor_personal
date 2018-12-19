@@ -43,6 +43,16 @@ def update_sync_count(x):
     return x
 
 
+@APP.callback(
+    Output("filters", "is_open"),
+    [Input("filters-button", "n_clicks")],
+    [State("filters", "is_open")],
+)
+def toggle_filters(n, is_open):
+    if n:
+        return not is_open
+    return is_open
+
 
 if __name__ == '__main__':
     APP.run_server(debug=True)

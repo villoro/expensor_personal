@@ -23,7 +23,7 @@ def get_layout():
         ),
         dbc.Button(
             "Filters",
-            id="collapse-button",
+            id="filters-button",
             outline=True,
             color="primary",
             className="mr-1"
@@ -48,61 +48,58 @@ def get_layout():
         sticky="top",
     )
 
-    filters = html.Div(
-        [
-            html.Div(
-                html.H5("Categories"),
-                className="w3-col l1 m2 s4 w3-padding"
+    filters_data = [
+        # Time average
+        {
+            "title": "Smoothing:",
+            "size": {"xs": 12, "md": 6, "lg": 3},
+            "data": dbc.Input(
+                id='input_time_average',
+                type='number',
+                value=c.dash.DEFAULT_SMOOTHING,
             ),
-            html.Div(
-                dcc.Dropdown(
-                    id="drop_categories", multi=True,
-                    options=get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
-                ),
-                className="w3-col l11 m10 s8",
-                style={
-                    "padding-top": "14px",
-                    "padding-bottom": "14px",
-                    "padding-left": "16px",
-                    "padding-right": "16px",
-                }
-            ),
-            html.Div(
-                [
-                    html.Div(
-                        "Months avg:",
-                        id="title_time_average",
-                        className="w3-bar-item w3-padding-large",
-                        style=c.dash.SHOW_DICT(False)
-                    ),
-                    dcc.Input(
-                        id='input_time_average',
-                        type='number',
-                        value=c.dash.DEFAULT_SMOOTHING,
-                        min=1, max=12,
-                        className="w3-bar-item w3-padding-large w3-green",
-                        style=c.dash.SHOW_DICT(False)
-                    ),
-                    html.Div(
-                        "Grouping:",
-                        id="title_timewindow",
-                        className="w3-bar-item w3-padding-large",
-                        style=c.dash.SHOW_DICT(False)
-                    ),
-                    dcc.RadioItems(
-                        id="radio_timewindow", value="M",
-                        options=[{"label": "Month ", "value": "M"},
-                                 {"label": "Year ", "value": "Y"}],
-                        className="w3-bar-item w3-padding-large",
-                        style=c.dash.SHOW_DICT(False)
-                    ),
+        },
+        # Time window
+        {
+            "title": "Grouping:",
+            "size": {"xs": 12, "md": 6, "lg": 3},
+            "data": dcc.Dropdown(
+                id="radio_timewindow",
+                value="M",
+                options=[
+                    {"label": "Month ", "value": "M"},
+                    {"label": "Year ", "value": "Y"}
                 ],
-                className="w3-right"
+            ),
+        },
+        # Categories
+        {
+            "title": "Categories:",
+            "size": {"xs": 12, "md": 12, "lg": 6},
+            "data": dcc.Dropdown(
+                id="drop_categories",
+                multi=True,
+                options=get_options(DFS[c.dfs.TRANS][c.cols.CATEGORY].unique())
             )
-        ],
+        }
+    ]
+
+    filters = dbc.Collapse(
+        dbc.CardDeck(
+            [
+                dbc.Card(
+                    [
+                        dbc.CardHeader(x["title"]),
+                        html.Div(
+                            x["data"],
+                            className="w3-padding"
+                        )
+                    ]
+                ) for x in filters_data
+            ],
+        ),
         id="filters",
-        className="w3-row w3-card",
-        style=c.dash.SHOW_DICT(False)
+        className="w3-padding-large"
     )
 
     content = [
