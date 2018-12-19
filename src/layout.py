@@ -117,7 +117,6 @@ def two_columns(elements):
         className="w3-row"
     )
 
-
 class AppPage():
     """
         Raw Page class that is meant to be extended
@@ -150,7 +149,5 @@ class AppPage():
         """ Retrives the html body """
 
         return [
-            html.Div(
-                data, className="w3-card w3-padding-large w3-margin w3-center"
-            ) for data in self.get_body()
+            html.Div(data, className="w3-padding-16 w3-center") for data in self.get_body()
         ]
