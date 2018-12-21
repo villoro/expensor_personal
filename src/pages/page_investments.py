@@ -2,6 +2,7 @@
     Dash app
 """
 
+import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 from dash.dependencies import Input, Output
 
@@ -81,9 +82,9 @@ class Page(lay.AppPage):
                     id="plot_invest_detail", config=c.dash.PLOT_CONFIG,
                     figure=plots.invest_evolution_plot(DFS[c.dfs.INVEST], c.dash.DEFAULT_SMOOTHING)
                 ),
-                dcc.RadioItems(
+                dbc.RadioItems(
                     id="radio_invest", options=lay.get_options([c.names.INVESTED, c.names.WORTH]),
-                    value=c.names.INVESTED, labelStyle={'display': 'inline-block'}
+                    value=c.names.INVESTED, inline=True
                 )
             ]),
             lay.card(

@@ -2,6 +2,7 @@
     Dash app
 """
 
+import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 from dash.dependencies import Input, Output
 
@@ -89,11 +90,11 @@ class Page(lay.AppPage):
                             self.def_tw,
                         )
                     ),
-                    dcc.RadioItems(
+                    dbc.RadioItems(
                         id="radio_evol_type",
                         options=lay.get_options([c.names.EXPENSES, c.names.INCOMES]),
                         value=self.def_type,
-                        labelStyle={'display': 'inline-block'}
+                        inline=True
                     )
                 ]
             ),
