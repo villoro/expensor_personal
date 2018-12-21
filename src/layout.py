@@ -62,13 +62,11 @@ def get_layout():
             "Sync",
             id="sync",
             className="mr-1",
-            outline=True,
             color="primary",
         ),
         dbc.Button(
             "Filters",
             id="filters-button",
-            outline=True,
             color="primary",
             className="mr-1"
         ),
@@ -90,6 +88,7 @@ def get_layout():
         brand="Expensor",
         brand_href="/",
         sticky="top",
+        className="w3-light-grey w3-card"
     )
 
     filters = dbc.Collapse(
@@ -143,7 +142,7 @@ class AppPage():
                     html.Div(element, className="w3-padding")
                 ],
                 color="secondary",
-                inverse=True,
+                outline=True,
             ) for title, element in self.filters
         ]
 

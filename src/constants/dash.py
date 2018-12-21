@@ -14,6 +14,16 @@ LINK_PIES = "/pies"
 LINK_LIQUID = "/liquid"
 LINK_INVESTMENTS = "/investments"
 
+LINKS_ALL = [
+    LINK_DASHBOARD,
+    LINK_EVOLUTION,
+    LINK_COMPARISON,
+    LINK_PIES,
+    LINK_HEATMAPS,
+    LINK_LIQUID,
+    LINK_INVESTMENTS
+]
+
 LANDING_APP = LINK_DASHBOARD
 
 NUM_DICT = {
@@ -21,16 +31,11 @@ NUM_DICT = {
     7: "seven", 8: "eight", 9: "nine", 10: "ten", 11: "eleven", 12: "twelve"
 }
 
-LINKS_ALL = [
-    LINK_DASHBOARD, LINK_EVOLUTION, LINK_COMPARISON, LINK_PIES, LINK_HEATMAPS, LINK_LIQUID,
-    LINK_INVESTMENTS
-]
-
 INPUT_CATEGORIES = "categories"
 INPUT_SMOOTHING = "smoothing"
 INPUT_TIMEWINDOW = "timewindow"
 
-DEFAULT_SMOOTHING = 1
+DEFAULT_SMOOTHING = 3
 
 PLOT_CONFIG = {
     "displaylogo": False,

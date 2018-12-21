@@ -2,6 +2,7 @@
     Dash app
 """
 
+import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 from dash.dependencies import Input, Output
 
@@ -72,9 +73,9 @@ class Page(lay.AppPage):
                         DFS[c.dfs.TRANS], c.names.INCOMES, c.dash.DEFAULT_SMOOTHING
                     )
                 ),
-                dcc.RadioItems(
+                dbc.RadioItems(
                     id="radio_comp_1", options=self.radio_opt,
-                    value=c.names.INCOMES, labelStyle={'display': 'inline-block'}
+                    value=c.names.INCOMES, inline=True
                 )
             ]),
             lay.card([
@@ -84,9 +85,9 @@ class Page(lay.AppPage):
                         DFS[c.dfs.TRANS], c.names.EXPENSES, c.dash.DEFAULT_SMOOTHING
                     )
                 ),
-                dcc.RadioItems(
+                dbc.RadioItems(
                     id="radio_comp_2", options=self.radio_opt,
-                    value=c.names.EXPENSES, labelStyle={'display': 'inline-block'}
+                    value=c.names.EXPENSES, inline=True
                 )
             ])
         ]
