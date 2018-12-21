@@ -43,7 +43,7 @@ class Page(lay.AppPage):
             """
 
             df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
-            return plots.plot_timeserie(df, timewindow, avg_month)
+            return plots.plot_timeserie(df, avg_month, timewindow)
 
 
         @app.callback(Output("plot_evo_detail", "figure"),
@@ -64,7 +64,7 @@ class Page(lay.AppPage):
             """
             df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
             return plots.plot_timeserie_by_categories(
-                df, DFS[c.dfs.CATEG], type_trans, timewindow, avg_month
+                df, DFS[c.dfs.CATEG], avg_month, type_trans, timewindow
             )
 
     def get_body(self):
@@ -72,7 +72,9 @@ class Page(lay.AppPage):
             lay.card(
                 dcc.Graph(
                     id="plot_evol", config=c.dash.PLOT_CONFIG,
-                    figure=plots.plot_timeserie(DFS[c.dfs.TRANS], self.def_tw)
+                    figure=plots.plot_timeserie(
+                    	DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING, self.def_tw
+                    )
                 )
             ),
             lay.card(
@@ -80,7 +82,11 @@ class Page(lay.AppPage):
                     dcc.Graph(
                         id="plot_evo_detail", config=c.dash.PLOT_CONFIG,
                         figure=plots.plot_timeserie_by_categories(
-                            DFS[c.dfs.TRANS], DFS[c.dfs.CATEG], self.def_type, self.def_tw
+                            DFS[c.dfs.TRANS],
+                            DFS[c.dfs.CATEG],
+                            c.dash.DEFAULT_SMOOTHING,
+                            self.def_type,
+                            self.def_tw,
                         )
                     ),
                     dcc.RadioItems(
