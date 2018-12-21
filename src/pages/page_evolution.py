@@ -74,7 +74,7 @@ class Page(lay.AppPage):
                 dcc.Graph(
                     id="plot_evol", config=c.dash.PLOT_CONFIG,
                     figure=plots.plot_timeserie(
-                    	DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING, self.def_tw
+                        DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING, self.def_tw
                     )
                 )
             ),
