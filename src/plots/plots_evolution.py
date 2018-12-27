@@ -38,13 +38,8 @@ def plot_timeserie(dfg, avg_month, timewindow="M"):
             )
         )
 
-    # Calculate EBIT
-    df = dfg.copy()
-    mfilter = df[c.cols.TYPE] == c.names.EXPENSES
-    df.loc[mfilter, c.cols.AMOUNT] = - df.loc[mfilter, c.cols.AMOUNT]
-
     # EBIT trace
-    df = u.dfs.group_df_by(df, timewindow)
+    df = u.dfs.group_df_by(u.dfs.get_ebit(dfg), timewindow)
     df = u.dfs.time_average(df, avg_month)
     data.append(
         go.Scatter(
@@ -118,17 +113,11 @@ def plot_savings_ratio(dfg, avg_month, timewindow="M"):
     """
 
     # Calculate EBIT
-    df = dfg.copy()
-    mfilter = df[c.cols.TYPE] == c.names.EXPENSES
-    df.loc[mfilter, c.cols.AMOUNT] = - df.loc[mfilter, c.cols.AMOUNT]
-
-    # EBIT trace
-    df = u.dfs.group_df_by(df, timewindow)
+    df = u.dfs.group_df_by(u.dfs.get_ebit(dfg), timewindow)
     df = u.dfs.time_average(df, avg_month)
 
     # Incomes
-    dfi = dfg[dfg[c.cols.TYPE] == c.names.INCOMES].copy()
-    dfi = u.dfs.group_df_by(dfi, timewindow)
+    dfi = u.dfs.group_df_by(dfg[dfg[c.cols.TYPE] == c.names.INCOMES], timewindow)
     dfi = u.dfs.time_average(dfi, avg_month)
 
     # Savings ratio

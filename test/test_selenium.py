@@ -59,7 +59,7 @@ class TestApp(unittest.TestCase):
     def test_page_evolution(self):
         """ Test the content of page evolution """
 
-        body_elem = ["plot_evol", "plot_evo_detail", "radio_evol_type"]
+        body_elem = ["plot_evol", "plot_evo_detail", "radio_evol_type", "plot_evo_savings"]
         sidebar_elem = ["input_categories", "input_smoothing", "input_timewindow"]
         self._check_one_page(c.dash.LINK_EVOLUTION, body_elem + sidebar_elem)
 
