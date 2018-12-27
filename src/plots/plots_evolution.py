@@ -2,6 +2,7 @@
 	Individual plots
 """
 
+import pandas as pd
 import plotly.graph_objs as go
 
 import constants as c
@@ -14,8 +15,8 @@ def plot_timeserie(dfg, avg_month, timewindow="M"):
 
         Args:
             dfg:        dataframe with info
-            timewindow: temporal grouping
             avg_month:  month to use in time average
+            timewindow: temporal grouping
 
         Returns:
             the plotly plot as html-div format
@@ -66,9 +67,9 @@ def plot_timeserie_by_categories(
         Args:
             dfg:        dataframe with info
             df_categ:   categories dataframe
+            avg_month:  month to use in time average
             type_trans: type of transaction [Income/Expense]
             timewindow: temporal grouping
-            avg_month:  month to use in time average
 
         Returns:
             the plotly plot as html-div format
@@ -100,4 +101,49 @@ def plot_timeserie_by_categories(
         ))
 
     layout = go.Layout(title="Evolution by category", barmode='stack')
+    return go.Figure(data=data, layout=layout)
+
+
+def plot_savings_ratio(dfg, avg_month, timewindow="M"):
+    """
+        Plots the ratio between ebit and incomes
+
+        Args:
+            dfg:        dataframe with info
+            avg_month:  month to use in time average
+            timewindow: temporal grouping
+
+        Returns:
+            the plotly plot as html-div format
+    """
+
+    # Calculate EBIT
+    df = dfg.copy()
+    mfilter = df[c.cols.TYPE] == c.names.EXPENSES
+    df.loc[mfilter, c.cols.AMOUNT] = - df.loc[mfilter, c.cols.AMOUNT]
+
+    # EBIT trace
+    df = u.dfs.group_df_by(df, timewindow)
+    df = u.dfs.time_average(df, avg_month)
+
+    # Incomes
+    dfi = dfg[dfg[c.cols.TYPE] == c.names.INCOMES].copy()
+    dfi = u.dfs.group_df_by(dfi, timewindow)
+    dfi = u.dfs.time_average(dfi, avg_month)
+
+    # Savings ratio
+    df = df[c.cols.AMOUNT]/dfi[c.cols.AMOUNT]
+
+    # Only positive values
+    df = df.apply(lambda x: 0 if pd.isnull(x) else max(0, x))
+
+    data = [
+        go.Scatter(
+            x=df.index, y=df,
+            marker={"color": c.colors.SAVINGS},
+            name=c.names.SAVINGS_RATIO, mode="lines"
+        )
+    ]
+
+    layout = go.Layout(title="Ratio savings/incomes")
     return go.Figure(data=data, layout=layout)
