@@ -14,7 +14,7 @@ Some screenshots (with personal data hidden):
 ![Screenshoot2](images/screenshot_2.jpg)
 ![Screenshoot3](images/screenshot_3.jpg)
 
-## Installation
+## Installation and usage
 1. Download the code 
 
     ```git clone https://github.com/villoro/expensor_personal.git```
@@ -23,17 +23,21 @@ Some screenshots (with personal data hidden):
 
     ```pip install -r requirements.txt```
 
-3. Run the app
+3. Register a dropbox app ([Documentation](https://www.dropbox.com/developers/reference/oauth-guide))
+
+4. Set environment variables
+    - **EXPENSOR_DROPBOX_TOKEN:** dropbox token (from the previously registered app)
+    - **EXPENSOR_USER:** user for login
+    - **EXPENSOR_PASSWORD:** password for login
+
+5. Make sure you have the data needed inside the dropbox app (see section `Data needed`)
+
+6. Run the app
 
     ```python src/index.py```
 
-4. Register a dropbox app ([Documentation](https://www.dropbox.com/developers/reference/oauth-guide))
+7. Log in using `EXPENSOR_USER` and `EXPENSOR_PASSWORD`.
 
-5. Set environment variables
-    - **EXPENSOR_DROPBOX_TOKEN:** dropbox token
-    - **EXPENSOR_USER:** user for login
-    - **EXPENSOR_PASSWORD:** password for login
-    
 ## Data needed
 In order to set up the app you will need two excel files inside the dropbox app folder:
 * your_app/Money Lover/YYYY-MM-DD.xlsx
