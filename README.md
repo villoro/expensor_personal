@@ -25,9 +25,7 @@ Some screenshots (with personal data hidden):
 
 3. Run the app
 
-    ```
-    python src/index.py
-    ```
+    ```python src/index.py```
 
 4. Register a dropbox app ([Documentation](https://www.dropbox.com/developers/reference/oauth-guide))
 
@@ -65,7 +63,7 @@ This file should have the following sheets:
 * trans_categ
 
 #### liquid_list sheet
-This states the different accounts with liquid and how liquid each account is. It needs the following columns
+This states the different accounts with liquid and how liquid each account is. It needs the following columns:
 
 | Name        | Liquidity level | Liquidity   name |
 |-------------|-----------------|------------------|
@@ -103,7 +101,7 @@ This is a list of all possible categories for the transactions listed in `Money 
 |  Rent  | Expenses | green      | 500         |
 
 
-All available colors can be found at [Meterial Design Guidline](https://material.io/design/color/the-color-system.html#color-usage-palettes)
+All available colors can be found at [Meterial Design Guidline](https://material.io/design/color/the-color-system.html#color-usage-palettes).
 
 ## Authors
 * [Arnau Villoro](villoro.com)
