@@ -15,6 +15,7 @@ LIQUID = get_colors(("blue", 400))
 LIQUID_MIN_REC = get_colors(("grey", 700))
 LIQUID_REC = get_colors(("grey", 400))
 WORTH = get_colors(("lime", 400))
+SAVINGS = get_colors(("purple", 500))
 
 TABLE_HEADER_FILL = get_colors(("blue", 200))
 

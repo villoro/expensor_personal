@@ -7,6 +7,17 @@ import pandas as pd
 import constants as c
 
 
+def get_ebit(df_in):
+    """
+        Changes the sign of expenses in order to calc EBIT
+    """
+    df = df_in.copy()
+    mfilter = df[c.cols.TYPE] == c.names.EXPENSES
+    df.loc[mfilter, c.cols.AMOUNT] = - df.loc[mfilter, c.cols.AMOUNT]
+
+    return df
+
+
 def group_df_by(df, timewindow):
     """
         Groups a dataframe by the given timewindow
