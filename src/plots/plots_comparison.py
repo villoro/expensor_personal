@@ -34,9 +34,7 @@ def ts_gradient(dfg, type_trans, avg_month):
     if df.shape[0] == 0:
         return {}
 
-    # Compute time average
-    if avg_month > 0:
-        df = u.dfs.time_average(df, avg_month)
+    df = u.dfs.time_average(df, avg_month)
 
     max_width = 5
 

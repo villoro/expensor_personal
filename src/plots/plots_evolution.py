@@ -8,7 +8,7 @@ import constants as c
 import utilities as u
 
 
-def plot_timeserie(dfg, timewindow="M", avg_month=12):
+def plot_timeserie(dfg, avg_month, timewindow="M"):
     """
         Creates a timeseries plot with expenses, incomes and their regressions
 
@@ -58,7 +58,7 @@ def plot_timeserie(dfg, timewindow="M", avg_month=12):
 
 
 def plot_timeserie_by_categories(
-        dfg, df_categ, type_trans=c.names.EXPENSES, timewindow="M", avg_month=12
+        dfg, df_categ, avg_month, type_trans=c.names.EXPENSES, timewindow="M"
     ):
     """
         Creates a timeseries plot detailed by category
