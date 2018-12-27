@@ -68,6 +68,28 @@ class Page(lay.AppPage):
                 df, DFS[c.dfs.CATEG], avg_month, type_trans, timewindow
             )
 
+
+        @app.callback(Output("plot_evo_savings", "figure"),
+                      [Input("input_categories", "value"),
+                       Input("input_timewindow", "value"),
+                       Input("input_smoothing", "value")])
+        #pylint: disable=unused-variable,unused-argument
+        def update_savings_plot(categories, timewindow, avg_month):
+            """
+                Updates the timeserie by categories plot
+
+                Args:
+                    categories: categories to use
+                    type_trans: type of transacions [Expenses/Inc]
+                    timewindow: timewindow to use for grouping
+                    avg_month:  month to use in time average
+            """
+            df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
+            return plots.plot_savings_ratio(
+                df, avg_month, timewindow
+            )
+
+
     def get_body(self):
         return [
             lay.card(
@@ -97,5 +119,13 @@ class Page(lay.AppPage):
                         inline=True
                     )
                 ]
+            ),
+            lay.card(
+                dcc.Graph(
+                    id="plot_evo_savings", config=c.dash.PLOT_CONFIG,
+                    figure=plots.plot_savings_ratio(
+                        DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING, self.def_tw
+                    )
+                )
             ),
         ]
