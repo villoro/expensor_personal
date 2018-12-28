@@ -82,7 +82,7 @@ def group_df_by(df_in, timewindow, dfg=None):
         return df_in
 
     col = {"D": c.cols.DATE, "M": c.cols.MONTH_DATE, "Y": c.cols.YEAR}[timewindow]
-    
+
     # Group by date
     df = df_in.copy()[[col, c.cols.AMOUNT]].groupby(col).sum()
 
