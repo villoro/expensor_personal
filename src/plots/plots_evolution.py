@@ -28,8 +28,7 @@ def plot_timeserie(dfg, avg_month, timewindow="M"):
     data = []
 
     for name, color in iter_data.items():
-        df = u.dfs.group_df_by(dfg[dfg[c.cols.TYPE] == name], timewindow)
-        df = u.dfs.time_average(df, avg_month)
+        df = u.dfs.group_df_with_time_avg(dfg[dfg[c.cols.TYPE] == name], timewindow, avg_month)
         data.append(
             go.Scatter(
                 x=df.index, y=df[c.cols.AMOUNT],
@@ -39,8 +38,8 @@ def plot_timeserie(dfg, avg_month, timewindow="M"):
         )
 
     # EBIT trace
-    df = u.dfs.group_df_by(u.dfs.get_ebit(dfg), timewindow)
-    df = u.dfs.time_average(df, avg_month)
+    df = u.dfs.group_df_with_time_avg(u.dfs.get_ebit(dfg), timewindow, avg_month)
+
     data.append(
         go.Scatter(
             x=df.index, y=df[c.cols.AMOUNT],
@@ -73,9 +72,8 @@ def plot_timeserie_by_categories(
     df = dfg[dfg[c.cols.TYPE] == type_trans].copy()
     df_cat = df_categ[df_categ[c.cols.TYPE] == type_trans].set_index(c.cols.NAME)
 
-    df_aux = u.dfs.group_df_by(df, timewindow)
-    df_aux = df_aux.reindex(dfg["Month_date"].unique(), fill_value=0)
-    df_aux = u.dfs.time_average(df_aux, avg_month)
+    df_aux = u.dfs.group_df_with_time_avg(df, timewindow, avg_month, dfg)
+
     data = [go.Scatter(x=df_aux.index, y=df_aux[c.cols.AMOUNT],
                        marker={"color": "black"}, name=c.names.TOTAL)]
 
@@ -87,9 +85,9 @@ def plot_timeserie_by_categories(
         else:
             color = u.get_colors(("black", 500))
 
-        df_aux = u.dfs.group_df_by(df[df[c.cols.CATEGORY] == cat], timewindow)
-        df_aux = df_aux.reindex(dfg["Month_date"].unique(), fill_value=0)
-        df_aux = u.dfs.time_average(df_aux, avg_month)
+        df_aux = u.dfs.group_df_with_time_avg(
+            df[df[c.cols.CATEGORY] == cat], timewindow, avg_month, dfg
+        )
         data.append(go.Bar(
             x=df_aux.index, y=df_aux[c.cols.AMOUNT],
             marker={"color": color}, name=cat
@@ -113,12 +111,12 @@ def plot_savings_ratio(dfg, avg_month, timewindow="M"):
     """
 
     # Calculate EBIT
-    df = u.dfs.group_df_by(u.dfs.get_ebit(dfg), timewindow)
-    df = u.dfs.time_average(df, avg_month)
+    df = u.dfs.group_df_with_time_avg(u.dfs.get_ebit(dfg), timewindow, avg_month)
 
     # Incomes
-    dfi = u.dfs.group_df_by(dfg[dfg[c.cols.TYPE] == c.names.INCOMES], timewindow)
-    dfi = u.dfs.time_average(dfi, avg_month)
+    dfi = u.dfs.group_df_with_time_avg(
+        dfg[dfg[c.cols.TYPE] == c.names.INCOMES], timewindow, avg_month
+    )
 
     # Savings ratio
     df = df[c.cols.AMOUNT]/dfi[c.cols.AMOUNT]
