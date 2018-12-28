@@ -18,7 +18,7 @@ def get_ebit(df_in):
     return df
 
 
-def group_df_by(df, timewindow):
+def group_df_by(df_in, timewindow=None):
     """
         Groups a dataframe by the given timewindow
 
@@ -30,9 +30,16 @@ def group_df_by(df, timewindow):
             dataframe grouped
     """
 
-    col = {"D": c.cols.DATE, "M": c.cols.MONTH_DATE, "Y": c.cols.YEAR}[timewindow]
+    if timewindow is None:
+        return df_in
 
-    return df[[col, c.cols.AMOUNT]].groupby(col).sum()
+    col = {"D": c.cols.DATE, "M": c.cols.MONTH_DATE, "Y": c.cols.YEAR}[timewindow]
+    
+    # Group by date
+    df = df_in.copy()[[col, c.cols.AMOUNT]].groupby(col).sum()
+
+    # Fill missing rows based on unique values of input data
+    return df.reindex(df_in[col].unique(), fill_value=0)
 
 
 def filter_data(df_input, values=None, col_name=c.cols.CATEGORY):

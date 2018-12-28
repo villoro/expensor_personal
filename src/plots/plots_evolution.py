@@ -70,15 +70,10 @@ def plot_timeserie_by_categories(
             the plotly plot as html-div format
     """
 
-    index_col = {
-        "M": c.cols.MONTH_DATE, "Y": c.cols.YEAR
-    }.get(timewindow, c.cols.DATE)
-
     df = dfg[dfg[c.cols.TYPE] == type_trans].copy()
     df_cat = df_categ[df_categ[c.cols.TYPE] == type_trans].set_index(c.cols.NAME)
 
     df_aux = u.dfs.group_df_by(df, timewindow)
-    df_aux = df_aux.reindex(dfg[index_col].unique(), fill_value=0)
     df_aux = u.dfs.time_average(df_aux, avg_month)
     data = [go.Scatter(x=df_aux.index, y=df_aux[c.cols.AMOUNT],
                        marker={"color": "black"}, name=c.names.TOTAL)]
@@ -92,7 +87,6 @@ def plot_timeserie_by_categories(
             color = u.get_colors(("black", 500))
 
         df_aux = u.dfs.group_df_by(df[df[c.cols.CATEGORY] == cat], timewindow)
-        df_aux = df_aux.reindex(dfg[index_col].unique(), fill_value=0)
         df_aux = u.dfs.time_average(df_aux, avg_month)
         data.append(go.Bar(
             x=df_aux.index, y=df_aux[c.cols.AMOUNT],
