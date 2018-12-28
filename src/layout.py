@@ -62,12 +62,12 @@ def get_layout():
             "Sync",
             id="sync",
             className="mr-1",
-            color="primary",
+            color="success",
         ),
         dbc.Button(
             "Filters",
             id="filters-button",
-            color="primary",
+            color="success",
             className="mr-1"
         ),
     ] + [
