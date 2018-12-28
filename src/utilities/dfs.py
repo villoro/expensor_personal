@@ -65,13 +65,14 @@ def get_ebit(df_in):
     return df
 
 
-def group_df_by(df_in, timewindow):
+def group_df_by(df_in, timewindow, dfg=None):
     """
         Groups a dataframe by the given timewindow
 
         Args:
             df:         dataframe to group
             timewindow: temporal agrupation to use
+            dfg:        dataframe that will be used to check all unique time values
 
         Returns:
             dataframe grouped
@@ -85,8 +86,11 @@ def group_df_by(df_in, timewindow):
     # Group by date
     df = df_in.copy()[[col, c.cols.AMOUNT]].groupby(col).sum()
 
+    if dfg is None:
+        return df
+
     # Fill missing rows based on unique values of input data
-    return df.reindex(df_in[col].unique(), fill_value=0)
+    return df.reindex(dfg[col].unique(), fill_value=0)
 
 
 def time_average(df_in, months):
@@ -99,7 +103,7 @@ def time_average(df_in, months):
     return df.apply(lambda x: round(x, 2))
 
 
-def group_df_with_time_avg(df_in, timewindow, months):
+def group_df_with_time_avg(df_in, timewindow, months, dfg=None):
     """ groups a dataframe by a timewindow and then do some time average """
 
-    return time_average(group_df_by(df_in, timewindow), months)
+    return time_average(group_df_by(df_in, timewindow, dfg), months)
