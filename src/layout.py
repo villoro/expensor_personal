@@ -2,6 +2,8 @@
     Dash app
 """
 
+from abc import ABC, abstractmethod
+
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
@@ -123,7 +125,7 @@ def two_columns(elements):
         className="w3-row"
     )
 
-class AppPage():
+class AppPage(ABC):
     """
         Raw Page class that is meant to be extended
     """
@@ -148,8 +150,12 @@ class AppPage():
 
 
     #pylint: disable=R0201
+    @abstractmethod
     def get_body(self):
-        """ Dummy function to be overrided by every page. It should create the body """
+        """
+            Dummy function to be overrided by every page. It should create the body
+            The @abstractmethod decorator ensures that this function is implemented
+        """
         return []
 
 
@@ -159,6 +165,7 @@ class AppPage():
         return [
             html.Div(data) for data in self.get_body()
         ]
+
 
 def card(data, **kwa):
     """ Create one card """
