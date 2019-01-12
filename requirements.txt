@@ -1,6 +1,6 @@
 dash==0.32.2
 dash_auth==1.3.1
-dash-bootstrap-components==0.2.5
+dash-bootstrap-components==0.3.0
 dash-core-components==0.41.0
 dash-html-components==0.13.2
 dash-renderer==0.16.1
