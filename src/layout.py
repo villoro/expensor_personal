@@ -92,16 +92,16 @@ def get_layout():
 
     navbar = dbc.Navbar(
         [
-        dbc.Row(
-            [
-                dbc.Col(html.Img(src="assets/logo.png", height="30px")),
-                dbc.Col(dbc.NavbarBrand("Expensor", className="ml-2")),
-            ],
-            align="center",
-            no_gutters=True,
-        ),
-        navbar_right
-    ],
+            dbc.Row(
+                [
+                    dbc.Col(html.Img(src="assets/logo.png", height="30px")),
+                    dbc.Col(dbc.NavbarBrand("Expensor", className="ml-2")),
+                ],
+                align="center",
+                no_gutters=True,
+            ),
+            navbar_right
+        ],
         className="w3-light-grey w3-card"
     )
 
