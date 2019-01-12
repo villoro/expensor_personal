@@ -14,6 +14,7 @@ from data_loader import DFS
 
 DEFAULT_PADDING = 9
 
+
 def padding(value=DEFAULT_PADDING):
     """ gets a dict with padding in each direction """
     return {f"padding-{x}": f"{value}px" for x in ["right", "left", "top", "bottom"]}
@@ -59,37 +60,48 @@ FILTERS = {
 def get_layout():
     """ Creates the dash layout """
 
-    dropdown_items = [
-        dbc.Button(
-            "Sync",
-            id="sync",
-            className="mr-1",
-            color="success",
-        ),
-        dbc.Button(
-            "Filters",
-            id="filters-button",
-            color="success",
-            className="mr-1"
-        ),
-    ] + [
-        dbc.DropdownMenu(
-            nav=True,
-            in_navbar=True,
-            label="Pages",
-            children=[
-                dbc.DropdownMenuItem(
-                    x[1:], href=x, id="section_{}".format(x[1:]),
-                ) for x in c.dash.LINKS_ALL
-            ]
-        ),
-    ]
+    navbar_right = dbc.Row(
+        [
+            dbc.DropdownMenu(
+                label="Pages",
+                children=[
+                    dbc.DropdownMenuItem(
+                        x[1:], href=x, id="section_{}".format(x[1:]),
+                    ) for x in c.dash.LINKS_ALL
+                ],
+                direction="left",
+                className="mr-1",
+            ),
+            dbc.Button(
+                "Sync",
+                id="sync",
+                className="mr-1",
+                color="success",
+            ),
+            dbc.Button(
+                "Filters",
+                id="filters-button",
+                className="mr-1",
+                color="success",
+            ),
+        ],
+        no_gutters=True,
+        className="ml-auto",
+        align="center",
+    )
 
     navbar = dbc.Navbar(
-        dropdown_items,
-        brand="Expensor",
-        brand_href="/",
-        sticky="top",
+        [
+            dbc.Row(
+                [
+                    dbc.Col(html.Img(src="assets/logo.png", height="30px")),
+                    dbc.Col(dbc.NavbarBrand("Expensor", className="ml-2")),
+                ],
+                align="center",
+                no_gutters=True,
+            ),
+            navbar_right
+        ],
         className="w3-light-grey w3-card"
     )
 
