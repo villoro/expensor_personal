@@ -2,6 +2,8 @@
     Dash app
 """
 
+from abc import ABC, abstractmethod
+
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
@@ -11,6 +13,7 @@ from data_loader import DFS
 
 
 DEFAULT_PADDING = 9
+
 
 def padding(value=DEFAULT_PADDING):
     """ gets a dict with padding in each direction """
@@ -57,37 +60,48 @@ FILTERS = {
 def get_layout():
     """ Creates the dash layout """
 
-    dropdown_items = [
-        dbc.Button(
-            "Sync",
-            id="sync",
-            className="mr-1",
-            color="success",
-        ),
-        dbc.Button(
-            "Filters",
-            id="filters-button",
-            color="success",
-            className="mr-1"
-        ),
-    ] + [
-        dbc.DropdownMenu(
-            nav=True,
-            in_navbar=True,
-            label="Pages",
-            children=[
-                dbc.DropdownMenuItem(
-                    x[1:], href=x, id="section_{}".format(x[1:]),
-                ) for x in c.dash.LINKS_ALL
-            ]
-        ),
-    ]
+    navbar_right = dbc.Row(
+        [
+            dbc.DropdownMenu(
+                label="Pages",
+                children=[
+                    dbc.DropdownMenuItem(
+                        x[1:], href=x, id="section_{}".format(x[1:]),
+                    ) for x in c.dash.LINKS_ALL
+                ],
+                direction="left",
+                className="mr-1",
+            ),
+            dbc.Button(
+                "Sync",
+                id="sync",
+                className="mr-1",
+                color="success",
+            ),
+            dbc.Button(
+                "Filters",
+                id="filters-button",
+                className="mr-1",
+                color="success",
+            ),
+        ],
+        no_gutters=True,
+        className="ml-auto",
+        align="center",
+    )
 
     navbar = dbc.Navbar(
-        dropdown_items,
-        brand="Expensor",
-        brand_href="/",
-        sticky="top",
+        [
+            dbc.Row(
+                [
+                    dbc.Col(html.Img(src="assets/logo.png", height="30px")),
+                    dbc.Col(dbc.NavbarBrand("Expensor", className="ml-2")),
+                ],
+                align="center",
+                no_gutters=True,
+            ),
+            navbar_right
+        ],
         className="w3-light-grey w3-card"
     )
 
@@ -123,7 +137,7 @@ def two_columns(elements):
         className="w3-row"
     )
 
-class AppPage():
+class AppPage(ABC):
     """
         Raw Page class that is meant to be extended
     """
@@ -148,8 +162,12 @@ class AppPage():
 
 
     #pylint: disable=R0201
+    @abstractmethod
     def get_body(self):
-        """ Dummy function to be overrided by every page. It should create the body """
+        """
+            Dummy function to be overrided by every page. It should create the body
+            The @abstractmethod decorator ensures that this function is implemented
+        """
         return []
 
 
@@ -159,6 +177,7 @@ class AppPage():
         return [
             html.Div(data) for data in self.get_body()
         ]
+
 
 def card(data, **kwa):
     """ Create one card """
