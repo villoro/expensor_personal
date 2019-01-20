@@ -4,15 +4,11 @@
 
 This is a [dash](https://plot.ly/products/dash/) app that allows me to visualitze my financial data. This includes expenses, incomes, EBIT, liquid and investments.
 
+![Mockup](images/mockup.png)
+
 **It is intended only for personal use.** There is another repository ([expensor](https://github.com/villoro/expensor)) with a similar dash app for public use. However, if you want, you can use the code of this app or fragments of it.
 
 It takes personal information from dropbox and uses dash login to verify the identity.
-
-Some screenshots (with personal data hidden):
-
-![Screenshoot1](images/screenshot_1.jpg)
-![Screenshoot2](images/screenshot_2.jpg)
-![Screenshoot3](images/screenshot_3.jpg)
 
 ## Installation and usage
 1. Download the code 
@@ -109,6 +105,14 @@ All available colors can be found at [Meterial Design Guidline](https://material
 
 ## Authors
 * [Arnau Villoro](villoro.com)
+
+
+## Images
+Some screenshots (with personal data hidden):
+
+![Screenshoot1](images/screenshot_1.jpg)
+![Screenshoot2](images/screenshot_2.jpg)
+![Screenshoot3](images/screenshot_3.jpg)
 
 ## License
 The content of this repository is licensed under a [MIT](https://opensource.org/licenses/MIT).
