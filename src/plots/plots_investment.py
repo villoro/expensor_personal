@@ -6,6 +6,7 @@ import plotly.graph_objs as go
 
 import constants as c
 import utilities as u
+from data_loader import YML
 
 
 def invest_evolution_plot(df_in, avg_month):
@@ -27,9 +28,23 @@ def invest_evolution_plot(df_in, avg_month):
     data = [go.Scatter(x=df.index, y=df[c.names.TOTAL],
                        marker={"color": "black"}, name=c.names.TOTAL)]
 
-    for col in df.columns:
-        if col != c.names.TOTAL:
-            data.append(go.Bar(x=df.index, y=df[col], name=col))
+    # If config file use it
+    if c.yml.INVEST in YML:
+        for name, config in YML[c.yml.INVEST].items():
+
+            # Check that accounts are in the config
+            mlist = [x for x in config[c.yml.ACCOUNTS] if x in df.columns]
+
+            df_aux = df[mlist].sum(axis=1)
+            color = u.get_colors((config[c.yml.COLOR_NAME], config[c.yml.COLOR_INDEX]))
+
+            data.append(go.Bar(x=df_aux.index, y=df_aux, marker={"color": color}, name=name))
+
+    # If not, simply plot the present columns
+    else:
+        for col in df.columns:
+            if col != c.names.TOTAL:
+                data.append(go.Bar(x=df.index, y=df[col], name=col))
 
     layout = go.Layout(title="Investment evolution", barmode="stack")
     return go.Figure(data=data, layout=layout)
