@@ -13,8 +13,9 @@
 import os
 import io
 
-import pandas as pd
 import dropbox
+import pandas as pd
+import oyaml as yaml
 
 import constants as c
 from utilities.dfs import fix_df_trans
@@ -22,6 +23,14 @@ from utilities.dfs import fix_df_trans
 
 DBX = dropbox.Dropbox(os.environ[c.io.VAR_DROPBOX_TOKEN])
 DFS = {}
+YML = {}
+
+
+def get_config():
+    """ retrives config yaml as ordered dict """
+
+    _, res = DBX.files_download(c.io.FILE_CONFIG)
+    return yaml.load(io.BytesIO(res.content))
 
 
 def get_money_lover_filename():
@@ -81,6 +90,8 @@ def sync():
 
     DFS.update(get_data_without_transactions())
     DFS[c.dfs.TRANS] = get_df_transactions()
+
+    YML.update(get_config())
 
 
 # Do one sync when it is imported!

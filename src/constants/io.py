@@ -8,5 +8,6 @@ VAR_PASSWORD = "EXPENSOR_PASSWORD"
 
 PATH_MONEY_LOVER = "/Money Lover/"
 FILE_DATA = "/data.xlsx"
+FILE_CONFIG = "/config.yml"
 
 FORBIDDEN_CATEGORIES = ['Debt', 'Loan']

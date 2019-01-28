@@ -35,9 +35,11 @@ It takes personal information from dropbox and uses dash login to verify the ide
 7. Log in using `EXPENSOR_USER` and `EXPENSOR_PASSWORD`.
 
 ## Data needed
-In order to set up the app you will need two excel files inside the dropbox app folder:
+In order to set up the app you will need three excel files inside the dropbox app folder:
 * your_app/Money Lover/YYYY-MM-DD.xlsx
 * your_app/data.xlsx
+* your_app/config.yml (optional)
+
 
 ### Money Lover/YYYY-MM-DD.xlsx file
 The first excel file will be a raw export from [Money Lover](https://moneylover.me/) android app. The dash app will scan the `Money Lover` folder and take the newest excel file based on it's name.
@@ -56,23 +58,13 @@ Note that expenses will have negative amounts and incomes positive ones.
 
 ### data.xlsx file
 This file should have the following sheets:
-* liquid_list
 * liquid_m
 * invest_m
 * worth_m
 * trans_categ
 
-#### liquid_list sheet
-This states the different accounts with liquid and how liquid each account is. It needs the following columns:
-
-| Name        | Liquidity level | Liquidity   name |
-|-------------|-----------------|------------------|
-| ING Account | 1               | liquid           |
-| ING Deposit | 2               | deposit          |
-|   Revolut   | 1               | liquid           |
-
 #### liquid_m sheet
-This will have the money in each account for each month. It should have `date` and `Total` as columns followed by one column per each account stated in the previous sheet. For example:
+This will have the money in each account for each month. It should have `date` and `Total` as columns followed by one column per each account. For example:
 
 | Date    | Total | ING Account | ING Deposit | Revolut |
 |---------|-------|-------------|-------------|---------|
@@ -100,6 +92,33 @@ This is a list of all possible categories for the transactions listed in `Money 
 | Salary | Incomes  | red        | 500         |
 |  Rent  | Expenses | green      | 500         |
 
+### config.yml (optional)
+This allows to set custom colors and group accounts in plots. It can group:
+* liquid
+* investment
+
+As a key for the first level it should have the name of the group it wants to classify (`liquid` / `investment`). Then it can have as many groups as wanted where each should have the following keys:
+* **color_name:** name of the color
+* **color_index:** color intensity
+* **accounts:** accounts this group includes
+
+For example:
+
+```yml
+liquid:
+  0 - Liquid:
+    color_name: blue
+    color_index: 100
+    accounts:
+      - ING Account
+      - Revolut
+
+  1 - Savings:
+    color_name: blue
+    color_index: 300
+    accounts:
+      - ING Deposit
+```
 
 All available colors can be found at [Meterial Design Guidline](https://material.io/design/color/the-color-system.html#color-usage-palettes).
 
