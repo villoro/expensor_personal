@@ -6,39 +6,47 @@ import plotly.graph_objs as go
 
 import constants as c
 import utilities as u
+from data_loader import YML
 
 
 MONTHS_MIN = 3
 MONTHS_REC = 6
 
-def liquid_plot(df_liq_in, df_list, avg_month):
+def liquid_plot(df_liq_in, avg_month):
     """
         Creates a plot for the liquid evolution
 
         Args:
             df_liq_in:  dataframe with liquid info
-            df_list:    dataframe with types of liquids
             avg_month:  month to use in time average
 
         Returns:
             the plotly plot as html-div format
     """
 
-    df_liq = df_liq_in.set_index(c.cols.DATE)
-    df_liq = u.dfs.time_average(df_liq.fillna(0), avg_month)
+    df = df_liq_in.set_index(c.cols.DATE)
+    df = u.dfs.time_average(df.fillna(0), avg_month)
 
-    data = [go.Scatter(x=df_liq.index, y=df_liq[c.names.TOTAL],
+    data = [go.Scatter(x=df.index, y=df[c.names.TOTAL],
                        marker={"color": "black"}, name=c.names.TOTAL)]
 
-    for level in df_list[c.cols.LIQUID_LEVEL].unique():
-        df_aux = df_list[df_list[c.cols.LIQUID_LEVEL] == level]
-        name_liq = df_aux[c.cols.LIQUID_NAME].tolist()[0]
-        name_trace = "{} - {}".format(level, name_liq)
+    # If config file use it
+    if c.yml.LIQUID in YML:
+        for name, config in YML[c.yml.LIQUID].items():
 
-        df = df_liq[df_aux[c.cols.NAME].tolist()].sum(axis=1)
-        color = u.get_colors(("blue", 100 + 200*level))
+            # Check that accounts are in the config
+            mlist = [x for x in config[c.yml.ACCOUNTS] if x in df.columns]
 
-        data.append(go.Bar(x=df.index, y=df, marker={"color": color}, name=name_trace))
+            df_aux = df[mlist].sum(axis=1)
+            color = u.get_colors((config[c.yml.COLOR_NAME], config[c.yml.COLOR_INDEX]))
+
+            data.append(go.Bar(x=df_aux.index, y=df_aux, marker={"color": color}, name=name))
+
+    # If not, simply plot the present columns
+    else:
+        for col in df.columns:
+            if col != c.names.TOTAL:
+                data.append(go.Bar(x=df.index, y=df[col], name=col))
 
     layout = go.Layout(title="Liquid evolution", barmode="stack")
     return go.Figure(data=data, layout=layout)

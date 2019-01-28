@@ -34,9 +34,7 @@ class Page(lay.AppPage):
                     avg_month:  month to use in time average
             """
 
-            return plots.liquid_plot(
-                DFS[c.dfs.LIQUID], DFS[c.dfs.LIQUID_LIST], avg_month
-            )
+            return plots.liquid_plot(DFS[c.dfs.LIQUID], avg_month)
 
         @app.callback(Output("plot_liquid_vs_expenses", "figure"),
                       [Input("input_smoothing", "value")])
@@ -76,7 +74,7 @@ class Page(lay.AppPage):
                 dcc.Graph(
                     id="plot_liquid_evo", config=c.dash.PLOT_CONFIG,
                     figure=plots.liquid_plot(
-                        DFS[c.dfs.LIQUID], DFS[c.dfs.LIQUID_LIST], c.dash.DEFAULT_SMOOTHING
+                        DFS[c.dfs.LIQUID], c.dash.DEFAULT_SMOOTHING
                     )
                 )
             ),
