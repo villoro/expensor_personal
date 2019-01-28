@@ -120,8 +120,6 @@ liquid:
       - ING Deposit
 ```
 
-> Available colors can be found at [material.io](https://material.io/guidelines/style/color.html#color-color-palette)
-
 All available colors can be found at [Meterial Design Guidline](https://material.io/design/color/the-color-system.html#color-usage-palettes).
 
 ## Authors
