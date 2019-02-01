@@ -107,12 +107,3 @@ def group_df_with_time_avg(df_in, timewindow, months, dfg=None):
     """ groups a dataframe by a timewindow and then do some time average """
 
     return time_average(group_df_by(df_in, timewindow, dfg), months)
-
-def normalize_index(df1, df2):
-    """ Force two dataframes to have the same indexs """
-
-    index = df2.index if df2.shape[0] > df1.shape[0] else df1.index
-    df1 = df1.reindex(index).fillna(0)
-    df2 = df2.reindex(index).fillna(0)
-
-    return df1, df2

@@ -52,7 +52,7 @@ def liquid_plot(df_liq_in, avg_month):
     return go.Figure(data=data, layout=layout)
 
 
-def plot_expenses_vs_liquid(df_liquid_in, df_trans_in, avg_month, show_rec=True, height=None):
+def plot_expenses_vs_liquid(df_liquid_in, df_trans_in, avg_month, show_rec=True):
     """
         Creates a plot to compare liquid and expenses
 
@@ -61,7 +61,6 @@ def plot_expenses_vs_liquid(df_liquid_in, df_trans_in, avg_month, show_rec=True,
             df_trans_in:    dataframe with transactions
             avg_month:      month to use in time average
             show_rec:       bool for show/hide recommended liquids
-            height:     height of the plot
 
         Returns:
             the plotly plot as html-div format
@@ -86,11 +85,11 @@ def plot_expenses_vs_liquid(df_liquid_in, df_trans_in, avg_month, show_rec=True,
     data = [go.Scatter(x=df.index, y=y, name=name, marker={"color": color}, mode="lines")
             for df, y, name, color in iter_data]
 
-    layout = go.Layout(title="Liquid vs Expenses", showlegend=show_rec, height=height)
+    layout = go.Layout(title="Liquid vs Expenses", showlegend=show_rec)
     return go.Figure(data=data, layout=layout)
 
 
-def plot_months(df_liquid_in, df_trans_in, avg_month, show_rec=True, height=None):
+def plot_months(df_liquid_in, df_trans_in, avg_month, show_rec=True):
     """
         Creates a plot to compare liquid and expenses
 
@@ -99,7 +98,6 @@ def plot_months(df_liquid_in, df_trans_in, avg_month, show_rec=True, height=None
             df_trans_in:    dataframe with transactions
             avg_month:      month to use in time average
             show_rec:       bool for show/hide recommended liquids
-            height:     height of the plot
 
         Returns:
             the plotly plot as html-div format
@@ -125,5 +123,5 @@ def plot_months(df_liquid_in, df_trans_in, avg_month, show_rec=True, height=None
     data = [go.Scatter(x=serie.index, y=y, name=name, marker={"color": color}, mode="lines")
             for y, name, color in iter_data]
 
-    layout = go.Layout(title="Survival months with current liquid", height=height)
+    layout = go.Layout(title="Survival months with current liquid")
     return go.Figure(data=data, layout=layout)

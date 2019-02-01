@@ -19,7 +19,6 @@ class Page(lay.AppPage):
     """ Page Dashboard """
 
     link = c.dash.LINK_DASHBOARD
-    plot_height = 380
 
 
     def __init__(self, app):
@@ -37,24 +36,7 @@ class Page(lay.AppPage):
                 Args:
                     avg_month:  month to use in time average
             """
-            return plt_ev.plot_timeserie(
-                DFS[c.dfs.TRANS], avg_month=avg_month, height=self.plot_height
-            )
-
-        @app.callback(Output("plot_dash_total_worth", "figure"),
-                      [Input("input_smoothing", "value")])
-        #pylint: disable=unused-variable,unused-argument
-        def update_plot_total_worth(avg_month):
-            """
-                Updates the timeserie gradient plot
-
-                Args:
-                    avg_month:  month to use in time average
-            """
-
-            return plt_inv.total_worth_plot(
-                DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], avg_month, height=self.plot_height
-            )
+            return plt_ev.plot_timeserie(DFS[c.dfs.TRANS], avg_month=avg_month)
 
 
         @app.callback(Output("plot_dash_l_vs_e", "figure"),
@@ -69,7 +51,7 @@ class Page(lay.AppPage):
             """
 
             return plt_li.plot_expenses_vs_liquid(
-                DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], avg_month, False, height=self.plot_height
+                DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], avg_month, False
             )
 
 
@@ -85,7 +67,22 @@ class Page(lay.AppPage):
             """
 
             return plt_li.plot_months(
-                DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], avg_month, False, height=self.plot_height
+                DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], avg_month, False
+            )
+
+        @app.callback(Output("plot_dash_total_worth", "figure"),
+                      [Input("input_smoothing", "value")])
+        #pylint: disable=unused-variable,unused-argument
+        def update_plot_total_worth(avg_month):
+            """
+                Updates the timeserie gradient plot
+
+                Args:
+                    avg_month:  month to use in time average
+            """
+
+            return plt_inv.total_worth_plot(
+                DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], avg_month
             )
 
 
@@ -98,8 +95,7 @@ class Page(lay.AppPage):
                         id="plot_dash_evol", config=c.dash.PLOT_CONFIG,
                         figure=plt_ev.plot_timeserie(
                             DFS[c.dfs.TRANS],
-                            avg_month=c.dash.DEFAULT_SMOOTHING,
-                            height=self.plot_height
+                            avg_month=c.dash.DEFAULT_SMOOTHING
                         )
                     )
                 ),
@@ -107,8 +103,7 @@ class Page(lay.AppPage):
                     dcc.Graph(
                         id="plot_dash_total_worth", config=c.dash.PLOT_CONFIG,
                         figure=plt_inv.total_worth_plot(
-                            DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH],
-                            c.dash.DEFAULT_SMOOTHING, height=self.plot_height
+                            DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], c.dash.DEFAULT_SMOOTHING
                         )
                     )
                 )
@@ -118,8 +113,7 @@ class Page(lay.AppPage):
                     dcc.Graph(
                         id="plot_dash_l_vs_e", config=c.dash.PLOT_CONFIG,
                         figure=plt_li.plot_expenses_vs_liquid(
-                            DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS],
-                            c.dash.DEFAULT_SMOOTHING, False, height=self.plot_height
+                            DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING, False
                         )
                     )
                 ),
@@ -127,8 +121,7 @@ class Page(lay.AppPage):
                     dcc.Graph(
                         id="plot_dash_liq_months", config=c.dash.PLOT_CONFIG,
                         figure=plt_li.plot_months(
-                            DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS],
-                            c.dash.DEFAULT_SMOOTHING, False, height=self.plot_height
+                            DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING, False
                         )
                     )
                 )
