@@ -70,9 +70,7 @@ def total_worth_plot(df_liq_in, df_wor_in, avg_month):
     df_wor = u.dfs.time_average(df_wor, avg_month)
 
     # If indexs have different lenghts, normalize them
-    index = df_wor.index if df_wor.shape[0] > df_liq.shape[0] else df_liq.index
-    df_liq = df_liq.reindex(index).fillna(0)
-    df_wor = df_wor.reindex(index).fillna(0)
+    df_liq, df_wor = u.dfs.normalize_index(df_liq, df_wor)
 
     dft = df_liq + df_wor
 
@@ -122,4 +120,65 @@ def passive_income_vs_expenses(df_wor_in, df_trans_in, avg_month, smooth):
     ]
 
     layout = go.Layout(title="Passive income vs expenses", barmode="stack")
+    return go.Figure(data=data, layout=layout)
+
+
+def performance_plot(df_inv_in, df_wor_in, avg_month):
+    """
+        Creates a plot with investment performance
+
+        Args:
+            df_inv_in:  dataframe with invested amounth
+            df_wor_in:  dataframe with investment worth
+            avg_month:  month to use in time average
+
+        Returns:
+            the plotly plot as html-div format
+    """
+
+    df_inv = df_inv_in.set_index(c.cols.DATE)
+    df_wor = df_wor_in.set_index(c.cols.DATE)
+
+    df_inv = u.dfs.time_average(df_inv, avg_month)
+    df_wor = u.dfs.time_average(df_wor, avg_month)
+
+    # If indexs have different lenghts, normalize them
+    df_inv, df_wor = u.dfs.normalize_index(df_inv, df_wor)
+
+
+    data = [go.Scatter(
+        x=df_wor.index,
+        y=df_wor[c.names.TOTAL]/df_inv[c.names.TOTAL],
+        marker={"color": "black"},
+        name=c.names.TOTAL
+    )]
+
+    # If config file use it
+    if c.yml.INVEST in YML:
+        for name, config in YML[c.yml.INVEST].items():
+
+            # Check that accounts are in the config
+            mlist = [x for x in config[c.yml.ACCOUNTS] if x in df_wor.columns]
+            color = u.get_colors((config[c.yml.COLOR_NAME], config[c.yml.COLOR_INDEX]))
+
+            data.append(
+                go.Scatter(
+                    x=df_wor.index,
+                    y=df_wor[mlist].sum(axis=1)/df_inv[mlist].sum(axis=1),
+                    marker={"color": color},
+                    name=name
+                )
+            )
+
+    # If not, simply plot the present columns
+    else:
+        for col in df_wor.columns:
+            if col != c.names.TOTAL:
+                data.append(
+                    go.Scatter(
+                        x=df_wor.index, y=df_wor[col]/df_inv[col], name=col
+                    )
+                )
+
+    layout = go.Layout(title="Total worth evolution", barmode="stack")
     return go.Figure(data=data, layout=layout)
