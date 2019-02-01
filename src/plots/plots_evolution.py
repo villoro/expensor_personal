@@ -93,7 +93,7 @@ def plot_timeserie_by_categories(
             marker={"color": color}, name=cat
         ))
 
-    layout = go.Layout(title="Evolution by category", barmode='stack')
+    layout = go.Layout(title="Evolution by category", barmode='stack', height=600)
     return go.Figure(data=data, layout=layout)
 
 
