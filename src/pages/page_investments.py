@@ -135,8 +135,10 @@ class Page(lay.AppPage):
                     figure=plots.invest_evolution_plot(DFS[c.dfs.INVEST], c.dash.DEFAULT_SMOOTHING)
                 ),
                 dbc.RadioItems(
-                    id="radio_invest_wor_inv", options=lay.get_options([c.names.INVESTED, c.names.WORTH]),
-                    value=c.names.INVESTED, inline=True
+                    id="radio_invest_wor_inv",
+                    options=lay.get_options([c.names.INVESTED, c.names.WORTH]),
+                    value=c.names.INVESTED,
+                    inline=True
                 )
             ]),
         ]
