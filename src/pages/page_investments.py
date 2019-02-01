@@ -17,6 +17,7 @@ class Page(lay.AppPage):
 
     link = c.dash.LINK_INVESTMENTS
     dict_types = {c.names.INVESTED: c.dfs.INVEST, c.names.WORTH: c.dfs.WORTH}
+    def_smooth = False
 
     def __init__(self, app):
         super().__init__([
@@ -60,18 +61,20 @@ class Page(lay.AppPage):
 
 
         @app.callback(Output("plot_passive_income", "figure"),
-                      [Input("input_smoothing", "value")])
+                      [Input("input_smoothing", "value"),
+                       Input("radio_invest_smooth", "value")])
         #pylint: disable=unused-variable,unused-argument
-        def update_plot_passive_income(avg_month):
+        def update_plot_passive_income(avg_month, smooth):
             """
                 Updates the timeserie gradient plot
 
                 Args:
                     avg_month:  month to use in time average
+                    smooth:     bool to allow/disable passive smoothing
             """
 
             return plots.passive_income_vs_expenses(
-                DFS[c.dfs.WORTH], DFS[c.dfs.TRANS], avg_month
+                DFS[c.dfs.WORTH], DFS[c.dfs.TRANS], avg_month, smooth
             )
 
 
@@ -95,14 +98,24 @@ class Page(lay.AppPage):
                     )
                 )
             ),
-            lay.card(
+            lay.card([
                 dcc.Graph(
                     id="plot_passive_income", config=c.dash.PLOT_CONFIG,
                     figure=plots.passive_income_vs_expenses(
-                        DFS[c.dfs.WORTH], DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING
+                        DFS[c.dfs.WORTH], DFS[c.dfs.TRANS],
+                        c.dash.DEFAULT_SMOOTHING, self.def_smooth
                     )
+                ),
+                dbc.RadioItems(
+                    id="radio_invest_smooth",
+                    options=[
+                        {"label": "Smooth passive income", "value": True},
+                        {"label": "Don't smooth", "value": False}
+                    ],
+                    value=self.def_smooth,
+                    inline=True
                 )
-            ),
+            ]),
         ]
 
         return body

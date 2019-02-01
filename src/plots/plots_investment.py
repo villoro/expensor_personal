@@ -89,7 +89,7 @@ def total_worth_plot(df_liq_in, df_wor_in, avg_month):
     return go.Figure(data=data, layout=layout)
 
 
-def passive_income_vs_expenses(df_wor_in, df_trans_in, avg_month):
+def passive_income_vs_expenses(df_wor_in, df_trans_in, avg_month, smooth):
     """
         Compares what can be generated with passive income to expanses
 
@@ -97,13 +97,15 @@ def passive_income_vs_expenses(df_wor_in, df_trans_in, avg_month):
             df_wor_in:      dataframe with investment worth
             df_trans_in:    dataframe with transactions
             avg_month:      month to use in time average
+            smooth:     bool to allow/disable passive smoothing
 
         Returns:
             the plotly plot as html-div format
     """
 
     dfw = df_wor_in.set_index(c.cols.DATE)[[c.names.TOTAL]]
-    dfw = u.dfs.time_average(dfw, avg_month)
+    if smooth:
+        dfw = u.dfs.time_average(dfw, avg_month)
 
     dfe = u.dfs.group_df_by(df_trans_in[df_trans_in[c.cols.TYPE] == c.names.EXPENSES], "M")
     dfe = u.dfs.time_average(dfe, avg_month)
