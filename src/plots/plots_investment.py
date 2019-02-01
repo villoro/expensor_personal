@@ -50,7 +50,7 @@ def invest_evolution_plot(df_in, avg_month):
     return go.Figure(data=data, layout=layout)
 
 
-def total_worth_plot(df_liq_in, df_wor_in, avg_month):
+def total_worth_plot(df_liq_in, df_wor_in, avg_month, height=None):
     """
         Creates a plot with investment and liquid
 
@@ -58,6 +58,7 @@ def total_worth_plot(df_liq_in, df_wor_in, avg_month):
             df_liq_in:  dataframe with liquid
             df_wor_in:  dataframe with investment worth
             avg_month:  month to use in time average
+            height:     height of the plot
 
         Returns:
             the plotly plot as html-div format
@@ -83,7 +84,7 @@ def total_worth_plot(df_liq_in, df_wor_in, avg_month):
                    marker={"color": "black"}, name=c.names.TOTAL)
     ]
 
-    layout = go.Layout(title="Total worth evolution", barmode="stack")
+    layout = go.Layout(title="Total worth evolution", barmode="stack", height=height)
     return go.Figure(data=data, layout=layout)
 
 
