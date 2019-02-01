@@ -25,7 +25,7 @@ class Page(lay.AppPage):
         ])
 
         @app.callback(Output("plot_invest_detail", "figure"),
-                      [Input("radio_invest", "value"),
+                      [Input("radio_invest_wor_inv", "value"),
                        Input("input_smoothing", "value")])
         #pylint: disable=unused-variable,unused-argument
         def update_plot_invest(type_df, avg_month):
@@ -135,7 +135,7 @@ class Page(lay.AppPage):
                     figure=plots.invest_evolution_plot(DFS[c.dfs.INVEST], c.dash.DEFAULT_SMOOTHING)
                 ),
                 dbc.RadioItems(
-                    id="radio_invest", options=lay.get_options([c.names.INVESTED, c.names.WORTH]),
+                    id="radio_invest_wor_inv", options=lay.get_options([c.names.INVESTED, c.names.WORTH]),
                     value=c.names.INVESTED, inline=True
                 )
             ]),
