@@ -16,15 +16,7 @@ def get_pages(app):
             app:    dash app
 
         Returns:
-            Pages as a json with the next structure
-
-            --page_link_1
-                --conent
-                --sidebar
-
-            --page_link_n
-                --content
-                --sidebar
+            dict with pages
     """
 
     output = {}

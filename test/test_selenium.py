@@ -49,65 +49,65 @@ class TestApp(unittest.TestCase):
     def test_page_dashboard(self):
         """ Test the content of page heatmaps """
 
-        body_elem = [
+        contents = [
             "plot_dash_evol", "plot_dash_total_worth", "plot_dash_l_vs_e", "plot_dash_liq_months"
         ]
-        sidebar_elem = ["input_smoothing"]
-        self._check_one_page(c.dash.LINK_DASHBOARD, body_elem + sidebar_elem)
+        filters = ["input_smoothing"]
+        self._check_one_page(c.dash.LINK_DASHBOARD, contents + filters)
 
 
     def test_page_evolution(self):
         """ Test the content of page evolution """
 
-        body_elem = ["plot_evol", "plot_evo_detail", "radio_evol_type", "plot_evo_savings"]
-        sidebar_elem = ["input_categories", "input_smoothing", "input_timewindow"]
-        self._check_one_page(c.dash.LINK_EVOLUTION, body_elem + sidebar_elem)
+        contents = ["plot_evol", "plot_evo_detail", "radio_evol_type", "plot_evo_savings"]
+        filters = ["input_categories", "input_smoothing", "input_timewindow"]
+        self._check_one_page(c.dash.LINK_EVOLUTION, contents + filters)
 
 
     def test_page_comparison(self):
         """ Test the content of page comparison """
 
-        body_elem = ["plot_comp_1", "radio_comp_1", "plot_comp_2", "radio_comp_2"]
-        sidebar_elem = ["input_categories", "input_smoothing"]
-        self._check_one_page(c.dash.LINK_COMPARISON, body_elem + sidebar_elem)
+        contents = ["plot_comp_1", "radio_comp_1", "plot_comp_2", "radio_comp_2"]
+        filters = ["input_categories", "input_smoothing"]
+        self._check_one_page(c.dash.LINK_COMPARISON, contents + filters)
 
 
     def test_page_heatmaps(self):
         """ Test the content of page heatmaps """
 
-        body_elem = ["plot_heat_i", "plot_heat_e", "plot_heat_distribution"]
-        sidebar_elem = ["input_categories"]
-        self._check_one_page(c.dash.LINK_HEATMAPS, body_elem + sidebar_elem)
+        contents = ["plot_heat_i", "plot_heat_e", "plot_heat_distribution"]
+        filters = ["input_categories"]
+        self._check_one_page(c.dash.LINK_HEATMAPS, contents + filters)
 
 
     def test_page_pies(self):
         """ Test the content of page pies """
 
         types = [c.names.INCOMES, c.names.EXPENSES]
-        body_elem = ["plot_pie_{}_{}".format(i, x) for i in range(2) for x in types]
-        body_elem += ["drop_pie_0", "drop_pie_1"]
+        contents = ["plot_pie_{}_{}".format(i, x) for i in range(2) for x in types]
+        contents += ["drop_pie_0", "drop_pie_1"]
 
-        sidebar_elem = ["input_categories"]
-        self._check_one_page(c.dash.LINK_PIES, body_elem + sidebar_elem)
+        filters = ["input_categories"]
+        self._check_one_page(c.dash.LINK_PIES, contents + filters)
 
 
     def test_page_liquid(self):
         """ Test the content of page liquid """
 
-        body_elem = ["plot_liquid_evo", "plot_liquid_vs_expenses", "plot_liquid_months"]
-        sidebar_elem = ["input_smoothing"]
-        self._check_one_page(c.dash.LINK_LIQUID, body_elem + sidebar_elem)
+        contents = ["plot_liquid_evo", "plot_liquid_vs_expenses", "plot_liquid_months"]
+        filters = ["input_smoothing"]
+        self._check_one_page(c.dash.LINK_LIQUID, contents + filters)
 
 
     def test_page_investments(self):
         """ Test the content of page investments """
 
-        body_elem = [
+        contents = [
             "plot_invest_total_worth", "plot_passive_income", "radio_invest_smooth",
             "plot_invest_performance", "plot_invest_detail", "radio_invest_wor_inv"
         ]
-        sidebar_elem = ["input_smoothing"]
-        self._check_one_page(c.dash.LINK_INVESTMENTS, body_elem + sidebar_elem)
+        filters = ["input_smoothing"]
+        self._check_one_page(c.dash.LINK_INVESTMENTS, contents + filters)
 
 
 
