@@ -102,6 +102,7 @@ def get_layout():
             ),
             navbar_right
         ],
+        sticky="top",
         className="w3-light-grey w3-card"
     )
 
