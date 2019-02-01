@@ -100,26 +100,24 @@ class Page(lay.AppPage):
                     )
                 )
             ),
-            lay.card(
-                [
-                    dcc.Graph(
-                        id="plot_evo_detail", config=c.dash.PLOT_CONFIG,
-                        figure=plots.plot_timeserie_by_categories(
-                            DFS[c.dfs.TRANS],
-                            DFS[c.dfs.CATEG],
-                            c.dash.DEFAULT_SMOOTHING,
-                            self.def_type,
-                            self.def_tw,
-                        )
-                    ),
-                    dbc.RadioItems(
-                        id="radio_evol_type",
-                        options=lay.get_options([c.names.EXPENSES, c.names.INCOMES]),
-                        value=self.def_type,
-                        inline=True
+            lay.card([
+                dcc.Graph(
+                    id="plot_evo_detail", config=c.dash.PLOT_CONFIG,
+                    figure=plots.plot_timeserie_by_categories(
+                        DFS[c.dfs.TRANS],
+                        DFS[c.dfs.CATEG],
+                        c.dash.DEFAULT_SMOOTHING,
+                        self.def_type,
+                        self.def_tw,
                     )
-                ]
-            ),
+                ),
+                dbc.RadioItems(
+                    id="radio_evol_type",
+                    options=lay.get_options([c.names.EXPENSES, c.names.INCOMES]),
+                    value=self.def_type,
+                    inline=True
+                )
+            ]),
             lay.card(
                 dcc.Graph(
                     id="plot_evo_savings", config=c.dash.PLOT_CONFIG,

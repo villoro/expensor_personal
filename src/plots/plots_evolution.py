@@ -9,7 +9,7 @@ import constants as c
 import utilities as u
 
 
-def plot_timeserie(dfg, avg_month, timewindow="M"):
+def plot_timeserie(dfg, avg_month, timewindow="M", height=None):
     """
         Creates a timeseries plot with expenses, incomes and their regressions
 
@@ -17,6 +17,7 @@ def plot_timeserie(dfg, avg_month, timewindow="M"):
             dfg:        dataframe with info
             avg_month:  month to use in time average
             timewindow: temporal grouping
+            height:     height of the plot
 
         Returns:
             the plotly plot as html-div format
@@ -48,7 +49,7 @@ def plot_timeserie(dfg, avg_month, timewindow="M"):
         )
     )
 
-    layout = go.Layout(title="Evolution")
+    layout = go.Layout(title="Evolution", height=height)
     return go.Figure(data=data, layout=layout)
 
 
@@ -93,7 +94,7 @@ def plot_timeserie_by_categories(
             marker={"color": color}, name=cat
         ))
 
-    layout = go.Layout(title="Evolution by category", barmode='stack')
+    layout = go.Layout(title="Evolution by category", barmode='stack', height=600)
     return go.Figure(data=data, layout=layout)
 
 
