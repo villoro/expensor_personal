@@ -123,7 +123,7 @@ liquid:
 All available colors can be found at [Meterial Design Guidline](https://material.io/design/color/the-color-system.html#color-usage-palettes).
 
 ## Authors
-* [Arnau Villoro](villoro.com)
+* [Arnau Villoro](https://villoro.com)
 
 
 ## Images
