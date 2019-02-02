@@ -11,21 +11,6 @@ from src.data_loader import DFS
 class TestUtilities(unittest.TestCase):
     """Test utilities"""
 
-    # ------------------------------ palette -------------------------------------------------------
-    def test_palette(self):
-        """
-            Test palette
-        """
-
-        # Test that you can call one color with a list of tuples or with a tuple
-        self.assertEqual(u.get_colors([("red", 100)]), "#FFCDD2")
-        self.assertEqual(u.get_colors(("red", 100)), "#FFCDD2")
-
-        # Test that you can call more than one color
-        self.assertEqual(u.get_colors([("red", 100), ("blue", 100)]),
-                         ["#FFCDD2", "#BBDEFB"])
-
-
     # ------------------------------ dfs -----------------------------------------------------------
     def test_fix_df_trans(self):
         """ Test that is able to retrive dataframes from data.xlsx """

@@ -2,5 +2,6 @@
 	Utilities module
 """
 
-from utilities.upalette import get_colors
+from v_palette import get_colors
+
 from utilities import dfs
