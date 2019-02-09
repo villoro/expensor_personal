@@ -17,15 +17,11 @@ class Page(lay.AppPage):
 
     link = c.dash.LINK_HEATMAPS
 
-
     def __init__(self, app):
-        super().__init__([
-            c.dash.INPUT_CATEGORIES
-        ])
+        super().__init__([c.dash.INPUT_CATEGORIES])
 
-        @app.callback(Output("plot_heat_i", "figure"),
-                      [Input("input_categories", "value")])
-        #pylint: disable=unused-variable,unused-argument
+        @app.callback(Output("plot_heat_i", "figure"), [Input("input_categories", "value")])
+        # pylint: disable=unused-variable,unused-argument
         def update_heatmap_i(categories):
             """
                 Updates the incomes heatmap
@@ -36,10 +32,8 @@ class Page(lay.AppPage):
             df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
             return plots.get_heatmap(df, c.names.INCOMES)
 
-
-        @app.callback(Output("plot_heat_e", "figure"),
-                      [Input("input_categories", "value")])
-        #pylint: disable=unused-variable,unused-argument
+        @app.callback(Output("plot_heat_e", "figure"), [Input("input_categories", "value")])
+        # pylint: disable=unused-variable,unused-argument
         def update_heatmap_e(categories):
             """
                 Updates the expenses heatmap
@@ -50,10 +44,10 @@ class Page(lay.AppPage):
             df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
             return plots.get_heatmap(df, c.names.EXPENSES)
 
-
-        @app.callback(Output("plot_heat_distribution", "figure"),
-                      [Input("input_categories", "value")])
-        #pylint: disable=unused-variable,unused-argument
+        @app.callback(
+            Output("plot_heat_distribution", "figure"), [Input("input_categories", "value")]
+        )
+        # pylint: disable=unused-variable,unused-argument
         def update_distplot(categories):
             """
                 Updates the distribution plot
@@ -64,27 +58,31 @@ class Page(lay.AppPage):
             df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
             return plots.dist_plot(df)
 
-
     def get_body(self):
         return [
-            lay.two_columns([
-                lay.card(
-                    dcc.Graph(
-                        id="plot_heat_i", config=c.dash.PLOT_CONFIG,
-                        figure=plots.get_heatmap(DFS[c.dfs.TRANS], c.names.INCOMES)
-                    )
-                ),
-                lay.card(
-                    dcc.Graph(
-                        id="plot_heat_e", config=c.dash.PLOT_CONFIG,
-                        figure=plots.get_heatmap(DFS[c.dfs.TRANS], c.names.EXPENSES)
-                    )
-                ),
-            ]),
+            lay.two_columns(
+                [
+                    lay.card(
+                        dcc.Graph(
+                            id="plot_heat_i",
+                            config=c.dash.PLOT_CONFIG,
+                            figure=plots.get_heatmap(DFS[c.dfs.TRANS], c.names.INCOMES),
+                        )
+                    ),
+                    lay.card(
+                        dcc.Graph(
+                            id="plot_heat_e",
+                            config=c.dash.PLOT_CONFIG,
+                            figure=plots.get_heatmap(DFS[c.dfs.TRANS], c.names.EXPENSES),
+                        )
+                    ),
+                ]
+            ),
             lay.card(
                 dcc.Graph(
-                    id="plot_heat_distribution", config=c.dash.PLOT_CONFIG,
-                    figure=plots.dist_plot(DFS[c.dfs.TRANS])
+                    id="plot_heat_distribution",
+                    config=c.dash.PLOT_CONFIG,
+                    figure=plots.dist_plot(DFS[c.dfs.TRANS]),
                 )
             ),
         ]

@@ -30,7 +30,7 @@ def _get_stats(dfs, date_in):
 
     out = {
         c.names.EXPENSES: df[df[c.cols.TYPE] == c.names.EXPENSES][c.cols.AMOUNT].sum(),
-        c.names.INCOMES: df[df[c.cols.TYPE] == c.names.INCOMES][c.cols.AMOUNT].sum()
+        c.names.INCOMES: df[df[c.cols.TYPE] == c.names.INCOMES][c.cols.AMOUNT].sum(),
     }
 
     out[c.names.EBIT] = out[c.names.INCOMES] - out[c.names.EXPENSES]
@@ -46,13 +46,12 @@ def get_summary(dfs):
     """ Gets a list of h6 with data from previous month """
 
     mdate = date.today()
-    date_m1 = (mdate.replace(day=1) - timedelta(days=1))
-    date_m2 = (date_m1.replace(day=1) - timedelta(days=1))
+    date_m1 = mdate.replace(day=1) - timedelta(days=1)
+    date_m2 = date_m1.replace(day=1) - timedelta(days=1)
 
     # Get stats for last month and the month previous to the last one
     stats = _get_stats(dfs, date_m1)
     stats2 = _get_stats(dfs, date_m2)
-
 
     # Header of the summary
     data = [["Stats for months", "{:%Y/%m} ({:%Y/%m})".format(date_m1, date_m2), "secundary"]]
@@ -75,14 +74,12 @@ def get_summary(dfs):
     return dbc.CardDeck(
         [
             dbc.Card(
-                [
-                    dbc.CardTitle(title),
-                    dbc.CardText(text)
-                ],
+                [dbc.CardTitle(title), dbc.CardText(text)],
                 color=color,
                 className="w3-center",
-                style=lay.padding()
-            ) for title, text, color in data
+                style=lay.padding(),
+            )
+            for title, text, color in data
         ],
         style=lay.padding(),
     )

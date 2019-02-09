@@ -21,14 +21,24 @@ LINKS_ALL = [
     LINK_PIES,
     LINK_HEATMAPS,
     LINK_LIQUID,
-    LINK_INVESTMENTS
+    LINK_INVESTMENTS,
 ]
 
 LANDING_APP = LINK_DASHBOARD
 
 NUM_DICT = {
-    1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six",
-    7: "seven", 8: "eight", 9: "nine", 10: "ten", 11: "eleven", 12: "twelve"
+    1: "one",
+    2: "two",
+    3: "three",
+    4: "four",
+    5: "five",
+    6: "six",
+    7: "seven",
+    8: "eight",
+    9: "nine",
+    10: "ten",
+    11: "eleven",
+    12: "twelve",
 }
 
 INPUT_CATEGORIES = "categories"
@@ -39,5 +49,5 @@ DEFAULT_SMOOTHING = 3
 
 PLOT_CONFIG = {
     "displaylogo": False,
-    "modeBarButtonsToRemove": ["sendDataToCloud", "select2d", "lasso2d", "resetScale2d"]
+    "modeBarButtonsToRemove": ["sendDataToCloud", "select2d", "lasso2d", "resetScale2d"],
 }

@@ -27,7 +27,7 @@ def ts_gradient(dfg, type_trans, avg_month):
     else:
         df = dfg.copy()
         mfilter = df[c.cols.TYPE] == c.names.EXPENSES
-        df.loc[mfilter, c.cols.AMOUNT] = - df.loc[mfilter, c.cols.AMOUNT]
+        df.loc[mfilter, c.cols.AMOUNT] = -df.loc[mfilter, c.cols.AMOUNT]
 
     df = u.dfs.group_df_by(df, "M")
 
@@ -44,7 +44,7 @@ def ts_gradient(dfg, type_trans, avg_month):
 
     for year in sorted(set(df.index.year), reverse=False):
 
-        index_color = max(100, 900 - 200*(max(df.index.year) - year))
+        index_color = max(100, 900 - 200 * (max(df.index.year) - year))
         color = u.get_colors([(color_name, index_color)])
 
         df_aux = df[df.index.year == year]
@@ -53,9 +53,10 @@ def ts_gradient(dfg, type_trans, avg_month):
             go.Scatter(
                 x=df_aux.index.month,
                 y=df_aux[c.cols.AMOUNT].values,
-                line={"width": min(0.5*(year - min(df.index.year)) + 1, max_width)},
+                line={"width": min(0.5 * (year - min(df.index.year)) + 1, max_width)},
                 marker={"color": color},
-                name=year, mode="lines"
+                name=year,
+                mode="lines",
             )
         )
 

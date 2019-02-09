@@ -18,11 +18,9 @@ PAGES = get_pages(APP)
 
 
 @APP.callback(
-    Output('body', 'children'),
-    [Input('url', 'pathname')],
-    [State('sync_count', 'children')]
+    Output("body", "children"), [Input("url", "pathname")], [State("sync_count", "children")]
 )
-#pylint: disable=unused-variable
+# pylint: disable=unused-variable
 def display_content(pathname, _):
     """ Updates content based on current page """
 
@@ -32,11 +30,9 @@ def display_content(pathname, _):
 
 
 @APP.callback(
-    Output('filters', 'children'),
-    [Input('url', 'pathname')],
-    [State('sync_count', 'children')]
+    Output("filters", "children"), [Input("url", "pathname")], [State("sync_count", "children")]
 )
-#pylint: disable=unused-variable
+# pylint: disable=unused-variable
 def display_filters(pathname, _):
     """ Updates content based on current page """
 
@@ -45,12 +41,8 @@ def display_filters(pathname, _):
     return "404"
 
 
-
-@APP.callback(
-    Output("sync_count", "children"),
-    [Input("sync", "n_clicks")]
-)
-#pylint: disable=unused-variable,unused-argument
+@APP.callback(Output("sync_count", "children"), [Input("sync", "n_clicks")])
+# pylint: disable=unused-variable,unused-argument
 def update_sync_count(x):
     """ sync data using the data_loader function """
 
@@ -71,5 +63,5 @@ def toggle_filters(count, is_open):
     return is_open
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     APP.run_server(debug=True)
