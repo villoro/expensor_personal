@@ -19,18 +19,18 @@ class Page(lay.AppPage):
     link = c.dash.LINK_COMPARISON
     radio_opt = lay.get_options([c.names.INCOMES, c.names.EXPENSES, c.names.EBIT])
 
-
     def __init__(self, app):
-        super().__init__([
-            c.dash.INPUT_CATEGORIES,
-            c.dash.INPUT_SMOOTHING,
-        ])
+        super().__init__([c.dash.INPUT_CATEGORIES, c.dash.INPUT_SMOOTHING])
 
-        @app.callback(Output("plot_comp_1", "figure"),
-                      [Input("input_categories", "value"),
-                       Input("input_smoothing", "value"),
-                       Input("radio_comp_1", "value")])
-        #pylint: disable=unused-variable,unused-argument
+        @app.callback(
+            Output("plot_comp_1", "figure"),
+            [
+                Input("input_categories", "value"),
+                Input("input_smoothing", "value"),
+                Input("radio_comp_1", "value"),
+            ],
+        )
+        # pylint: disable=unused-variable,unused-argument
         def update_ts_grad_1(categories, avg_month, type_trans):
             """
                 Updates the timeserie gradient plot
@@ -44,12 +44,15 @@ class Page(lay.AppPage):
             df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
             return plots.ts_gradient(df, type_trans, avg_month)
 
-
-        @app.callback(Output("plot_comp_2", "figure"),
-                      [Input("input_categories", "value"),
-                       Input("input_smoothing", "value"),
-                       Input("radio_comp_2", "value")])
-        #pylint: disable=unused-variable,unused-argument
+        @app.callback(
+            Output("plot_comp_2", "figure"),
+            [
+                Input("input_categories", "value"),
+                Input("input_smoothing", "value"),
+                Input("radio_comp_2", "value"),
+            ],
+        )
+        # pylint: disable=unused-variable,unused-argument
         def update_ts_grad_2(categories, avg_month, type_trans):
             """
                 Updates the timeserie gradient plot
@@ -63,31 +66,40 @@ class Page(lay.AppPage):
             df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
             return plots.ts_gradient(df, type_trans, avg_month)
 
-
     def get_body(self):
         return [
-            lay.card([
-                dcc.Graph(
-                    id="plot_comp_1", config=c.dash.PLOT_CONFIG,
-                    figure=plots.ts_gradient(
-                        DFS[c.dfs.TRANS], c.names.INCOMES, c.dash.DEFAULT_SMOOTHING
-                    )
-                ),
-                dbc.RadioItems(
-                    id="radio_comp_1", options=self.radio_opt,
-                    value=c.names.INCOMES, inline=True
-                )
-            ]),
-            lay.card([
-                dcc.Graph(
-                    id="plot_comp_2", config=c.dash.PLOT_CONFIG,
-                    figure=plots.ts_gradient(
-                        DFS[c.dfs.TRANS], c.names.EXPENSES, c.dash.DEFAULT_SMOOTHING
-                    )
-                ),
-                dbc.RadioItems(
-                    id="radio_comp_2", options=self.radio_opt,
-                    value=c.names.EXPENSES, inline=True
-                )
-            ])
+            lay.card(
+                [
+                    dcc.Graph(
+                        id="plot_comp_1",
+                        config=c.dash.PLOT_CONFIG,
+                        figure=plots.ts_gradient(
+                            DFS[c.dfs.TRANS], c.names.INCOMES, c.dash.DEFAULT_SMOOTHING
+                        ),
+                    ),
+                    dbc.RadioItems(
+                        id="radio_comp_1",
+                        options=self.radio_opt,
+                        value=c.names.INCOMES,
+                        inline=True,
+                    ),
+                ]
+            ),
+            lay.card(
+                [
+                    dcc.Graph(
+                        id="plot_comp_2",
+                        config=c.dash.PLOT_CONFIG,
+                        figure=plots.ts_gradient(
+                            DFS[c.dfs.TRANS], c.names.EXPENSES, c.dash.DEFAULT_SMOOTHING
+                        ),
+                    ),
+                    dbc.RadioItems(
+                        id="radio_comp_2",
+                        options=self.radio_opt,
+                        value=c.names.EXPENSES,
+                        inline=True,
+                    ),
+                ]
+            ),
         ]

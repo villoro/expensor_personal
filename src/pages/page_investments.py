@@ -20,14 +20,13 @@ class Page(lay.AppPage):
     def_smooth = False
 
     def __init__(self, app):
-        super().__init__([
-            c.dash.INPUT_SMOOTHING,
-        ])
+        super().__init__([c.dash.INPUT_SMOOTHING])
 
-        @app.callback(Output("plot_invest_detail", "figure"),
-                      [Input("radio_invest_wor_inv", "value"),
-                       Input("input_smoothing", "value")])
-        #pylint: disable=unused-variable,unused-argument
+        @app.callback(
+            Output("plot_invest_detail", "figure"),
+            [Input("radio_invest_wor_inv", "value"), Input("input_smoothing", "value")],
+        )
+        # pylint: disable=unused-variable,unused-argument
         def update_plot_invest(type_df, avg_month):
             """
                 Updates the investment evolution plot
@@ -37,16 +36,14 @@ class Page(lay.AppPage):
                     avg_month:  month to use in time average
             """
 
-
-
             df = DFS[self.dict_types[type_df]]
 
             return plots.invest_evolution_plot(df, avg_month)
 
-
-        @app.callback(Output("plot_invest_total_worth", "figure"),
-                      [Input("input_smoothing", "value")])
-        #pylint: disable=unused-variable,unused-argument
+        @app.callback(
+            Output("plot_invest_total_worth", "figure"), [Input("input_smoothing", "value")]
+        )
+        # pylint: disable=unused-variable,unused-argument
         def update_plot_total_worth(avg_month):
             """
                 Updates the total worth plot
@@ -55,15 +52,13 @@ class Page(lay.AppPage):
                     avg_month:  month to use in time average
             """
 
-            return plots.total_worth_plot(
-                DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], avg_month
-            )
+            return plots.total_worth_plot(DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], avg_month)
 
-
-        @app.callback(Output("plot_passive_income", "figure"),
-                      [Input("input_smoothing", "value"),
-                       Input("radio_invest_smooth", "value")])
-        #pylint: disable=unused-variable,unused-argument
+        @app.callback(
+            Output("plot_passive_income", "figure"),
+            [Input("input_smoothing", "value"), Input("radio_invest_smooth", "value")],
+        )
+        # pylint: disable=unused-variable,unused-argument
         def update_plot_passive_income(avg_month, smooth):
             """
                 Updates the passive income plot
@@ -77,9 +72,10 @@ class Page(lay.AppPage):
                 DFS[c.dfs.WORTH], DFS[c.dfs.TRANS], avg_month, smooth
             )
 
-        @app.callback(Output("plot_invest_performance", "figure"),
-                      [Input("input_smoothing", "value")])
-        #pylint: disable=unused-variable,unused-argument
+        @app.callback(
+            Output("plot_invest_performance", "figure"), [Input("input_smoothing", "value")]
+        )
+        # pylint: disable=unused-variable,unused-argument
         def update_plot_invest_performance(avg_month):
             """
                 Updates the investment performance plot
@@ -88,59 +84,68 @@ class Page(lay.AppPage):
                     avg_month:  month to use in time average
             """
 
-            return plots.performance_plot(
-                DFS[c.dfs.INVEST], DFS[c.dfs.WORTH], avg_month
-            )
-
+            return plots.performance_plot(DFS[c.dfs.INVEST], DFS[c.dfs.WORTH], avg_month)
 
     def get_body(self):
         body = [
             lay.card(
                 dcc.Graph(
-                    id="plot_invest_total_worth", config=c.dash.PLOT_CONFIG,
+                    id="plot_invest_total_worth",
+                    config=c.dash.PLOT_CONFIG,
                     figure=plots.total_worth_plot(
                         DFS[c.dfs.LIQUID], DFS[c.dfs.WORTH], c.dash.DEFAULT_SMOOTHING
-                    )
+                    ),
                 )
             ),
-            lay.card([
-                dcc.Graph(
-                    id="plot_passive_income", config=c.dash.PLOT_CONFIG,
-                    figure=plots.passive_income_vs_expenses(
-                        DFS[c.dfs.WORTH], DFS[c.dfs.TRANS],
-                        c.dash.DEFAULT_SMOOTHING, self.def_smooth
-                    )
-                ),
-                dbc.RadioItems(
-                    id="radio_invest_smooth",
-                    options=[
-                        {"label": "Smooth passive income", "value": True},
-                        {"label": "Don't smooth", "value": False}
-                    ],
-                    value=self.def_smooth,
-                    inline=True
-                )
-            ]),
+            lay.card(
+                [
+                    dcc.Graph(
+                        id="plot_passive_income",
+                        config=c.dash.PLOT_CONFIG,
+                        figure=plots.passive_income_vs_expenses(
+                            DFS[c.dfs.WORTH],
+                            DFS[c.dfs.TRANS],
+                            c.dash.DEFAULT_SMOOTHING,
+                            self.def_smooth,
+                        ),
+                    ),
+                    dbc.RadioItems(
+                        id="radio_invest_smooth",
+                        options=[
+                            {"label": "Don't smooth", "value": False},
+                            {"label": "Smooth passive income", "value": True},
+                        ],
+                        value=self.def_smooth,
+                        inline=True,
+                    ),
+                ]
+            ),
             lay.card(
                 dcc.Graph(
-                    id="plot_invest_performance", config=c.dash.PLOT_CONFIG,
+                    id="plot_invest_performance",
+                    config=c.dash.PLOT_CONFIG,
                     figure=plots.total_worth_plot(
                         DFS[c.dfs.INVEST], DFS[c.dfs.WORTH], c.dash.DEFAULT_SMOOTHING
-                    )
+                    ),
                 )
             ),
-            lay.card([
-                dcc.Graph(
-                    id="plot_invest_detail", config=c.dash.PLOT_CONFIG,
-                    figure=plots.invest_evolution_plot(DFS[c.dfs.INVEST], c.dash.DEFAULT_SMOOTHING)
-                ),
-                dbc.RadioItems(
-                    id="radio_invest_wor_inv",
-                    options=lay.get_options([c.names.INVESTED, c.names.WORTH]),
-                    value=c.names.INVESTED,
-                    inline=True
-                )
-            ]),
+            lay.card(
+                [
+                    dcc.Graph(
+                        id="plot_invest_detail",
+                        config=c.dash.PLOT_CONFIG,
+                        figure=plots.invest_evolution_plot(
+                            DFS[c.dfs.INVEST], c.dash.DEFAULT_SMOOTHING
+                        ),
+                    ),
+                    dbc.RadioItems(
+                        id="radio_invest_wor_inv",
+                        options=lay.get_options([c.names.WORTH, c.names.INVESTED]),
+                        value=c.names.WORTH,
+                        inline=True,
+                    ),
+                ]
+            ),
         ]
 
         return body

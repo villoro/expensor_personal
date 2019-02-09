@@ -2,7 +2,7 @@
 	Individual plots
 """
 
-from calendar import month_abbr # options: [month_name, month_abbr]
+from calendar import month_abbr  # options: [month_name, month_abbr]
 from plotly import figure_factory as FF
 import plotly.graph_objs as go
 
@@ -37,8 +37,9 @@ def get_heatmap(dfg, type_trans):
 
     cmap = {c.names.INCOMES: "Greens", c.names.EXPENSES: "YlOrRd"}[type_trans]
 
-    data = go.Heatmap(x=df.columns, y=df.index, z=df.values,
-                      colorscale=cmap, reversescale=True, showscale=False)
+    data = go.Heatmap(
+        x=df.columns, y=df.index, z=df.values, colorscale=cmap, reversescale=True, showscale=False
+    )
 
     layout = go.Layout(title="Heatmap ({})".format(type_trans))
     return go.Figure(data=[data], layout=layout)
@@ -63,7 +64,7 @@ def dist_plot(dfg):
     iter_data = [
         (df_baii, c.names.EBIT, c.colors.EBIT),
         (dfe, c.names.EXPENSES, c.colors.EXPENSES),
-        (dfi, c.names.INCOMES, c.colors.INCOMES)
+        (dfi, c.names.INCOMES, c.colors.INCOMES),
     ]
 
     # Generate traces to show. This allow to disable traces if there is no data
@@ -81,6 +82,6 @@ def dist_plot(dfg):
 
     fig = FF.create_distplot(data, names, colors=colors, bin_size=100)
 
-    fig['layout'].update(title="Incomes, Expenses and EBIT distribution")
+    fig["layout"].update(title="Incomes, Expenses and EBIT distribution")
 
     return fig

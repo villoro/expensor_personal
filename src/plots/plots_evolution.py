@@ -1,5 +1,5 @@
 """
-	Individual plots
+    Individual plots
 """
 
 import pandas as pd
@@ -32,9 +32,7 @@ def plot_timeserie(dfg, avg_month, timewindow="M", height=None):
         df = u.dfs.group_df_with_time_avg(dfg[dfg[c.cols.TYPE] == name], timewindow, avg_month)
         data.append(
             go.Scatter(
-                x=df.index, y=df[c.cols.AMOUNT],
-                marker={"color": color},
-                name=name, mode="lines"
+                x=df.index, y=df[c.cols.AMOUNT], marker={"color": color}, name=name, mode="lines"
             )
         )
 
@@ -43,9 +41,11 @@ def plot_timeserie(dfg, avg_month, timewindow="M", height=None):
 
     data.append(
         go.Scatter(
-            x=df.index, y=df[c.cols.AMOUNT],
+            x=df.index,
+            y=df[c.cols.AMOUNT],
             marker={"color": c.colors.EBIT},
-            name=c.names.EBIT, mode="lines"
+            name=c.names.EBIT,
+            mode="lines",
         )
     )
 
@@ -54,8 +54,8 @@ def plot_timeserie(dfg, avg_month, timewindow="M", height=None):
 
 
 def plot_timeserie_by_categories(
-        dfg, df_categ, avg_month, type_trans=c.names.EXPENSES, timewindow="M"
-    ):
+    dfg, df_categ, avg_month, type_trans=c.names.EXPENSES, timewindow="M"
+):
     """
         Creates a timeseries plot detailed by category
 
@@ -75,8 +75,11 @@ def plot_timeserie_by_categories(
 
     df_aux = u.dfs.group_df_with_time_avg(df, timewindow, avg_month, dfg)
 
-    data = [go.Scatter(x=df_aux.index, y=df_aux[c.cols.AMOUNT],
-                       marker={"color": "black"}, name=c.names.TOTAL)]
+    data = [
+        go.Scatter(
+            x=df_aux.index, y=df_aux[c.cols.AMOUNT], marker={"color": "black"}, name=c.names.TOTAL
+        )
+    ]
 
     for cat in df_cat.index:
         if cat in df_cat.index:
@@ -89,12 +92,11 @@ def plot_timeserie_by_categories(
         df_aux = u.dfs.group_df_with_time_avg(
             df[df[c.cols.CATEGORY] == cat], timewindow, avg_month, dfg
         )
-        data.append(go.Bar(
-            x=df_aux.index, y=df_aux[c.cols.AMOUNT],
-            marker={"color": color}, name=cat
-        ))
+        data.append(
+            go.Bar(x=df_aux.index, y=df_aux[c.cols.AMOUNT], marker={"color": color}, name=cat)
+        )
 
-    layout = go.Layout(title="Evolution by category", barmode='stack', height=600)
+    layout = go.Layout(title="Evolution by category", barmode="stack", height=600)
     return go.Figure(data=data, layout=layout)
 
 
@@ -120,16 +122,18 @@ def plot_savings_ratio(dfg, avg_month, timewindow="M"):
     )
 
     # Savings ratio
-    df = df[c.cols.AMOUNT]/dfi[c.cols.AMOUNT]
+    df = df[c.cols.AMOUNT] / dfi[c.cols.AMOUNT]
 
     # Only positive values
     df = df.apply(lambda x: 0 if pd.isnull(x) else max(0, x))
 
     data = [
         go.Scatter(
-            x=df.index, y=df,
+            x=df.index,
+            y=df,
             marker={"color": c.colors.SAVINGS},
-            name=c.names.SAVINGS_RATIO, mode="lines"
+            name=c.names.SAVINGS_RATIO,
+            mode="lines",
         )
     ]
 

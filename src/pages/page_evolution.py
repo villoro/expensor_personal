@@ -20,19 +20,18 @@ class Page(lay.AppPage):
     def_type = c.names.EXPENSES
     def_tw = "M"
 
-
     def __init__(self, app):
-        super().__init__([
-            c.dash.INPUT_CATEGORIES,
-            c.dash.INPUT_SMOOTHING,
-            c.dash.INPUT_TIMEWINDOW
-        ])
+        super().__init__([c.dash.INPUT_CATEGORIES, c.dash.INPUT_SMOOTHING, c.dash.INPUT_TIMEWINDOW])
 
-        @app.callback(Output("plot_evol", "figure"),
-                      [Input("input_categories", "value"),
-                       Input("input_timewindow", "value"),
-                       Input("input_smoothing", "value")])
-        #pylint: disable=unused-variable,unused-argument
+        @app.callback(
+            Output("plot_evol", "figure"),
+            [
+                Input("input_categories", "value"),
+                Input("input_timewindow", "value"),
+                Input("input_smoothing", "value"),
+            ],
+        )
+        # pylint: disable=unused-variable,unused-argument
         def update_timeserie_plot(categories, timewindow, avg_month):
             """
                 Updates the timeserie plot
@@ -46,13 +45,16 @@ class Page(lay.AppPage):
             df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
             return plots.plot_timeserie(df, avg_month, timewindow)
 
-
-        @app.callback(Output("plot_evo_detail", "figure"),
-                      [Input("input_categories", "value"),
-                       Input("radio_evol_type", "value"),
-                       Input("input_timewindow", "value"),
-                       Input("input_smoothing", "value")])
-        #pylint: disable=unused-variable,unused-argument
+        @app.callback(
+            Output("plot_evo_detail", "figure"),
+            [
+                Input("input_categories", "value"),
+                Input("radio_evol_type", "value"),
+                Input("input_timewindow", "value"),
+                Input("input_smoothing", "value"),
+            ],
+        )
+        # pylint: disable=unused-variable,unused-argument
         def update_ts_by_categories_plot(categories, type_trans, timewindow, avg_month):
             """
                 Updates the timeserie by categories plot
@@ -68,12 +70,15 @@ class Page(lay.AppPage):
                 df, DFS[c.dfs.CATEG], avg_month, type_trans, timewindow
             )
 
-
-        @app.callback(Output("plot_evo_savings", "figure"),
-                      [Input("input_categories", "value"),
-                       Input("input_timewindow", "value"),
-                       Input("input_smoothing", "value")])
-        #pylint: disable=unused-variable,unused-argument
+        @app.callback(
+            Output("plot_evo_savings", "figure"),
+            [
+                Input("input_categories", "value"),
+                Input("input_timewindow", "value"),
+                Input("input_smoothing", "value"),
+            ],
+        )
+        # pylint: disable=unused-variable,unused-argument
         def update_savings_plot(categories, timewindow, avg_month):
             """
                 Updates the timeserie by categories plot
@@ -85,45 +90,47 @@ class Page(lay.AppPage):
                     avg_month:  month to use in time average
             """
             df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
-            return plots.plot_savings_ratio(
-                df, avg_month, timewindow
-            )
-
+            return plots.plot_savings_ratio(df, avg_month, timewindow)
 
     def get_body(self):
         return [
             lay.card(
                 dcc.Graph(
-                    id="plot_evol", config=c.dash.PLOT_CONFIG,
+                    id="plot_evol",
+                    config=c.dash.PLOT_CONFIG,
                     figure=plots.plot_timeserie(
                         DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING, self.def_tw
-                    )
+                    ),
                 )
             ),
-            lay.card([
-                dcc.Graph(
-                    id="plot_evo_detail", config=c.dash.PLOT_CONFIG,
-                    figure=plots.plot_timeserie_by_categories(
-                        DFS[c.dfs.TRANS],
-                        DFS[c.dfs.CATEG],
-                        c.dash.DEFAULT_SMOOTHING,
-                        self.def_type,
-                        self.def_tw,
-                    )
-                ),
-                dbc.RadioItems(
-                    id="radio_evol_type",
-                    options=lay.get_options([c.names.EXPENSES, c.names.INCOMES]),
-                    value=self.def_type,
-                    inline=True
-                )
-            ]),
+            lay.card(
+                [
+                    dcc.Graph(
+                        id="plot_evo_detail",
+                        config=c.dash.PLOT_CONFIG,
+                        figure=plots.plot_timeserie_by_categories(
+                            DFS[c.dfs.TRANS],
+                            DFS[c.dfs.CATEG],
+                            c.dash.DEFAULT_SMOOTHING,
+                            self.def_type,
+                            self.def_tw,
+                        ),
+                    ),
+                    dbc.RadioItems(
+                        id="radio_evol_type",
+                        options=lay.get_options([c.names.EXPENSES, c.names.INCOMES]),
+                        value=self.def_type,
+                        inline=True,
+                    ),
+                ]
+            ),
             lay.card(
                 dcc.Graph(
-                    id="plot_evo_savings", config=c.dash.PLOT_CONFIG,
+                    id="plot_evo_savings",
+                    config=c.dash.PLOT_CONFIG,
                     figure=plots.plot_savings_ratio(
                         DFS[c.dfs.TRANS], c.dash.DEFAULT_SMOOTHING, self.def_tw
-                    )
+                    ),
                 )
             ),
         ]
