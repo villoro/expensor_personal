@@ -1,5 +1,5 @@
 """
-	Individual plots
+    Individual plots
 """
 
 import pandas as pd
