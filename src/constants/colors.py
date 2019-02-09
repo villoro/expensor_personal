@@ -20,16 +20,11 @@ SAVINGS = get_colors(("purple", 500))
 
 TABLE_HEADER_FILL = get_colors(("blue", 200))
 
-COLORS = {
-    names.INCOMES: INCOMES,
-    names.EXPENSES: EXPENSES,
-    names.EBIT: EBIT,
-    names.LIQUID: LIQUID
-}
+COLORS = {names.INCOMES: INCOMES, names.EXPENSES: EXPENSES, names.EBIT: EBIT, names.LIQUID: LIQUID}
 
 COLORS_CARDS = {
     names.INCOMES: "success",
     names.EXPENSES: "danger",
     names.EBIT: "warning",
-    names.LIQUID: "primary"
+    names.LIQUID: "primary",
 }

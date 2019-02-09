@@ -25,8 +25,9 @@ def invest_evolution_plot(df_in, avg_month):
 
     df = u.dfs.time_average(df, avg_month)
 
-    data = [go.Scatter(x=df.index, y=df[c.names.TOTAL],
-                       marker={"color": "black"}, name=c.names.TOTAL)]
+    data = [
+        go.Scatter(x=df.index, y=df[c.names.TOTAL], marker={"color": "black"}, name=c.names.TOTAL)
+    ]
 
     # If config file use it
     if c.yml.INVEST in YML:
@@ -76,12 +77,21 @@ def total_worth_plot(df_liq_in, df_wor_in, avg_month, height=None):
     dft = df_liq + df_wor
 
     data = [
-        go.Bar(x=df_liq.index, y=df_liq[c.names.TOTAL],
-               marker={"color": c.colors.LIQUID}, name=c.names.LIQUID),
-        go.Bar(x=df_wor.index, y=df_wor[c.names.TOTAL],
-               marker={"color": c.colors.WORTH}, name=c.names.WORTH),
-        go.Scatter(x=dft.index, y=dft[c.names.TOTAL],
-                   marker={"color": "black"}, name=c.names.TOTAL)
+        go.Bar(
+            x=df_liq.index,
+            y=df_liq[c.names.TOTAL],
+            marker={"color": c.colors.LIQUID},
+            name=c.names.LIQUID,
+        ),
+        go.Bar(
+            x=df_wor.index,
+            y=df_wor[c.names.TOTAL],
+            marker={"color": c.colors.WORTH},
+            name=c.names.WORTH,
+        ),
+        go.Scatter(
+            x=dft.index, y=dft[c.names.TOTAL], marker={"color": "black"}, name=c.names.TOTAL
+        ),
     ]
 
     layout = go.Layout(title="Total worth evolution", barmode="stack", height=height)
@@ -111,12 +121,13 @@ def passive_income_vs_expenses(df_wor_in, df_trans_in, avg_month, smooth):
 
     data = [
         go.Scatter(
-            x=dfw.index, y=dfw[c.names.TOTAL]*0.04/12,
-            name="Passive income", marker={"color": c.colors.INCOMES_PASSIVE}
+            x=dfw.index,
+            y=dfw[c.names.TOTAL] * 0.04 / 12,
+            name="Passive income",
+            marker={"color": c.colors.INCOMES_PASSIVE},
         ),
         go.Scatter(
-            x=dfe.index, y=dfe[c.cols.AMOUNT],
-            name="Expenses", marker={"color": c.colors.EXPENSES}
+            x=dfe.index, y=dfe[c.cols.AMOUNT], name="Expenses", marker={"color": c.colors.EXPENSES}
         ),
     ]
 
@@ -146,13 +157,14 @@ def performance_plot(df_inv_in, df_wor_in, avg_month):
     # If indexs have different lenghts, normalize them
     df_inv, df_wor = u.dfs.normalize_index(df_inv, df_wor)
 
-
-    data = [go.Scatter(
-        x=df_wor.index,
-        y=df_wor[c.names.TOTAL]/df_inv[c.names.TOTAL],
-        marker={"color": "black"},
-        name=c.names.TOTAL
-    )]
+    data = [
+        go.Scatter(
+            x=df_wor.index,
+            y=df_wor[c.names.TOTAL] / df_inv[c.names.TOTAL],
+            marker={"color": "black"},
+            name=c.names.TOTAL,
+        )
+    ]
 
     # If config file use it
     if c.yml.INVEST in YML:
@@ -165,9 +177,9 @@ def performance_plot(df_inv_in, df_wor_in, avg_month):
             data.append(
                 go.Scatter(
                     x=df_wor.index,
-                    y=df_wor[mlist].sum(axis=1)/df_inv[mlist].sum(axis=1),
+                    y=df_wor[mlist].sum(axis=1) / df_inv[mlist].sum(axis=1),
                     marker={"color": color},
-                    name=name
+                    name=name,
                 )
             )
 
@@ -175,11 +187,7 @@ def performance_plot(df_inv_in, df_wor_in, avg_month):
     else:
         for col in df_wor.columns:
             if col != c.names.TOTAL:
-                data.append(
-                    go.Scatter(
-                        x=df_wor.index, y=df_wor[col]/df_inv[col], name=col
-                    )
-                )
+                data.append(go.Scatter(x=df_wor.index, y=df_wor[col] / df_inv[col], name=col))
 
     layout = go.Layout(title="Total worth evolution", barmode="stack")
     return go.Figure(data=data, layout=layout)

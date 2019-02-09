@@ -60,7 +60,7 @@ def get_ebit(df_in):
     """
     df = df_in.copy()
     mfilter = df[c.cols.TYPE] == c.names.EXPENSES
-    df.loc[mfilter, c.cols.AMOUNT] = - df.loc[mfilter, c.cols.AMOUNT]
+    df.loc[mfilter, c.cols.AMOUNT] = -df.loc[mfilter, c.cols.AMOUNT]
 
     return df
 
@@ -107,6 +107,7 @@ def group_df_with_time_avg(df_in, timewindow, months, dfg=None):
     """ groups a dataframe by a timewindow and then do some time average """
 
     return time_average(group_df_by(df_in, timewindow, dfg), months)
+
 
 def normalize_index(df1, df2):
     """ Force two dataframes to have the same indexs """

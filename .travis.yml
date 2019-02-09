@@ -28,10 +28,6 @@ before_script:
 
 script:
 - nosetests --with-coverage --cover-package=src --cover-erase --cover-inclusive
-- pylint --disable=W,R test
-- cd src
-- pylint --disable=W,R src
-- cd ..
 
 after_success:
 - codecov
