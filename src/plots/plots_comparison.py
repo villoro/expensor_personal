@@ -45,7 +45,7 @@ def ts_gradient(dfg, type_trans, avg_month):
     for year in sorted(set(df.index.year), reverse=False):
 
         index_color = max(100, 900 - 200 * (max(df.index.year) - year))
-        color = u.get_colors([(color_name, index_color)])
+        color = u.get_colors((color_name, index_color))
 
         df_aux = df[df.index.year == year]
 
