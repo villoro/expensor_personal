@@ -1,21 +1,51 @@
+# --------------------- COMMON EXCLUSIONS -------------------------------------
+# Sublime settings
 sublime.sublime-project
 sublime.sublime-workspace
-/data
-*/data
+
+# Pycharm files
+.idea
+
+# Python temporal files
 *.pyc
 __pycache__
 */__pycache__
+
+# Jupyter temporal files
 /.ipynb_checkpoints
 */.ipynb_checkpoints
+
+# Coverage info
 .coverage
 /cover
 */.coverage
 */cover
 coverage.xml
 */coverage.xml
+
+# Unit test report
 nosetests.xml
 */nosetests.xml
+
+# Pylint ouput
 pylint.xml
 */pylint.xml
+
+# Package files
+build/
+dist/
+*.egg-info
+
+# Executables
 *.exe
+
+
+# --------------------- PERSONAL EXCLUSIONS -----------------------------------
+# Data folders
+/data
+*/data
+
+
+# --------------------- PROJECT EXCLUSIONS ------------------------------------
+# Playground notebooks
 notebooks/temp.ipynb

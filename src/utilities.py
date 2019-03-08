@@ -3,6 +3,7 @@
 """
 
 import pandas as pd
+from v_palette import get_colors
 
 import constants as c
 

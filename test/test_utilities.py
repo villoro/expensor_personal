@@ -8,6 +8,7 @@ from src import constants as c
 from src import utilities as u
 from src.data_loader import DFS
 
+
 class TestUtilities(unittest.TestCase):
     """Test utilities"""
 
@@ -24,22 +25,20 @@ class TestUtilities(unittest.TestCase):
         for x in [c.names.EXPENSES, c.names.INCOMES]:
             self.assertTrue(df[df[c.cols.TYPE] == x][c.cols.AMOUNT].min() > 0)
 
-
     def test_filter_data(self):
         """ Test that is able to filter by some column """
 
         df = DFS[c.dfs.TRANS]
 
         # No filter no modifications
-        self.assertEqual(df.shape, u.dfs.filter_data(df).shape)
+        self.assertEqual(df.shape, u.filter_data(df).shape)
 
         # Check that is able to filter using some personal categories
-        aux = u.dfs.filter_data(df, "Menjar")[c.cols.CATEGORY].unique().tolist()
+        aux = u.filter_data(df, "Menjar")[c.cols.CATEGORY].unique().tolist()
         self.assertEqual(aux, ["Menjar"])
 
-        aux = u.dfs.filter_data(df, ["Transport", "Menjar"])[c.cols.CATEGORY].unique().tolist()
+        aux = u.filter_data(df, ["Transport", "Menjar"])[c.cols.CATEGORY].unique().tolist()
         self.assertEqual(sorted(aux), sorted(["Transport", "Menjar"]))
-
 
     def test_groupby(self):
         """ Test that is able group by timewindow """
@@ -47,15 +46,14 @@ class TestUtilities(unittest.TestCase):
         df = DFS[c.dfs.TRANS]
 
         # When filtered by month, all dates are from day 1
-        aux = u.dfs.group_df_by(df, "M")
-        self.assertEqual(aux.index.strftime("%d").tolist(), ['01']*aux.shape[0])
+        aux = u.group_df_by(df, "M")
+        self.assertEqual(aux.index.strftime("%d").tolist(), ["01"] * aux.shape[0])
 
         # When filtered by year index are ints
-        aux = u.dfs.group_df_by(df, "Y")
+        aux = u.group_df_by(df, "Y")
         self.assertEqual(aux.index.min(), df[c.cols.YEAR].min())
         self.assertEqual(aux.index.max(), df[c.cols.YEAR].max())
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

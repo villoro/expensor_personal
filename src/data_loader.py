@@ -18,7 +18,7 @@ import pandas as pd
 import oyaml as yaml
 
 import constants as c
-from utilities.dfs import fix_df_trans
+from utilities import fix_df_trans
 
 
 DBX = dropbox.Dropbox(os.environ[c.io.VAR_DROPBOX_TOKEN])

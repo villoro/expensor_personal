@@ -26,7 +26,7 @@ def liquid_plot(df_liq_in, avg_month):
     """
 
     df = df_liq_in.set_index(c.cols.DATE)
-    df = u.dfs.time_average(df.fillna(0), avg_month)
+    df = u.time_average(df.fillna(0), avg_month)
 
     data = [
         go.Scatter(x=df.index, y=df[c.names.TOTAL], marker={"color": "black"}, name=c.names.TOTAL)
@@ -70,10 +70,10 @@ def plot_expenses_vs_liquid(df_liquid_in, df_trans_in, avg_month, show_rec=True,
     """
 
     df_l = df_liquid_in.set_index(c.cols.DATE).copy()
-    df_l = u.dfs.time_average(df_l.fillna(0), avg_month)
+    df_l = u.time_average(df_l.fillna(0), avg_month)
 
-    df_t = u.dfs.group_df_by(df_trans_in[df_trans_in[c.cols.TYPE] == c.names.EXPENSES], "M")
-    df_t = u.dfs.time_average(df_t, avg_month)
+    df_t = u.group_df_by(df_trans_in[df_trans_in[c.cols.TYPE] == c.names.EXPENSES], "M")
+    df_t = u.time_average(df_t, avg_month)
 
     iter_data = [
         (df_t, df_t[c.cols.AMOUNT], c.names.EXPENSES, c.colors.EXPENSES),
@@ -110,10 +110,10 @@ def plot_months(df_liquid_in, df_trans_in, avg_month, show_rec=True, height=None
     """
 
     df_l = df_liquid_in.set_index(c.cols.DATE).copy()
-    df_l = u.dfs.time_average(df_l.fillna(0), avg_month)
+    df_l = u.time_average(df_l.fillna(0), avg_month)
 
-    df_t = u.dfs.group_df_by(df_trans_in[df_trans_in[c.cols.TYPE] == c.names.EXPENSES], "M")
-    df_t = u.dfs.time_average(df_t, avg_month)
+    df_t = u.group_df_by(df_trans_in[df_trans_in[c.cols.TYPE] == c.names.EXPENSES], "M")
+    df_t = u.time_average(df_t, avg_month)
 
     serie = df_l[c.names.TOTAL] / df_t[c.cols.AMOUNT]
 

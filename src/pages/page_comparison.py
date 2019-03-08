@@ -43,7 +43,7 @@ class Page(lay.AppPage):
                     type_trans_2: expenses/incomes/ebit plot 2
             """
 
-            df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
+            df = u.filter_data(DFS[c.dfs.TRANS], categories)
             return (
                 plots.ts_gradient(df, type_trans_1, avg_month),
                 plots.ts_gradient(df, type_trans_2, avg_month),
