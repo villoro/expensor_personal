@@ -2,6 +2,7 @@
     Dash app
 """
 
+from dash import callback_context
 from dash.dependencies import Input, Output, State
 
 from pages import get_pages
@@ -18,36 +19,24 @@ PAGES = get_pages(APP)
 
 
 @APP.callback(
-    Output("body", "children"), [Input("url", "pathname")], [State("sync_count", "children")]
+    [Output("body", "children"), Output("filters", "children")],
+    [Input("url", "pathname"), Input("sync", "n_clicks")],
 )
 # pylint: disable=unused-variable
-def display_content(pathname, _):
-    """ Updates content based on current page """
+def change_page(pathname, _):
+    """ Updates the page content """
 
-    if pathname in PAGES:
-        return PAGES[pathname].get_body_html()
-    return "404"
+    ctx = callback_context
 
+    # If sync button pressed, sync the app
+    if ctx.triggered and ctx.triggered[0]["prop_id"] == "sync.n_clicks":
+        sync()
 
-@APP.callback(
-    Output("filters", "children"), [Input("url", "pathname")], [State("sync_count", "children")]
-)
-# pylint: disable=unused-variable
-def display_filters(pathname, _):
-    """ Updates content based on current page """
+    page = PAGES.get(pathname, None)
 
-    if pathname in PAGES:
-        return PAGES[pathname].get_filters()
-    return "404"
-
-
-@APP.callback(Output("sync_count", "children"), [Input("sync", "n_clicks")])
-# pylint: disable=unused-variable,unused-argument
-def update_sync_count(x):
-    """ sync data using the data_loader function """
-
-    sync()
-    return x
+    if page is not None:
+        return page.get_body_html(), page.get_filters()
+    return ["404"] * 2
 
 
 @APP.callback(
