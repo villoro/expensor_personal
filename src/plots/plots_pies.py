@@ -23,7 +23,7 @@ def get_pie(dfg, df_categ, type_trans, years=None, height=None):
             the plotly plot as html-div format
     """
 
-    df = u.dfs.filter_data(dfg, years, c.cols.YEAR)
+    df = u.filter_data(dfg, years, c.cols.YEAR)
     df = df[df[c.cols.TYPE] == type_trans]
     df_cat = df_categ[df_categ[c.cols.TYPE] == type_trans].set_index(c.cols.NAME)
 

@@ -32,7 +32,7 @@ class Page(lay.AppPage):
                 Args:
                     categories: categories to use
             """
-            df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
+            df = u.filter_data(DFS[c.dfs.TRANS], categories)
             return (
                 plots.get_heatmap(df, c.names.INCOMES),
                 plots.get_heatmap(df, c.names.EXPENSES),

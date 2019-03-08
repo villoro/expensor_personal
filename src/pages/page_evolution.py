@@ -46,7 +46,7 @@ class Page(lay.AppPage):
                     timewindow: timewindow to use for grouping
                     avg_month:  month to use in time average
             """
-            df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
+            df = u.filter_data(DFS[c.dfs.TRANS], categories)
             return (
                 plots.plot_timeserie(df, avg_month, timewindow),
                 plots.plot_timeserie_by_categories(

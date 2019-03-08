@@ -23,7 +23,7 @@ def invest_evolution_plot(df_in, avg_month):
 
     df = df_in.set_index(c.cols.DATE)
 
-    df = u.dfs.time_average(df, avg_month)
+    df = u.time_average(df, avg_month)
 
     data = [
         go.Scatter(x=df.index, y=df[c.names.TOTAL], marker={"color": "black"}, name=c.names.TOTAL)
@@ -68,11 +68,11 @@ def total_worth_plot(df_liq_in, df_wor_in, avg_month, height=None):
     df_liq = df_liq_in.set_index(c.cols.DATE)[[c.names.TOTAL]]
     df_wor = df_wor_in.set_index(c.cols.DATE)[[c.names.TOTAL]]
 
-    df_liq = u.dfs.time_average(df_liq, avg_month)
-    df_wor = u.dfs.time_average(df_wor, avg_month)
+    df_liq = u.time_average(df_liq, avg_month)
+    df_wor = u.time_average(df_wor, avg_month)
 
     # If indexs have different lenghts, normalize them
-    df_liq, df_wor = u.dfs.normalize_index(df_liq, df_wor)
+    df_liq, df_wor = u.normalize_index(df_liq, df_wor)
 
     dft = df_liq + df_wor
 
@@ -114,10 +114,10 @@ def passive_income_vs_expenses(df_wor_in, df_trans_in, avg_month, smooth):
 
     dfw = df_wor_in.set_index(c.cols.DATE)[[c.names.TOTAL]]
     if smooth:
-        dfw = u.dfs.time_average(dfw, avg_month)
+        dfw = u.time_average(dfw, avg_month)
 
-    dfe = u.dfs.group_df_by(df_trans_in[df_trans_in[c.cols.TYPE] == c.names.EXPENSES], "M")
-    dfe = u.dfs.time_average(dfe, avg_month)
+    dfe = u.group_df_by(df_trans_in[df_trans_in[c.cols.TYPE] == c.names.EXPENSES], "M")
+    dfe = u.time_average(dfe, avg_month)
 
     data = [
         go.Scatter(
@@ -151,11 +151,11 @@ def performance_plot(df_inv_in, df_wor_in, avg_month):
     df_inv = df_inv_in.set_index(c.cols.DATE)
     df_wor = df_wor_in.set_index(c.cols.DATE)
 
-    df_inv = u.dfs.time_average(df_inv, avg_month)
-    df_wor = u.dfs.time_average(df_wor, avg_month)
+    df_inv = u.time_average(df_inv, avg_month)
+    df_wor = u.time_average(df_wor, avg_month)
 
     # If indexs have different lenghts, normalize them
-    df_inv, df_wor = u.dfs.normalize_index(df_inv, df_wor)
+    df_inv, df_wor = u.normalize_index(df_inv, df_wor)
 
     data = [
         go.Scatter(

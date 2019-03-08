@@ -29,7 +29,7 @@ def plot_timeserie(dfg, avg_month, timewindow="M", height=None):
     data = []
 
     for name, color in iter_data.items():
-        df = u.dfs.group_df_with_time_avg(dfg[dfg[c.cols.TYPE] == name], timewindow, avg_month)
+        df = u.group_df_with_time_avg(dfg[dfg[c.cols.TYPE] == name], timewindow, avg_month)
         data.append(
             go.Scatter(
                 x=df.index, y=df[c.cols.AMOUNT], marker={"color": color}, name=name, mode="lines"
@@ -37,7 +37,7 @@ def plot_timeserie(dfg, avg_month, timewindow="M", height=None):
         )
 
     # EBIT trace
-    df = u.dfs.group_df_with_time_avg(u.dfs.get_ebit(dfg), timewindow, avg_month)
+    df = u.group_df_with_time_avg(u.get_ebit(dfg), timewindow, avg_month)
 
     data.append(
         go.Scatter(
@@ -73,7 +73,7 @@ def plot_timeserie_by_categories(
     df = dfg[dfg[c.cols.TYPE] == type_trans].copy()
     df_cat = df_categ[df_categ[c.cols.TYPE] == type_trans].set_index(c.cols.NAME)
 
-    df_aux = u.dfs.group_df_with_time_avg(df, timewindow, avg_month, dfg)
+    df_aux = u.group_df_with_time_avg(df, timewindow, avg_month, dfg)
 
     data = [
         go.Scatter(
@@ -89,7 +89,7 @@ def plot_timeserie_by_categories(
         else:
             color = u.get_colors(("black", 500))
 
-        df_aux = u.dfs.group_df_with_time_avg(
+        df_aux = u.group_df_with_time_avg(
             df[df[c.cols.CATEGORY] == cat], timewindow, avg_month, dfg
         )
         data.append(
@@ -114,12 +114,10 @@ def plot_savings_ratio(dfg, avg_month, timewindow="M"):
     """
 
     # Calculate EBIT
-    df = u.dfs.group_df_with_time_avg(u.dfs.get_ebit(dfg), timewindow, avg_month)
+    df = u.group_df_with_time_avg(u.get_ebit(dfg), timewindow, avg_month)
 
     # Incomes
-    dfi = u.dfs.group_df_with_time_avg(
-        dfg[dfg[c.cols.TYPE] == c.names.INCOMES], timewindow, avg_month
-    )
+    dfi = u.group_df_with_time_avg(dfg[dfg[c.cols.TYPE] == c.names.INCOMES], timewindow, avg_month)
 
     # Savings ratio
     df = df[c.cols.AMOUNT] / dfi[c.cols.AMOUNT]

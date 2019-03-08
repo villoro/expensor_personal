@@ -42,7 +42,7 @@ class Page(lay.AppPage):
                         categories: categories to use
                         years:      years to include in pie
                 """
-                df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
+                df = u.filter_data(DFS[c.dfs.TRANS], categories)
                 return (
                     plots.get_pie(df, DFS[c.dfs.CATEG], c.names.INCOMES, years),
                     plots.get_pie(df, DFS[c.dfs.CATEG], c.names.EXPENSES, years),
