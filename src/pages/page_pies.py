@@ -27,36 +27,26 @@ class Page(lay.AppPage):
         for num, _ in enumerate([self.all_years, self.last_year_as_list]):
 
             @app.callback(
-                Output("plot_pie_{}_{}".format(num, c.names.INCOMES), "figure"),
+                [
+                    Output("plot_pie_{}_{}".format(num, c.names.INCOMES), "figure"),
+                    Output("plot_pie_{}_{}".format(num, c.names.EXPENSES), "figure"),
+                ],
                 [Input("input_categories", "value"), Input("drop_pie_{}".format(num), "value")],
             )
             # pylint: disable=unused-variable,unused-argument
-            def update_pie_incomes(categories, years):
+            def update_pies(categories, years):
                 """
-                    Updates the incomes pie plot
+                    Updates the pies plot
 
                     Args:
                         categories: categories to use
                         years:      years to include in pie
                 """
                 df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
-                return plots.get_pie(df, DFS[c.dfs.CATEG], c.names.INCOMES, years)
-
-            @app.callback(
-                Output("plot_pie_{}_{}".format(num, c.names.EXPENSES), "figure"),
-                [Input("input_categories", "value"), Input("drop_pie_{}".format(num), "value")],
-            )
-            # pylint: disable=unused-variable,unused-argument
-            def update_pie_expenses(categories, years):
-                """
-                    Updates the expenses pie plot
-
-                    Args:
-                        categories: categories to use
-                        years:      years to include in pie
-                """
-                df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
-                return plots.get_pie(df, DFS[c.dfs.CATEG], c.names.EXPENSES, years)
+                return (
+                    plots.get_pie(df, DFS[c.dfs.CATEG], c.names.INCOMES, years),
+                    plots.get_pie(df, DFS[c.dfs.CATEG], c.names.EXPENSES, years),
+                )
 
     def get_body(self):
         body = []

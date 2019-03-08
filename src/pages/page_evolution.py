@@ -24,16 +24,15 @@ class Page(lay.AppPage):
         super().__init__([c.dash.INPUT_CATEGORIES, c.dash.INPUT_SMOOTHING, c.dash.INPUT_TIMEWINDOW])
 
         @app.callback(
+            [Output(x, "figure") for x in ["plot_evol", "plot_evo_detail", "plot_evo_savings"]],
             [
-                Output("plot_evol", "figure"),
-                Output("plot_evo_detail", "figure"),
-                Output("plot_evo_savings", "figure"),
-            ],
-            [
-                Input("input_categories", "value"),
-                Input("radio_evol_type", "value"),
-                Input("input_timewindow", "value"),
-                Input("input_smoothing", "value"),
+                Input(x, "value")
+                for x in [
+                    "input_categories",
+                    "radio_evol_type",
+                    "input_timewindow",
+                    "input_smoothing",
+                ]
             ],
         )
         # pylint: disable=unused-variable,unused-argument

@@ -21,11 +21,7 @@ class Page(lay.AppPage):
         super().__init__([c.dash.INPUT_CATEGORIES])
 
         @app.callback(
-            [
-                Output("plot_heat_i", "figure"),
-                Output("plot_heat_e", "figure"),
-                Output("plot_heat_distribution", "figure"),
-            ],
+            [Output(f"plot_heat_{x}", "figure") for x in ["i", "e", "distribution"]],
             [Input("input_categories", "value")],
         )
         # pylint: disable=unused-variable,unused-argument

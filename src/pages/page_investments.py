@@ -24,10 +24,8 @@ class Page(lay.AppPage):
 
         @app.callback(
             [
-                Output("plot_invest_detail", "figure"),
-                Output("plot_invest_total_worth", "figure"),
-                Output("plot_passive_income", "figure"),
-                Output("plot_invest_performance", "figure"),
+                Output(f"plot_invest_{x}", "figure")
+                for x in ["detail", "total_worth", "passive_income", "performance"]
             ],
             [
                 Input("radio_invest_wor_inv", "value"),
@@ -71,7 +69,7 @@ class Page(lay.AppPage):
             lay.card(
                 [
                     dcc.Graph(
-                        id="plot_passive_income",
+                        id="plot_invest_passive_income",
                         config=c.dash.PLOT_CONFIG,
                         figure=plots.passive_income_vs_expenses(
                             DFS[c.dfs.WORTH],
