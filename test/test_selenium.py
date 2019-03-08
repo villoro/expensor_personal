@@ -5,6 +5,7 @@ from test.selenium_utils import open_dash, wait_until_loaded
 
 import src.constants as c
 
+
 class TestApp(unittest.TestCase):
     """ Tests the dash app works """
 
@@ -13,7 +14,6 @@ class TestApp(unittest.TestCase):
     def test_title(self):
         """ Test that the app is able to load """
         self.assertEqual(c.names.TITLE, self.driver.title)
-
 
     def test_pages(self):
         """ Test that is possible to open all pages """
@@ -25,7 +25,6 @@ class TestApp(unittest.TestCase):
             # Check that there is a body and filters divs
             self.driver.find_element_by_id("body")
             self.driver.find_element_by_id("filters")
-
 
     def _check_one_page(self, page_link, elements):
         """
@@ -45,16 +44,17 @@ class TestApp(unittest.TestCase):
         for elem in elements:
             self.driver.find_element_by_id(elem)
 
-
     def test_page_dashboard(self):
         """ Test the content of page heatmaps """
 
         contents = [
-            "plot_dash_evol", "plot_dash_total_worth", "plot_dash_l_vs_e", "plot_dash_liq_months"
+            "plot_dash_evol",
+            "plot_dash_total_worth",
+            "plot_dash_l_vs_e",
+            "plot_dash_liq_months",
         ]
         filters = ["input_smoothing"]
         self._check_one_page(c.dash.LINK_DASHBOARD, contents + filters)
-
 
     def test_page_evolution(self):
         """ Test the content of page evolution """
@@ -63,7 +63,6 @@ class TestApp(unittest.TestCase):
         filters = ["input_categories", "input_smoothing", "input_timewindow"]
         self._check_one_page(c.dash.LINK_EVOLUTION, contents + filters)
 
-
     def test_page_comparison(self):
         """ Test the content of page comparison """
 
@@ -71,14 +70,12 @@ class TestApp(unittest.TestCase):
         filters = ["input_categories", "input_smoothing"]
         self._check_one_page(c.dash.LINK_COMPARISON, contents + filters)
 
-
     def test_page_heatmaps(self):
         """ Test the content of page heatmaps """
 
         contents = ["plot_heat_i", "plot_heat_e", "plot_heat_distribution"]
         filters = ["input_categories"]
         self._check_one_page(c.dash.LINK_HEATMAPS, contents + filters)
-
 
     def test_page_pies(self):
         """ Test the content of page pies """
@@ -90,7 +87,6 @@ class TestApp(unittest.TestCase):
         filters = ["input_categories"]
         self._check_one_page(c.dash.LINK_PIES, contents + filters)
 
-
     def test_page_liquid(self):
         """ Test the content of page liquid """
 
@@ -98,18 +94,20 @@ class TestApp(unittest.TestCase):
         filters = ["input_smoothing"]
         self._check_one_page(c.dash.LINK_LIQUID, contents + filters)
 
-
     def test_page_investments(self):
         """ Test the content of page investments """
 
         contents = [
-            "plot_invest_total_worth", "plot_passive_income", "radio_invest_smooth",
-            "plot_invest_performance", "plot_invest_detail", "radio_invest_wor_inv"
+            "plot_invest_total_worth",
+            "plot_invest_passive_income",
+            "radio_invest_smooth",
+            "plot_invest_performance",
+            "plot_invest_detail",
+            "radio_invest_wor_inv",
         ]
         filters = ["input_smoothing"]
         self._check_one_page(c.dash.LINK_INVESTMENTS, contents + filters)
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

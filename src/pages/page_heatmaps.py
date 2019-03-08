@@ -20,43 +20,24 @@ class Page(lay.AppPage):
     def __init__(self, app):
         super().__init__([c.dash.INPUT_CATEGORIES])
 
-        @app.callback(Output("plot_heat_i", "figure"), [Input("input_categories", "value")])
-        # pylint: disable=unused-variable,unused-argument
-        def update_heatmap_i(categories):
-            """
-                Updates the incomes heatmap
-
-                Args:
-                    categories: categories to use
-            """
-            df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
-            return plots.get_heatmap(df, c.names.INCOMES)
-
-        @app.callback(Output("plot_heat_e", "figure"), [Input("input_categories", "value")])
-        # pylint: disable=unused-variable,unused-argument
-        def update_heatmap_e(categories):
-            """
-                Updates the expenses heatmap
-
-                Args:
-                    categories: categories to use
-            """
-            df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
-            return plots.get_heatmap(df, c.names.EXPENSES)
-
         @app.callback(
-            Output("plot_heat_distribution", "figure"), [Input("input_categories", "value")]
+            [Output(f"plot_heat_{x}", "figure") for x in ["i", "e", "distribution"]],
+            [Input("input_categories", "value")],
         )
         # pylint: disable=unused-variable,unused-argument
-        def update_distplot(categories):
+        def update_plots(categories):
             """
-                Updates the distribution plot
+                Updates the plots
 
                 Args:
                     categories: categories to use
             """
             df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
-            return plots.dist_plot(df)
+            return (
+                plots.get_heatmap(df, c.names.INCOMES),
+                plots.get_heatmap(df, c.names.EXPENSES),
+                plots.dist_plot(df),
+            )
 
     def get_body(self):
         return [

@@ -19,43 +19,24 @@ class Page(lay.AppPage):
     def __init__(self, app):
         super().__init__([c.dash.INPUT_SMOOTHING])
 
-        @app.callback(Output("plot_liquid_evo", "figure"), [Input("input_smoothing", "value")])
-        # pylint: disable=unused-variable,unused-argument
-        def update_liquid(avg_month):
-            """
-                Updates the liquid plot
-
-                Args:
-                    avg_month:  month to use in time average
-            """
-
-            return plots.liquid_plot(DFS[c.dfs.LIQUID], avg_month)
-
         @app.callback(
-            Output("plot_liquid_vs_expenses", "figure"), [Input("input_smoothing", "value")]
+            [Output(f"plot_heat_{x}", "figure") for x in ["evo", "vs_expenses", "months"]],
+            [Input("input_smoothing", "value")],
         )
         # pylint: disable=unused-variable,unused-argument
-        def update_liquid_vs_expenses(avg_month):
+        def update_plots(avg_month):
             """
-                Updates the liquid vs expenses plot
+                Updates the plots
 
                 Args:
                     avg_month:  month to use in time average
             """
 
-            return plots.plot_expenses_vs_liquid(DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], avg_month)
-
-        @app.callback(Output("plot_liquid_months", "figure"), [Input("input_smoothing", "value")])
-        # pylint: disable=unused-variable,unused-argument
-        def update_liquid_months(avg_month):
-            """
-                Updates the survival months plot
-
-                Args:
-                    avg_month:  month to use in time average
-            """
-
-            return plots.plot_months(DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], avg_month)
+            return (
+                plots.liquid_plot(DFS[c.dfs.LIQUID], avg_month),
+                plots.plot_expenses_vs_liquid(DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], avg_month),
+                plots.plot_months(DFS[c.dfs.LIQUID], DFS[c.dfs.TRANS], avg_month),
+            )
 
     def get_body(self):
         return [

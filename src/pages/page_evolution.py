@@ -24,40 +24,21 @@ class Page(lay.AppPage):
         super().__init__([c.dash.INPUT_CATEGORIES, c.dash.INPUT_SMOOTHING, c.dash.INPUT_TIMEWINDOW])
 
         @app.callback(
-            Output("plot_evol", "figure"),
+            [Output(x, "figure") for x in ["plot_evol", "plot_evo_detail", "plot_evo_savings"]],
             [
-                Input("input_categories", "value"),
-                Input("input_timewindow", "value"),
-                Input("input_smoothing", "value"),
+                Input(x, "value")
+                for x in [
+                    "input_categories",
+                    "radio_evol_type",
+                    "input_timewindow",
+                    "input_smoothing",
+                ]
             ],
         )
         # pylint: disable=unused-variable,unused-argument
-        def update_timeserie_plot(categories, timewindow, avg_month):
+        def update_plots(categories, type_trans, timewindow, avg_month):
             """
-                Updates the timeserie plot
-
-                Args:
-                    categories: categories to use
-                    timewindow: timewindow to use for grouping
-                    avg_month:  month to use in time average
-            """
-
-            df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
-            return plots.plot_timeserie(df, avg_month, timewindow)
-
-        @app.callback(
-            Output("plot_evo_detail", "figure"),
-            [
-                Input("input_categories", "value"),
-                Input("radio_evol_type", "value"),
-                Input("input_timewindow", "value"),
-                Input("input_smoothing", "value"),
-            ],
-        )
-        # pylint: disable=unused-variable,unused-argument
-        def update_ts_by_categories_plot(categories, type_trans, timewindow, avg_month):
-            """
-                Updates the timeserie by categories plot
+                Updates evolution plots
 
                 Args:
                     categories: categories to use
@@ -66,31 +47,13 @@ class Page(lay.AppPage):
                     avg_month:  month to use in time average
             """
             df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
-            return plots.plot_timeserie_by_categories(
-                df, DFS[c.dfs.CATEG], avg_month, type_trans, timewindow
+            return (
+                plots.plot_timeserie(df, avg_month, timewindow),
+                plots.plot_timeserie_by_categories(
+                    df, DFS[c.dfs.CATEG], avg_month, type_trans, timewindow
+                ),
+                plots.plot_savings_ratio(df, avg_month, timewindow),
             )
-
-        @app.callback(
-            Output("plot_evo_savings", "figure"),
-            [
-                Input("input_categories", "value"),
-                Input("input_timewindow", "value"),
-                Input("input_smoothing", "value"),
-            ],
-        )
-        # pylint: disable=unused-variable,unused-argument
-        def update_savings_plot(categories, timewindow, avg_month):
-            """
-                Updates the timeserie by categories plot
-
-                Args:
-                    categories: categories to use
-                    type_trans: type of transacions [Expenses/Inc]
-                    timewindow: timewindow to use for grouping
-                    avg_month:  month to use in time average
-            """
-            df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
-            return plots.plot_savings_ratio(df, avg_month, timewindow)
 
     def get_body(self):
         return [

@@ -96,8 +96,6 @@ def get_layout():
     content = [
         # Body
         html.Div(id="body", style=padding()),
-        # Others
-        html.Div(id="sync_count", style={"display": "none"}),
         dcc.Location(id="url", refresh=False),
     ]
 
