@@ -22,7 +22,7 @@ def get_heatmap(dfg, type_trans):
             the plotly plot as html-div format
     """
 
-    df = u.dfs.group_df_by(dfg[dfg[c.cols.TYPE] == type_trans], "M")
+    df = u.group_df_by(dfg[dfg[c.cols.TYPE] == type_trans], "M")
 
     # No data no fun
     if df.shape[0] < 2:
@@ -56,8 +56,8 @@ def dist_plot(dfg):
             the plotly plot as html-div format
     """
 
-    dfe = u.dfs.group_df_by(dfg[dfg[c.cols.TYPE] == c.names.EXPENSES], "M")
-    dfi = u.dfs.group_df_by(dfg[dfg[c.cols.TYPE] == c.names.INCOMES], "M")
+    dfe = u.group_df_by(dfg[dfg[c.cols.TYPE] == c.names.EXPENSES], "M")
+    dfi = u.group_df_by(dfg[dfg[c.cols.TYPE] == c.names.INCOMES], "M")
 
     df_baii = dfi - dfe
 

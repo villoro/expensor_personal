@@ -29,12 +29,12 @@ def ts_gradient(dfg, type_trans, avg_month):
         mfilter = df[c.cols.TYPE] == c.names.EXPENSES
         df.loc[mfilter, c.cols.AMOUNT] = -df.loc[mfilter, c.cols.AMOUNT]
 
-    df = u.dfs.group_df_by(df, "M")
+    df = u.group_df_by(df, "M")
 
     if df.shape[0] == 0:
         return {}
 
-    df = u.dfs.time_average(df, avg_month)
+    df = u.time_average(df, avg_month)
 
     max_width = 5
 

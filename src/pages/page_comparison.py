@@ -23,48 +23,31 @@ class Page(lay.AppPage):
         super().__init__([c.dash.INPUT_CATEGORIES, c.dash.INPUT_SMOOTHING])
 
         @app.callback(
-            Output("plot_comp_1", "figure"),
+            [Output(f"plot_comp_{x}", "figure") for x in list("12")],
             [
                 Input("input_categories", "value"),
                 Input("input_smoothing", "value"),
                 Input("radio_comp_1", "value"),
-            ],
-        )
-        # pylint: disable=unused-variable,unused-argument
-        def update_ts_grad_1(categories, avg_month, type_trans):
-            """
-                Updates the timeserie gradient plot
-
-                Args:
-                    categories: categories to use
-                    avg_month:  month to use in time average
-                    type_trans: expenses/incomes
-            """
-
-            df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
-            return plots.ts_gradient(df, type_trans, avg_month)
-
-        @app.callback(
-            Output("plot_comp_2", "figure"),
-            [
-                Input("input_categories", "value"),
-                Input("input_smoothing", "value"),
                 Input("radio_comp_2", "value"),
             ],
         )
         # pylint: disable=unused-variable,unused-argument
-        def update_ts_grad_2(categories, avg_month, type_trans):
+        def update_plots(categories, avg_month, type_trans_1, type_trans_2):
             """
-                Updates the timeserie gradient plot
+                Updates the plots
 
                 Args:
                     categories: categories to use
                     avg_month:  month to use in time average
-                    type_trans: expenses/incomes
+                    type_trans_1: expenses/incomes/ebit plot 1
+                    type_trans_2: expenses/incomes/ebit plot 2
             """
 
-            df = u.dfs.filter_data(DFS[c.dfs.TRANS], categories)
-            return plots.ts_gradient(df, type_trans, avg_month)
+            df = u.filter_data(DFS[c.dfs.TRANS], categories)
+            return (
+                plots.ts_gradient(df, type_trans_1, avg_month),
+                plots.ts_gradient(df, type_trans_2, avg_month),
+            )
 
     def get_body(self):
         return [
