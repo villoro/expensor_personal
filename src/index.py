@@ -23,10 +23,10 @@ PAGES = get_pages(APP)
 def change_page(pathname, _):
     """ Updates the page content """
 
-    ctx = callback_context
+    context = callback_context
 
     # If sync button pressed, sync the app
-    if ctx.triggered and ctx.triggered[0]["prop_id"] == "sync.n_clicks":
+    if context.triggered and context.triggered[0]["prop_id"] == "sync.n_clicks":
         sync()
 
     if pathname in PAGES:

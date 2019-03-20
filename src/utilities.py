@@ -94,14 +94,21 @@ def group_df_by(df_in, timewindow, dfg=None):
     return df.reindex(dfg[col].unique(), fill_value=0)
 
 
-def time_average(df_in, months):
+def time_average(df_in, months, exponential=False):
     """ do some time average """
 
     # No negative values
     months = max(0, months)
 
-    df = df_in.copy().ewm(span=months, min_periods=0, adjust=False, ignore_na=False).mean()
-    return df.apply(lambda x: round(x, 2))
+    # Exponential moving average
+    if exponential:
+        df = df_in.ewm(span=months, min_periods=0, adjust=False, ignore_na=False)
+
+    # Regular moving average
+    else:
+        df = df_in.rolling(months, min_periods=1)
+
+    return df.mean().apply(lambda x: round(x, 2))
 
 
 def group_df_with_time_avg(df_in, timewindow, months, dfg=None):
