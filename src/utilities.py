@@ -4,8 +4,17 @@
 
 import pandas as pd
 from v_palette import get_colors
+from v_crypt import Cipher
 
 import constants as c
+
+
+cipher = Cipher(secrets_file=c.io.FILE_SECRETS, environ_var_name=c.io.SECRET_ENV_VAR_NAME)
+
+
+def get_secret(key):
+    """ Retrives one encrypted secret """
+    return cipher.get_secret(key)
 
 
 def fix_df_trans(df_in):

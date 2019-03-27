@@ -39,6 +39,8 @@ dist/
 # Executables
 *.exe
 
+# Passwords
+*.password
 
 # --------------------- PERSONAL EXCLUSIONS -----------------------------------
 # Data folders

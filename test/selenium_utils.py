@@ -10,6 +10,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 import src.constants as c
+import src.utilities as u
 
 SELENIUM_PATH_IN_TRAVIS = '/home/travis/selenium/chromedriver'
 
@@ -83,8 +84,8 @@ def open_dash(headless=False):
 
     # First login and then open dash app (entering with credentials does not render correctly)
     driver.get(c.dash.LINK_ROOT_LOGIN.format(
-        os.environ[c.io.VAR_USER],
-        os.environ[c.io.VAR_PASSWORD]
+        u.get_secret(c.io.VAR_USER),
+        u.get_secret(c.io.VAR_PASSWORD)
     ))
     driver.get(c.dash.LINK_ROOT)
 
