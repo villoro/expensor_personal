@@ -18,10 +18,11 @@ import pandas as pd
 import oyaml as yaml
 
 import constants as c
+import utilities as u
 from utilities import fix_df_trans
 
 
-DBX = dropbox.Dropbox(os.environ[c.io.VAR_DROPBOX_TOKEN])
+DBX = dropbox.Dropbox(u.get_secret(c.io.VAR_DROPBOX_TOKEN))
 DFS = {}
 YML = {}
 
