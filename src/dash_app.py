@@ -9,9 +9,10 @@ from dash import Dash
 from dash_bootstrap_components.themes import BOOTSTRAP
 
 import constants as c
+import utilities as u
 import layout
 
-VALID_USERNAME_PASSWORD_PAIRS = [[os.environ[c.io.VAR_USER], os.environ[c.io.VAR_PASSWORD]]]
+VALID_USERNAME_PASSWORD_PAIRS = [[u.get_secret(c.io.VAR_USER), u.get_secret(c.io.VAR_PASSWORD)]]
 
 
 def create_dash_app():

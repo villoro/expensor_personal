@@ -11,5 +11,6 @@ oyaml==0.7
 pandas==0.24.1
 plotly==3.6.1
 scipy==1.2.1
+v-crypt>=1.0.2
 v-palette>=1.0.3
 xlrd==1.2.0
