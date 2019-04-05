@@ -106,15 +106,18 @@ def group_df_by(df_in, timewindow, dfg=None):
 def time_average(df_in, months, exponential=False):
     """ do some time average """
 
-    # No negative values
-    months = max(0, months)
-
     # Exponential moving average
     if exponential:
+        # No negative values
+        months = max(0, months)
+
         df = df_in.ewm(span=months, min_periods=0, adjust=False, ignore_na=False)
 
     # Regular moving average
     else:
+        # One month at least
+        months = max(1, months)
+
         df = df_in.rolling(months, min_periods=1)
 
     return df.mean().apply(lambda x: round(x, 2))

@@ -20,7 +20,7 @@ class Page(lay.AppPage):
         super().__init__([c.dash.INPUT_SMOOTHING])
 
         @app.callback(
-            [Output(f"plot_heat_{x}", "figure") for x in ["evo", "vs_expenses", "months"]],
+            [Output(f"plot_liquid_{x}", "figure") for x in ["evo", "vs_expenses", "months"]],
             [Input("input_smoothing", "value")],
         )
         # pylint: disable=unused-variable,unused-argument
