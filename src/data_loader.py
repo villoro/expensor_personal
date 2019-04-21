@@ -10,7 +10,6 @@
         > df_xx = DFS[xx] # xx is the name of the dataframe
 """
 
-import os
 import io
 
 import dropbox

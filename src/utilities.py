@@ -2,19 +2,18 @@
     Utilities for pandas dataframes
 """
 
-import pandas as pd
 from v_palette import get_colors
 from v_crypt import Cipher
 
 import constants as c
 
 
-cipher = Cipher(secrets_file=c.io.FILE_SECRETS, environ_var_name=c.io.SECRET_ENV_VAR_NAME)
+CIPHER = Cipher(secrets_file=c.io.FILE_SECRETS, environ_var_name=c.io.SECRET_ENV_VAR_NAME)
 
 
 def get_secret(key):
     """ Retrives one encrypted secret """
-    return cipher.get_secret(key)
+    return CIPHER.get_secret(key)
 
 
 def filter_data(df_input, values=None, col_name=c.cols.CATEGORY):
