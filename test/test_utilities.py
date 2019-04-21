@@ -13,7 +13,7 @@ class TestUtilities(unittest.TestCase):
     """Test utilities"""
 
     # ------------------------------ dfs -----------------------------------------------------------
-    def test_fix_df_trans(self):
+    def test_df_trans(self):
         """ Test that is able to retrive dataframes from data.xlsx """
 
         df = DFS[c.dfs.TRANS]

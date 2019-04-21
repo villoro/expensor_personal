@@ -19,7 +19,6 @@ import oyaml as yaml
 
 import constants as c
 import utilities as u
-from utilities import fix_df_trans
 
 
 DBX = dropbox.Dropbox(u.get_secret(c.io.VAR_DROPBOX_TOKEN))
@@ -31,7 +30,7 @@ def get_config():
     """ retrives config yaml as ordered dict """
 
     _, res = DBX.files_download(c.io.FILE_CONFIG)
-    return yaml.load(io.BytesIO(res.content))
+    return yaml.load(io.BytesIO(res.content), Loader=yaml.SafeLoader)
 
 
 def get_money_lover_filename():
@@ -62,11 +61,9 @@ def get_df_transactions():
         Returns:
             raw dataframe with transactions
     """
-    filename = get_money_lover_filename()
 
-    _, res = DBX.files_download(c.io.PATH_MONEY_LOVER + filename)
-
-    return fix_df_trans(pd.read_excel(io.BytesIO(res.content), index_col=0))
+    _, res = DBX.files_download(c.io.FILE_TRANSACTIONS)
+    return pd.read_excel(io.BytesIO(res.content), index_col=0)
 
 
 def get_data_without_transactions():
