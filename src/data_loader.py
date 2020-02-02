@@ -54,9 +54,6 @@ def get_df_transactions():
     """
         Retrives the df with transactions. It will read the newest money lover excel file
 
-        Args:
-            dbx:    dropbox connector needed to call the dropbox api
-
         Returns:
             raw dataframe with transactions
     """
@@ -68,9 +65,6 @@ def get_df_transactions():
 def get_data_without_transactions():
     """
         Retrives all dataframes from data.xlsx file
-
-        Args:
-            dbx:    dropbox connector needed to call the dropbox api
 
         Returns:
             dict with raw dataframes from data.xlsx file

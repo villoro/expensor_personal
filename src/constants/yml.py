@@ -3,8 +3,8 @@
 """
 
 
-LIQUID = "liquid"
-INVEST = "investment"
+LIQUID = "Liquid"
+INVEST = "Investment"
 
 COLOR_NAME = "color_name"
 COLOR_INDEX = "color_index"
