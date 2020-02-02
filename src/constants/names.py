@@ -12,8 +12,8 @@ TOTAL = "Total"
 LIQUID = "Liquid"
 LIQUID_MIN_REC = "Minimum liquid recomended"
 LIQUID_REC = "Liquid recomended"
-WORTH = "worth"
-INVESTED = "invested"
+WORTH = "Worth"
+INVESTED = "Invested"
 SAVINGS_RATIO = "savings percent"
 
 MONTHS = {
