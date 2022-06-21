@@ -6,7 +6,7 @@ dash-html-components==0.15.0
 dash-renderer==0.22.0
 dropbox==9.3.0
 gunicorn==19.9.0
-numpy==1.16.2
+numpy==1.22.0
 oyaml==0.7
 pandas==0.24.2
 plotly==3.8.1
